@@ -1,0 +1,32 @@
+StackF765 drone / board viewer (docs/drone/) - credits and licences
+====================================================================
+
+Flight controller boards
+  The three boards shown (lower power board, upper flight-controller board, service board) are the
+  GLB models exported by kicad-cli from the KiCad design files in this repository
+  (https://github.com/PeterJBurke/stackf765). They are loaded from ../boards/ and are not copied here.
+  Hardware licence: CERN-OHL-P v2 (see the project page).
+
+Page design
+  Layout, controls, camera presets and the frame context are modelled on Peter Burke's FC viewer at
+  https://peterjburke.github.io/dronerenders/fc/ (repository PeterJBurke/dronerenders).
+
+Frame model: assets/frame-mod-l-hd-cargo.js
+  MOD-L 4-inch HD Cargo frame (4" regular arms, Cargo top and bottom plates, cross plate, 30 mm standoffs).
+  Design: MOD-L by ledroneclub, Thingiverse thing 4295478, https://www.thingiverse.com/thing:4295478
+  Licence: Creative Commons Attribution (CC BY), as stated with the designer's files.
+  The packed mesh file is copied unchanged from dronerenders fc/assets/native-frame.js, where the
+  designer's part geometry was assembled and recoloured for that viewer (parts not stretched).
+
+Scale coin: assets/penny.js (copied unchanged from dronerenders fc/assets/penny.js)
+  The original credit file is kept beside it as PENNY-CREDITS.txt:
+  Obverse: United States Mint, public-domain US government work
+    (https://commons.wikimedia.org/wiki/File:2010_cent_obverse.png).
+  Reverse texture: Leopard2A7m, CC BY-SA 4.0
+    (https://commons.wikimedia.org/wiki/File:Union_Shield_Cent.jpg,
+     https://creativecommons.org/licenses/by-sa/4.0/).
+
+three.js r160 (MIT licence, Copyright 2010-2023 three.js authors) is loaded from cdn.jsdelivr.net.
+
+Mounting posts, rubber grommets, washers, screws, foam tape and the service cable are simple
+illustrative shapes generated in assets/stackf765.js and assets/drone.js; they are not CAD models.

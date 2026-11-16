@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>StackF765 — board view</title>
+<meta name="description" content="Interactive 3D view of the StackF765 flight controller boards, generated from the KiCad design files."/>
+<link href="assets/viewer.css" rel="stylesheet"/>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head><body>
+<div class="page-links"><span class="brand">StackF765</span><a href="./">Drone</a><a aria-current="page" href="board.html">Board</a><button id="legendButton" aria-controls="legend" aria-expanded="false">Details</button><a href="../index.html">Project page</a></div>
+
+<nav aria-label="Board controls" class="viewer-controls">
+  <label>Board <select id="boardChoice"><option value="stack">Stack</option><option value="upper">Upper</option><option value="lower">Lower</option><option value="service">Service</option></select></label>
+  <label>View <select id="viewChoice"><option value="iso">3/4</option><option value="top">Top</option><option value="bottom">Bottom</option><option value="side">Side</option></select></label>
+  <button id="headers" title="Hide the 0.1 inch pin headers">Hide headers</button>
+  <details class="options"><summary>Options</summary><div><button id="explode">Explode stack</button><button id="theme">Dark / light</button></div></details>
+</nav>
+
+<aside hidden id="legend">
+  <h1>StackF765 boards</h1>
+  <p><b>This render is generated from the KiCad design files in the <a href="https://github.com/PeterJBurke/stackf765">stackf765 repository</a></b>: the boards are the GLB models that <code>kicad-cli</code> exports for the <a href="../index.html">project page</a>, loaded here unmodified.</p>
+  <ul>
+    <li><b>Lower</b>: power board, 31.5 × 48 mm, four 4 mm holes on a 20 × 20 mm pattern for rubber grommets, battery / ESC solder pads at the tail end.</li>
+    <li><b>Upper</b>: flight controller (STM32F765), same outline, top surface 7.6 mm above the lower board's (6.0 mm standoffs + 1.6 mm PCB).</li>
+    <li><b>Service</b>: USB, buzzer and boot button, 18 × 32 mm, on a 100 mm 6-wire cable (cable not drawn on this page).</li>
+  </ul>
+  <p>The frame posts, grommets, washers and screws under the stack are simple illustrative shapes, not part of the KiCad export. Scale: 10 mm grid, a US cent (Ø19.05 mm) and a 70 mm rule.</p>
+  <p><a href="../index.html#pinout">Pinout</a> · <a href="../index.html#boards">Board files</a> · <a href="https://github.com/PeterJBurke/stackf765">GitHub repository</a> · <a href="assets/CREDITS.txt">Credits and licences</a></p>
+</aside>
+
+<div id="status" role="status">Loading 3D models…</div>
+<footer><span><b aria-live="polite" id="viewLabel"></b><br/>Drag to rotate · wheel or pinch to zoom · right-drag or two fingers to pan<br/>Scene units: mm · grid 10 mm · penny Ø19.05 mm</span><span>Boards generated from the KiCad design files in the <a href="https://github.com/PeterJBurke/stackf765">stackf765</a> repository</span></footer>
+
+<script src="assets/penny.js"></script>
+<script type="module" src="assets/board.js"></script>
+</body></html>
