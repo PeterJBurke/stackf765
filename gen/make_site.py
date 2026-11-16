@@ -71,7 +71,7 @@ def pinouts():
     svgs["power-pads"] = grid_svg(
         [["BAT+", "ESC+", "ESC-", "BAT-"]], ["rear edge"],
         "Lower board solder pads - seen from above",
-        "Battery + passes through the current shunt to ESC +.  2S-4S LiPo, 50 A continuous.", cell=80)
+        "Battery + passes through the current shunt to ESC +.  2S-3S LiPo, 50 A continuous.", cell=80)
     svgs["service-cable"] = grid_svg(
         [["VBUS", "D-", "D+", "G", "BUZ", "BOOT"]], ["pin 1 - 6"],
         "Service cable (JST-SH 6 pin, wired 1:1)",
@@ -81,6 +81,69 @@ def pinouts():
         with open(os.path.join(DOCS, "img", k + ".svg"), "w") as f:
             f.write(v)
     return svgs
+
+
+def pinout_md():
+    from pinmap import PINMAP
+    A, Bq, C = (upper.J1_ROWS[r] for r in "ABC")
+    L = ["# Pinout", "",
+         "Diagrams: [project page](https://peterjburke.github.io/stackf765/#pinout). "
+         "This file is generated from `gen/upper.py`, `gen/lower.py` and `gen/pinmap.py`.", "",
+         "TX and RX are named from the flight controller's side: connect a device's TX to an RX pin.", "",
+         "## Upper board, 3 x 12 header (J1)", "",
+         "Seen from above with the header pointing away from you. Column 1 is on the left.", "",
+         "| Row | " + " | ".join(str(i) for i in range(1, 13)) + " |", "|---|" + "---|" * 12,
+         "| C: front edge, lowest pins | " + " | ".join(l for l, _ in C) + " |",
+         "| B: middle | " + " | ".join(l for l, _ in Bq) + " |",
+         "| A: inner row, highest pins | " + " | ".join(l for l, _ in A) + " |", "",
+         "Looking into the pins from the front, the order is mirrored (column 12 on the left) and row A is on top.", "",
+         "| Label | Meaning |", "|---|---|",
+         "| G | Ground |", "| 5V | 5 V from the battery regulator (off on USB power) |",
+         "| 4V5 | 5 V that is also live on USB power |",
+         "| TXn / RXn | UART n (3.3 V logic). ArduPilot SERIAL1-7 = UART 1, 2, 3, 4, 6, 7, 8 |",
+         "| SDA / SCL | I2C bus for an external compass etc. (3.3 V, 2.2 k pull-ups fitted) |",
+         "| CAM | Analog video in from the camera |", "| VTX | Analog video out to the transmitter, with OSD |", "",
+         "Suggested use (any UART can be given any role with `SERIALn_PROTOCOL`):", "",
+         "| Pins | Typical device |", "|---|---|",
+         "| A1-A6: G 4V5 TX1 RX1 SDA SCL | GPS + compass module (6-wire) |",
+         "| B1-B4: G 4V5 TX2 RX2 | Radio receiver (CRSF / ELRS) |",
+         "| A7-A9, A10-A12 | Camera (G 5V CAM) and video transmitter (G 5V VTX) |",
+         "| other G 5V TX RX groups | Telemetry radio, ESC telemetry, VTX control, companion computer |", "",
+         "## Lower board, 2 x 10 header (J2)", "",
+         "Seen from above with the header pointing away from you.", "",
+         "| Row | " + " | ".join(str(i) for i in range(1, 11)) + " |", "|---|" + "---|" * 10,
+         "| top row (signal) | " + " | ".join(lower.J2_LABELS) + " |",
+         "| bottom row | " + " | ".join(["G"] * 10) + " |", "",
+         "M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). "
+         "5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer.", "",
+         "## Lower board, power pads", "", "Rear edge, seen from above: `BAT+  ESC+  ESC-  BAT-`. 2S-3S LiPo, 50 A continuous.", "",
+         "## Service cable (J5 on the upper board, J2 on the service board)", "",
+         "| Pin | 1 | 2 | 3 | 4 | 5 | 6 |", "|---|---|---|---|---|---|---|", "| Signal | VBUS | D- | D+ | GND | BUZ | BOOT |", "",
+         "JST-SH 1.0 mm, wired pin 1 to pin 1.", "",
+         "## Microcontroller pins", "", "| MCU pin | ArduPilot function | Net | Goes to |", "|---|---|---|---|"]
+    dest = {"USB_DM": "service cable pin 2", "USB_DP": "service cable pin 3", "SWDIO": "test pad TP4", "SWCLK": "test pad TP5",
+            "BUZZER": "buzzer switch Q1", "LED_BLUE": "blue LED", "LED_GREEN": "green LED", "VBAT_ADC": "battery voltage divider (lower board)",
+            "CURR_ADC": "current-sense amplifier (lower board)", "LED_STRIP": "lower header, LED pin"}
+    for pin in sorted(PINMAP, key=lambda p: (p[1], int(p[2:]))):
+        net, fn = PINMAP[pin]
+        d = dest.get(net)
+        if not d:
+            if net.startswith(("TX", "RX")) or net in ("SDA", "SCL"):
+                d = "upper header pin " + net
+            elif net.startswith("M") and net[1:].isdigit():
+                d = "lower header pin " + net
+            elif net.startswith("IMU"):
+                d = "IMU (U2)"
+            elif net.startswith("OSD"):
+                d = "OSD chip (U4)"
+            elif net.startswith("BARO"):
+                d = "barometer (U3)"
+            elif net.startswith("SD_"):
+                d = "microSD socket (J4)"
+            else:
+                d = ""
+        L.append(f"| {pin} | {fn} | {net} | {d} |")
+    open(os.path.join(DOCS, "pinout.md"), "w").write("\n".join(L) + "\n")
 
 
 def read_bom(board):
@@ -119,8 +182,9 @@ BOARDS = [("upper", "Upper board - flight controller", "6-layer, 1.6 mm, 31.5 x 
 
 def main():
     svgs = pinouts()
-    checks = json.load(open(os.path.join(ROOT, "build", "verification.json"))) if os.path.exists(
-        os.path.join(ROOT, "build", "verification.json")) else {}
+    pinout_md()
+    vj = os.path.join(DOCS, "verification.json")
+    checks = json.load(open(vj)) if os.path.exists(vj) else {}
     cards, boms, grand = [], [], 0.0
     for b, title, sub in BOARDS:
         s = summary(b)

@@ -59,7 +59,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
   <h1>StackF765</h1>
   <p class="lead">An open-hardware ArduPilot flight controller: STM32F765, two stacked 31.5&nbsp;&times;&nbsp;48&nbsp;mm boards on a 20&nbsp;&times;&nbsp;20&nbsp;mm mount, plus a small USB / buzzer / boot board on a cable. Every pin is on a labelled 0.1&nbsp;inch right-angle header.</p>
   <nav>
-    <a href="#view">3D view</a><a href="#facts">At a glance</a><a href="#pinout">Pinout</a><a href="#boards">Boards &amp; files</a>
+    <a href="drone/">Drone viewer</a><a href="#view">3D view</a><a href="#facts">At a glance</a><a href="#pinout">Pinout</a><a href="#boards">Boards &amp; files</a>
     <a href="#verify">Verification</a><a href="#build">Build one</a><a href="https://github.com/PeterJBurke/stackf765">GitHub repository</a>
   </nav>
   <div class="note"><b>Status:</b> design verified by rule checks, cross-checks and a firmware build (details below). <b>No hardware has been built or tested yet.</b> Follow the <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/bringup.md">bring-up procedure</a> on the first boards.</div>
@@ -81,8 +81,8 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <div class="grid">
   <div class="fact"><b>Processor</b>STM32F765VIT6, 216&nbsp;MHz Cortex-M7, 2&nbsp;MB flash</div>
   <div class="fact"><b>Firmware</b>ArduPilot (Copter / Plane / Rover), board name <code>StackF765</code></div>
-  <div class="fact"><b>Sensors</b>ICM-42688-P IMU (SPI), BMP388 barometer (I2C)</div>
-  <div class="fact"><b>Battery</b>2S&ndash;4S LiPo (6&ndash;17&nbsp;V), 50&nbsp;A continuous through a 0.5&nbsp;m&Omega; shunt</div>
+  <div class="fact"><b>Sensors</b>ICM-45686 IMU (SPI), BMP388 barometer (I2C)</div>
+  <div class="fact"><b>Battery</b>2S&ndash;3S LiPo (6&ndash;13&nbsp;V), 50&nbsp;A continuous through a 0.5&nbsp;m&Omega; shunt</div>
   <div class="fact"><b>Serial ports</b>7 UARTs + USB, all on labelled header pins</div>
   <div class="fact"><b>Outputs</b>6 motor / servo outputs (DShot capable), addressable LED</div>
   <div class="fact"><b>Video</b>Analog OSD (AT7456E): camera in, VTX out</div>
@@ -90,7 +90,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
   <div class="fact"><b>5&nbsp;V rails</b>3&nbsp;A for the flight controller and peripherals; a separate 3&nbsp;A for a companion computer</div>
   <div class="fact"><b>Size</b>31.5 &times; 48 &times; about 17&nbsp;mm; 20 &times; 20&nbsp;mm grommet mounting</div>
   <div class="fact"><b>Service board</b>USB-C, buzzer and DFU button on a 6-wire cable</div>
-  <div class="fact"><b>Parts cost</b>about $5 per set at single-unit prices (PCBs and assembly extra)</div>
+  <div class="fact"><b>Parts cost</b>about $45 per set at single-unit prices (PCBs and assembly extra)</div>
 </div>
 
 <h2 id="pinout">Pinout</h2>
@@ -310,7 +310,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <text x="270.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">ESC-</text>
 <rect x="312" y="36" width="76" height="30" rx="5" fill="#777"/>
 <text x="350.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">BAT-</text>
-<text x="10" y="104" font-size="11.5" fill="currentColor" opacity="0.75">Battery + passes through the current shunt to ESC +.  2S-4S LiPo, 50 A continuous.</text>
+<text x="10" y="104" font-size="11.5" fill="currentColor" opacity="0.75">Battery + passes through the current shunt to ESC +.  2S-3S LiPo, 50 A continuous.</text>
 </svg></div>
 <div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 474 114" font-family="system-ui,Segoe UI,Arial,sans-serif">
 <text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Service cable (JST-SH 6 pin, wired 1:1)</text>
@@ -335,7 +335,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 
 <article class="board" id="upper">
   <h3>Upper board - flight controller <span class="warn">work in progress</span></h3>
-  <p class="sub">6-layer, 1.6 mm, 31.5 x 48 mm &middot; 74 parts &middot; 74 nets</p>
+  <p class="sub">6-layer, 1.6 mm, 31.5 x 48 mm &middot; 78 parts &middot; 76 nets</p>
   <div class="imgs">
     <a href="boards/upper/upper-top.png"><img loading="lazy" src="boards/upper/upper-top.png" alt="Upper board - flight controller, top"></a>
     <a href="boards/upper/upper-bottom.png"><img loading="lazy" src="boards/upper/upper-bottom.png" alt="Upper board - flight controller, bottom"></a>
@@ -348,10 +348,43 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
     <a href="boards/upper/upper.step">STEP</a>
     <a href="boards/upper/upper.glb">GLB</a>
   </p>
-  <details><summary>Bill of materials: 0 lines, 0 parts, about $0.00 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+  <details><summary>Bill of materials: 33 lines, 72 parts, about $40.07 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+<tr><td>C1 C3 C4 C7 C46</td><td>5</td><td>10u</td><td>10 uF 25 V X5R</td><td>CL10A106MA8NRNC</td><td><a href="https://www.lcsc.com/product-detail/C96446.html">C96446</a></td><td>0.012</td></tr>
+<tr><td>C2 C5 C6 C8 C9 C19</td><td>6</td><td>1u</td><td>1 uF 25 V X5R</td><td>CL05A105KA5NQNC</td><td><a href="https://www.lcsc.com/product-detail/C52923.html">C52923</a></td><td>0.004</td></tr>
+<tr><td>C10 C11 C12 C13 C14 C16 C20 C23 C30 C32 C33 C34 C40 C41 C42 C44 C45 C50 C51</td><td>19</td><td>100n</td><td>100 nF 16 V X7R</td><td>CL05B104KO5NNNC</td><td><a href="https://www.lcsc.com/product-detail/C1525.html">C1525</a></td><td>0.002</td></tr>
+<tr><td>C15 C43</td><td>2</td><td>4.7u</td><td>4.7 uF 16 V X5R</td><td>CL10A475KO8NNNC</td><td><a href="https://www.lcsc.com/product-detail/C19666.html">C19666</a></td><td>0.008</td></tr>
+<tr><td>C17 C18 C31</td><td>3</td><td>2.2u</td><td>2.2 uF 6.3 V X5R</td><td>CL05A225MQ5NSNC</td><td><a href="https://www.lcsc.com/product-detail/C12530.html">C12530</a></td><td>0.005</td></tr>
+<tr><td>C21 C22</td><td>2</td><td>15p</td><td>15 pF 50 V C0G</td><td>0402CG150J500NT</td><td><a href="https://www.lcsc.com/product-detail/C1548.html">C1548</a></td><td>0.002</td></tr>
+<tr><td>D1</td><td>1</td><td>BLUE</td><td>Blue LED 0603</td><td>NCD0603B1</td><td><a href="https://www.lcsc.com/product-detail/C84266.html">C84266</a></td><td>0.017</td></tr>
+<tr><td>D2</td><td>1</td><td>GREEN</td><td>Green LED 0603</td><td>NCD0603G1</td><td><a href="https://www.lcsc.com/product-detail/C84267.html">C84267</a></td><td>0.016</td></tr>
+<tr><td>D3</td><td>1</td><td>SMF5.0CA</td><td>200 W bidirectional TVS, 5 V stand-off, SOD-123FL</td><td>SMF5.0CA-TP</td><td><a href="https://www.lcsc.com/product-detail/C914432.html">C914432</a></td><td>0.053</td></tr>
+<tr><td>FB1</td><td>1</td><td>120R@100MHz</td><td>Ferrite bead 120 ohm, 2 A, 0603</td><td>BLM18PG121SN1D</td><td><a href="https://www.lcsc.com/product-detail/C14709.html">C14709</a></td><td>0.015</td></tr>
+<tr><td>J1</td><td>1</td><td>3x12 RA 2.54mm</td><td>3x12 right-angle pin header, 2.54 mm: four 3x3 pieces or one Samtec TSW (hand-soldered)</td><td>PZ254-3-03-W-2.5-G0 (x4) or TSW-112-08-G-T-RA</td><td><a href="https://www.lcsc.com/product-detail/C7429379.html">C7429379</a></td><td>0.96</td></tr>
+<tr><td>J3</td><td>1</td><td>2x10 header 1.27mm</td><td>2x10 SMD pin header, 1.27 mm pitch, 1.0 mm plastic</td><td>PZ127-2-10-S</td><td><a href="https://www.lcsc.com/product-detail/C3975193.html">C3975193</a></td><td>0.18</td></tr>
+<tr><td>J4</td><td>1</td><td>microSD</td><td>microSD push-push socket</td><td>104031-0811</td><td><a href="https://www.lcsc.com/product-detail/C585350.html">C585350</a></td><td>0.68</td></tr>
+<tr><td>J5</td><td>1</td><td>JST-SH 6P</td><td>JST SH 6-pin side-entry header, 1.0 mm</td><td>SM06B-SRSS-TB(LF)(SN)</td><td><a href="https://www.lcsc.com/product-detail/C160405.html">C160405</a></td><td>0.3</td></tr>
+<tr><td>Q1</td><td>1</td><td>2N7002</td><td>N-MOSFET 60 V SOT-23</td><td>2N7002</td><td><a href="https://www.lcsc.com/product-detail/C8545.html">C8545</a></td><td>0.016</td></tr>
+<tr><td>Q2</td><td>1</td><td>AO3401A</td><td>P-MOSFET -30 V 4 A SOT-23</td><td>AO3401A</td><td><a href="https://www.lcsc.com/product-detail/C15127.html">C15127</a></td><td>0.07</td></tr>
+<tr><td>R1 R13</td><td>2</td><td>10k</td><td>10 k 1%</td><td>0402WGF1002TCE</td><td><a href="https://www.lcsc.com/product-detail/C25744.html">C25744</a></td><td>0.001</td></tr>
+<tr><td>R2 R3</td><td>2</td><td>470R</td><td>470 ohm 1%</td><td>0402WGF4700TCE</td><td><a href="https://www.lcsc.com/product-detail/C25117.html">C25117</a></td><td>0.001</td></tr>
+<tr><td>R4 R5 R6 R7</td><td>4</td><td>2.2k</td><td>2.2 k 1%</td><td>0402WGF2201TCE</td><td><a href="https://www.lcsc.com/product-detail/C25879.html">C25879</a></td><td>0.001</td></tr>
+<tr><td>R10 R11</td><td>2</td><td>75R</td><td>75 ohm 1%</td><td>0402WGF750JTCE</td><td><a href="https://www.lcsc.com/product-detail/C25133.html">C25133</a></td><td>0.001</td></tr>
+<tr><td>R12</td><td>1</td><td>100k</td><td>100 k 1%</td><td>0402WGF1003TCE</td><td><a href="https://www.lcsc.com/product-detail/C25741.html">C25741</a></td><td>0.001</td></tr>
+<tr><td>R14 R15</td><td>2</td><td>1k</td><td>1 k 1%</td><td>0402WGF1001TCE</td><td><a href="https://www.lcsc.com/product-detail/C11702.html">C11702</a></td><td>0.001</td></tr>
+<tr><td>R16 R17</td><td>2</td><td>4.7R</td><td>4.7 ohm 1% 1/8 W</td><td>FRC0805F4R70TS</td><td><a href="https://www.lcsc.com/product-detail/C2933459.html">C2933459</a></td><td>0.005</td></tr>
+<tr><td>R18</td><td>1</td><td>10R</td><td>10 ohm 1% 1 W, 1206</td><td>MFCR1206F10R0QHR</td><td><a href="https://www.lcsc.com/product-detail/C42460620.html">C42460620</a></td><td>0.09</td></tr>
+<tr><td>U1</td><td>1</td><td>STM32F765VIT6</td><td>Cortex-M7 216 MHz, 2 MB flash, LQFP-100</td><td>STM32F765VIT6</td><td><a href="https://www.lcsc.com/product-detail/C710319.html">C710319</a></td><td>16.34</td></tr>
+<tr><td>U2</td><td>1</td><td>ICM-45686</td><td>6-axis IMU, SPI, LGA-14 2.5x3 mm (ICM-42688-P is a drop-in alternative)</td><td>ICM-45686</td><td><a href="https://www.lcsc.com/product-detail/C22459454.html">C22459454</a></td><td>14.35</td></tr>
+<tr><td>U3</td><td>1</td><td>BMP388</td><td>Barometric pressure sensor, I2C, LGA-10 2x2 mm</td><td>BMP388</td><td><a href="https://www.lcsc.com/product-detail/C779278.html">C779278</a></td><td>2.39</td></tr>
+<tr><td>U4</td><td>1</td><td>AT7456E</td><td>Single-channel monochrome OSD generator (MAX7456 compatible)</td><td>AT7456E</td><td><a href="https://www.lcsc.com/product-detail/C82351.html">C82351</a></td><td>3.29</td></tr>
+<tr><td>U5</td><td>1</td><td>LM66200DRLR</td><td>Dual ideal diode OR, 2.5 A, 40 mohm</td><td>LM66200DRLR</td><td><a href="https://www.lcsc.com/product-detail/C3235556.html">C3235556</a></td><td>0.49</td></tr>
+<tr><td>U6</td><td>1</td><td>TLV75533PDBVR</td><td>3.3 V 500 mA LDO</td><td>TLV75533PDBVR</td><td><a href="https://www.lcsc.com/product-detail/C404027.html">C404027</a></td><td>0.15</td></tr>
+<tr><td>U7</td><td>1</td><td>TPS7A2033PDBVR</td><td>3.3 V 300 mA ultra-low-noise LDO</td><td>TPS7A2033PDBVR</td><td><a href="https://www.lcsc.com/product-detail/C2862740.html">C2862740</a></td><td>0.23</td></tr>
+<tr><td>Y1</td><td>1</td><td>8MHz 12pF</td><td>8 MHz crystal, CL 12 pF, 3225</td><td>XL2EL89COI-111YLC-8M</td><td><a href="https://www.lcsc.com/product-detail/C2973805.html">C2973805</a></td><td>0.16</td></tr>
+<tr><td>Y2</td><td>1</td><td>27MHz 10pF</td><td>27 MHz fundamental crystal, 3225</td><td>X322527MMB4SI</td><td><a href="https://www.lcsc.com/product-detail/C5210645.html">C5210645</a></td><td>0.09</td></tr>
 </tbody></table></details>
   <details><summary>Copper layers and assembly drawings</summary><div class="layers">
-    
+    <figure><img loading="lazy" src="boards/upper/upper-B_Cu.svg"><figcaption>B.Cu</figcaption></figure><figure><img loading="lazy" src="boards/upper/upper-F_Cu.svg"><figcaption>F.Cu</figcaption></figure><figure><img loading="lazy" src="boards/upper/upper-In1_Cu.svg"><figcaption>In1.Cu</figcaption></figure><figure><img loading="lazy" src="boards/upper/upper-In2_Cu.svg"><figcaption>In2.Cu</figcaption></figure><figure><img loading="lazy" src="boards/upper/upper-In3_Cu.svg"><figcaption>In3.Cu</figcaption></figure><figure><img loading="lazy" src="boards/upper/upper-In4_Cu.svg"><figcaption>In4.Cu</figcaption></figure><figure><img loading="lazy" src="boards/upper/upper-assembly-bottom.svg"><figcaption>assembly-bottom</figcaption></figure><figure><img loading="lazy" src="boards/upper/upper-assembly-top.svg"><figcaption>assembly-top</figcaption></figure>
   </div></details>
 </article>
 
@@ -370,17 +403,17 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
     <a href="boards/lower/lower.step">STEP</a>
     <a href="boards/lower/lower.glb">GLB</a>
   </p>
-  <details><summary>Bill of materials: 19 lines, 43 parts, about $3.76 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+  <details><summary>Bill of materials: 19 lines, 43 parts, about $3.78 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
 <tr><td>C3 C12 C22</td><td>3</td><td>100n 50V</td><td>100 nF 50 V X7R</td><td>CL05B104KB54PNC</td><td><a href="https://www.lcsc.com/product-detail/C307331.html">C307331</a></td><td>0.004</td></tr>
 <tr><td>C4 C5 C14 C17 C24 C27</td><td>6</td><td>100n</td><td>100 nF 16 V X7R</td><td>CL05B104KO5NNNC</td><td><a href="https://www.lcsc.com/product-detail/C1525.html">C1525</a></td><td>0.002</td></tr>
 <tr><td>C10 C11 C20 C21</td><td>4</td><td>10u</td><td>10 uF 25 V X5R</td><td>CL21A106KAYNNNE</td><td><a href="https://www.lcsc.com/product-detail/C15850.html">C15850</a></td><td>0.015</td></tr>
 <tr><td>C13 C23</td><td>2</td><td>33n</td><td>33 nF 16 V X7R</td><td>CL05B333KO5NNNC</td><td><a href="https://www.lcsc.com/product-detail/C1532.html">C1532</a></td><td>0.003</td></tr>
 <tr><td>C15 C16 C25 C26</td><td>4</td><td>22u</td><td>22 uF 25 V X5R</td><td>CL21A226MAQNNNE</td><td><a href="https://www.lcsc.com/product-detail/C45783.html">C45783</a></td><td>0.03</td></tr>
-<tr><td>D1</td><td>1</td><td>SMBJ18CA</td><td>600 W bidirectional TVS, 18 V stand-off, 29.2 V clamp, SMB</td><td>SMBJ18CA</td><td><a href="https://www.lcsc.com/product-detail/C908850.html">C908850</a></td><td>0.04</td></tr>
+<tr><td>D1</td><td>1</td><td>SMBJ15CA</td><td>600 W bidirectional TVS, 15 V stand-off, 24.4 V clamp, SMB</td><td>SMBJ15CA</td><td><a href="https://www.lcsc.com/product-detail/C211759.html">C211759</a></td><td>0.065</td></tr>
 <tr><td>D2</td><td>1</td><td>GREEN</td><td>Green LED 0603</td><td>NCD0603G1</td><td><a href="https://www.lcsc.com/product-detail/C84267.html">C84267</a></td><td>0.016</td></tr>
 <tr><td>H1 H2 H3</td><td>3</td><td>M2 x 6 mm</td><td>Reflow-solder M2 standoff, 6.0 mm</td><td>SMTSO2060CTJ</td><td><a href="https://www.lcsc.com/product-detail/C2915628.html">C2915628</a></td><td>0.17</td></tr>
 <tr><td>J1</td><td>1</td><td>2x10 socket 1.27mm</td><td>2x10 SMD socket, 1.27 mm pitch, 4.3 mm body</td><td>PM127-2-10-S-4.3</td><td><a href="https://www.lcsc.com/product-detail/C3975136.html">C3975136</a></td><td>0.37</td></tr>
-<tr><td>J2</td><td>1</td><td>2x10 RA 2.54mm</td><td>2x10 right-angle pin header, 2.54 mm</td><td>PZ254R-12-20P</td><td><a href="https://www.lcsc.com/product-detail/C492438.html">C492438</a></td><td>0.18</td></tr>
+<tr><td>J2</td><td>1</td><td>2x10 RA 2.54mm</td><td>2x10 right-angle pin header, 2.54 mm (hand-soldered)</td><td>PZ254R-12-20P</td><td><a href="https://www.lcsc.com/product-detail/C492438.html">C492438</a></td><td>0.18</td></tr>
 <tr><td>L1 L2</td><td>2</td><td>4.7uH 5A</td><td>4.7 uH shielded moulded inductor, Isat 5 A, 50 mohm, 5.5x5.2x3.0 mm</td><td>SMMS0530-4R7M</td><td><a href="https://www.lcsc.com/product-detail/C181722.html">C181722</a></td><td>0.11</td></tr>
 <tr><td>R1</td><td>1</td><td>0.5mR 1% 6W</td><td>0.5 mohm 1% 6 W metal-strip current shunt, 2512</td><td>ASR-M-3-0.5F</td><td><a href="https://www.lcsc.com/product-detail/C469426.html">C469426</a></td><td>0.28</td></tr>
 <tr><td>R2 R3</td><td>2</td><td>10R</td><td>10 ohm 1%</td><td>0402WGF100JTCE</td><td><a href="https://www.lcsc.com/product-detail/C25077.html">C25077</a></td><td>0.001</td></tr>
@@ -398,7 +431,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 
 <article class="board" id="service">
   <h3>Service board - USB / buzzer / boot <span class="ok">ERC / DRC clean</span></h3>
-  <p class="sub">2-layer, 1.6 mm, 18 x 32 mm &middot; 11 parts &middot; 10 nets</p>
+  <p class="sub">2-layer, 1.6 mm, 18 x 32 mm &middot; 10 parts &middot; 9 nets</p>
   <div class="imgs">
     <a href="boards/service/service-top.png"><img loading="lazy" src="boards/service/service-top.png" alt="Service board - USB / buzzer / boot, top"></a>
     <a href="boards/service/service-bottom.png"><img loading="lazy" src="boards/service/service-bottom.png" alt="Service board - USB / buzzer / boot, bottom"></a>
@@ -411,14 +444,13 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
     <a href="boards/service/service.step">STEP</a>
     <a href="boards/service/service.glb">GLB</a>
   </p>
-  <details><summary>Bill of materials: 10 lines, 11 parts, about $1.28 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+  <details><summary>Bill of materials: 9 lines, 10 parts, about $1.28 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
 <tr><td>BZ1</td><td>1</td><td>MLT-8530</td><td>Passive magnetic buzzer 8.5x8.5 mm, 2.7 kHz, 16 ohm</td><td>KLJ-8530-3627 / MLT-8530</td><td><a href="https://www.lcsc.com/product-detail/C189206.html">C189206</a></td><td>0.57</td></tr>
 <tr><td>C1</td><td>1</td><td>1u</td><td>1 uF 25 V X5R</td><td>CL05A105KA5NQNC</td><td><a href="https://www.lcsc.com/product-detail/C52923.html">C52923</a></td><td>0.004</td></tr>
 <tr><td>D1</td><td>1</td><td>B5819WS</td><td>Schottky diode 40 V 1 A SOD-323</td><td>B5819WS</td><td><a href="https://www.lcsc.com/product-detail/C916992.html">C916992</a></td><td>0.013</td></tr>
 <tr><td>J1</td><td>1</td><td>USB-C</td><td>USB Type-C 2.0 receptacle, 16-pin</td><td>TYPE-C-31-M-12</td><td><a href="https://www.lcsc.com/product-detail/C165948.html">C165948</a></td><td>0.19</td></tr>
 <tr><td>J2</td><td>1</td><td>JST-SH 6P</td><td>JST SH 6-pin side-entry header, 1.0 mm</td><td>SM06B-SRSS-TB(LF)(SN)</td><td><a href="https://www.lcsc.com/product-detail/C160405.html">C160405</a></td><td>0.3</td></tr>
 <tr><td>R1 R2</td><td>2</td><td>5.1k</td><td>5.1 k 1%</td><td>0402WGF5101TCE</td><td><a href="https://www.lcsc.com/product-detail/C25905.html">C25905</a></td><td>0.001</td></tr>
-<tr><td>R3</td><td>1</td><td>10R</td><td>10 ohm 1% 1/8 W</td><td>0805W8F100JT5E</td><td><a href="https://www.lcsc.com/product-detail/C17415.html">C17415</a></td><td>0.002</td></tr>
 <tr><td>R4</td><td>1</td><td>10k</td><td>10 k 1%</td><td>0402WGF1002TCE</td><td><a href="https://www.lcsc.com/product-detail/C25744.html">C25744</a></td><td>0.001</td></tr>
 <tr><td>SW1</td><td>1</td><td>BOOT</td><td>Tactile switch 5.1x5.1 mm</td><td>TS-1187A-B-A-B</td><td><a href="https://www.lcsc.com/product-detail/C318884.html">C318884</a></td><td>0.02</td></tr>
 <tr><td>U1</td><td>1</td><td>USBLC6-2SC6</td><td>USB ESD protection</td><td>USBLC6-2SC6</td><td><a href="https://www.lcsc.com/product-detail/C7519.html">C7519</a></td><td>0.18</td></tr>

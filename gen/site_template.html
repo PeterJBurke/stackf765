@@ -59,7 +59,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
   <h1>StackF765</h1>
   <p class="lead">An open-hardware ArduPilot flight controller: STM32F765, two stacked 31.5&nbsp;&times;&nbsp;48&nbsp;mm boards on a 20&nbsp;&times;&nbsp;20&nbsp;mm mount, plus a small USB / buzzer / boot board on a cable. Every pin is on a labelled 0.1&nbsp;inch right-angle header.</p>
   <nav>
-    <a href="#view">3D view</a><a href="#facts">At a glance</a><a href="#pinout">Pinout</a><a href="#boards">Boards &amp; files</a>
+    <a href="drone/">Drone viewer</a><a href="#view">3D view</a><a href="#facts">At a glance</a><a href="#pinout">Pinout</a><a href="#boards">Boards &amp; files</a>
     <a href="#verify">Verification</a><a href="#build">Build one</a><a href="{{REPO}}">GitHub repository</a>
   </nav>
   <div class="note"><b>Status:</b> design verified by rule checks, cross-checks and a firmware build (details below). <b>No hardware has been built or tested yet.</b> Follow the <a href="{{REPO}}/blob/main/docs/bringup.md">bring-up procedure</a> on the first boards.</div>
@@ -81,8 +81,8 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <div class="grid">
   <div class="fact"><b>Processor</b>STM32F765VIT6, 216&nbsp;MHz Cortex-M7, 2&nbsp;MB flash</div>
   <div class="fact"><b>Firmware</b>ArduPilot (Copter / Plane / Rover), board name <code>StackF765</code></div>
-  <div class="fact"><b>Sensors</b>ICM-42688-P IMU (SPI), BMP388 barometer (I2C)</div>
-  <div class="fact"><b>Battery</b>2S&ndash;4S LiPo (6&ndash;17&nbsp;V), 50&nbsp;A continuous through a 0.5&nbsp;m&Omega; shunt</div>
+  <div class="fact"><b>Sensors</b>ICM-45686 IMU (SPI), BMP388 barometer (I2C)</div>
+  <div class="fact"><b>Battery</b>2S&ndash;3S LiPo (6&ndash;13&nbsp;V), 50&nbsp;A continuous through a 0.5&nbsp;m&Omega; shunt</div>
   <div class="fact"><b>Serial ports</b>7 UARTs + USB, all on labelled header pins</div>
   <div class="fact"><b>Outputs</b>6 motor / servo outputs (DShot capable), addressable LED</div>
   <div class="fact"><b>Video</b>Analog OSD (AT7456E): camera in, VTX out</div>
