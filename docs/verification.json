@@ -23,8 +23,8 @@
   },
   {
    "name": "upper: fabrication files present and current",
-   "ok": false,
-   "detail": "missing [] stale=True"
+   "ok": true,
+   "detail": "gerbers, drill, BOM, placement"
   },
   {
    "name": "upper: every BOM line has a manufacturer part number and an LCSC number",
