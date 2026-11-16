@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StackF765 - open ArduPilot flight controller</title>
+<meta name="description" content="StackF765: an open-hardware STM32F765 ArduPilot flight controller made of two stacked 31.5 x 48 mm boards plus a USB/buzzer service board. KiCad sources, fabrication files, firmware and 3D models.">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#16202b;--mut:#5a6978;--line:#dde3ea;--acc:#0b6bcb;--ok:#1b7f3b;--bad:#b3261e;--warn:#9a6700;--view:#e9edf2}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--card:#171e25;--ink:#e6edf3;--mut:#9aa7b4;--line:#2a343f;--acc:#58a6ff;--ok:#3fb950;--bad:#ff7b72;--warn:#d29922;--view:#1c242c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--acc)}
+header.top{padding:28px 16px 8px;max-width:1100px;margin:0 auto}
+h1{font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:1.45rem;margin:42px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:1.15rem;margin:0 0 4px}
+p.lead{font-size:1.1rem;color:var(--mut);margin:0 0 14px;max-width:70ch}
+main{max-width:1100px;margin:0 auto;padding:0 16px 60px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+nav a,.links a{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);text-decoration:none;font-size:.92rem}
+.note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:8px;padding:10px 14px;margin:14px 0;font-size:.95rem}
+#viewer{position:relative;height:min(68vh,620px);min-height:360px;background:var(--view);border:1px solid var(--line);border-radius:12px;overflow:hidden;touch-action:none}
+#viewer canvas{width:100%;height:100%;display:block}
+#status{position:absolute;left:12px;top:10px;font-size:.9rem;color:var(--mut)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:10px 0 0;font-size:.93rem}
+.controls button{font:inherit;padding:5px 11px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
+.controls button:hover{border-color:var(--acc)}
+.controls label{display:inline-flex;align-items:center;gap:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.fact b{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);font-weight:600}
+.pin{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0;overflow-x:auto}
+.pin svg{min-width:560px;width:100%;height:auto;color:var(--ink)}
+.board{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}
+.sub{color:var(--mut);margin:0 0 10px;font-size:.95rem}
+.imgs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.imgs img{width:100%;height:230px;object-fit:contain;background:var(--view);border-radius:8px}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.ok,.warn{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:6px;color:#fff;background:var(--ok)}
+.warn{background:var(--warn)}
+details{margin:8px 0}summary{cursor:pointer;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin-top:8px}
+th,td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600}
+.tw{overflow-x:auto}
+td.pass{color:var(--ok);font-weight:700}td.fail{color:var(--bad);font-weight:700}
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.layers figure{margin:0;background:#fff;border-radius:8px;padding:6px;border:1px solid var(--line)}
+.layers img{width:100%;height:auto}.layers figcaption{font-size:.78rem;color:#333;text-align:center}
+ol.steps li{margin:6px 0}
+footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);font-size:.9rem}
+@media (max-width:640px){.imgs{grid-template-columns:1fr}.imgs img{height:auto}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<header class="top">
+  <h1>StackF765</h1>
+  <p class="lead">An open-hardware ArduPilot flight controller: STM32F765, two stacked 31.5&nbsp;&times;&nbsp;48&nbsp;mm boards on a 20&nbsp;&times;&nbsp;20&nbsp;mm mount, plus a small USB / buzzer / boot board on a cable. Every pin is on a labelled 0.1&nbsp;inch right-angle header.</p>
+  <nav>
+    <a href="#view">3D view</a><a href="#facts">At a glance</a><a href="#pinout">Pinout</a><a href="#boards">Boards &amp; files</a>
+    <a href="#verify">Verification</a><a href="#build">Build one</a><a href="{{REPO}}">GitHub repository</a>
+  </nav>
+  <div class="note"><b>Status:</b> design verified by rule checks, cross-checks and a firmware build (details below). <b>No hardware has been built or tested yet.</b> Follow the <a href="{{REPO}}/blob/main/docs/bringup.md">bring-up procedure</a> on the first boards.</div>
+</header>
+<main>
+
+<h2 id="view">3D view</h2>
+<div id="viewer"><div id="status">Loading 3D models&hellip;</div></div>
+<div class="controls">
+  <span>Drag to rotate &middot; scroll or pinch to zoom &middot; right-drag to pan</span>
+  <label>Separate boards <input id="explode" type="range" min="0" max="30" value="0" step="0.5"></label>
+  <label><input type="checkbox" id="t-upper" checked> upper</label>
+  <label><input type="checkbox" id="t-lower" checked> lower</label>
+  <label><input type="checkbox" id="t-service" checked> service</label>
+  <button data-view="iso">3/4</button><button data-view="top">Top</button><button data-view="bottom">Bottom</button><button data-view="front">Front</button><button data-view="side">Side</button>
+</div>
+
+<h2 id="facts">At a glance</h2>
+<div class="grid">
+  <div class="fact"><b>Processor</b>STM32F765VIT6, 216&nbsp;MHz Cortex-M7, 2&nbsp;MB flash</div>
+  <div class="fact"><b>Firmware</b>ArduPilot (Copter / Plane / Rover), board name <code>StackF765</code></div>
+  <div class="fact"><b>Sensors</b>ICM-42688-P IMU (SPI), BMP388 barometer (I2C)</div>
+  <div class="fact"><b>Battery</b>2S&ndash;4S LiPo (6&ndash;17&nbsp;V), 50&nbsp;A continuous through a 0.5&nbsp;m&Omega; shunt</div>
+  <div class="fact"><b>Serial ports</b>7 UARTs + USB, all on labelled header pins</div>
+  <div class="fact"><b>Outputs</b>6 motor / servo outputs (DShot capable), addressable LED</div>
+  <div class="fact"><b>Video</b>Analog OSD (AT7456E): camera in, VTX out</div>
+  <div class="fact"><b>Logging</b>microSD (4-bit SDMMC)</div>
+  <div class="fact"><b>5&nbsp;V rails</b>3&nbsp;A for the flight controller and peripherals; a separate 3&nbsp;A for a companion computer</div>
+  <div class="fact"><b>Size</b>31.5 &times; 48 &times; about 17&nbsp;mm; 20 &times; 20&nbsp;mm grommet mounting</div>
+  <div class="fact"><b>Service board</b>USB-C, buzzer and DFU button on a 6-wire cable</div>
+  <div class="fact"><b>Parts cost</b>about ${{TOTAL}} per set at single-unit prices (PCBs and assembly extra)</div>
+</div>
+
+<h2 id="pinout">Pinout</h2>
+<p>Labels are printed on the boards. <b>5V</b> pins are live only on battery; <b>4V5</b> pins are also live on USB, which is handy for setting up a GPS or receiver on the bench.</p>
+<div class="pin">{{SVG:upper-header-front}}</div>
+<div class="pin">{{SVG:upper-header-top}}</div>
+<div class="pin">{{SVG:lower-header-front}}</div>
+<div class="pin">{{SVG:power-pads}}</div>
+<div class="pin">{{SVG:service-cable}}</div>
+<p>Default ArduPilot mapping: SERIAL0 = USB, SERIAL1&hellip;7 = UART 1, 2, 3, 4, 6, 7, 8. Any port can be GPS, telemetry, receiver or ESC telemetry; set <code>SERIALn_PROTOCOL</code>. Full table: <a href="{{REPO}}/blob/main/docs/pinout.md">docs/pinout.md</a>.</p>
+
+<h2 id="boards">Boards and files</h2>
+{{CARDS}}
+
+<h2 id="verify">Verification</h2>
+<p>These checks are run by <code>make verify</code> from the files in the repository (last run {{DATE}}). They show the design is self-consistent and manufacturable; they do not replace testing real hardware.</p>
+<div class="tw"><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody>{{VROWS}}</tbody></table></div>
+<p>How each check works and what is <em>not</em> covered: <a href="{{REPO}}/blob/main/docs/verification.md">docs/verification.md</a>.</p>
+
+<h2 id="build">Build one</h2>
+<ol class="steps">
+  <li>Order the three PCBs with assembly using the files in <a href="{{REPO}}/tree/main/fab">fab/</a>. Settings and stack-ups: <a href="{{REPO}}/blob/main/docs/manufacturing.md">docs/manufacturing.md</a>.</li>
+  <li>Solder the two right-angle headers and the battery / ESC wires, then stack the boards: <a href="{{REPO}}/blob/main/docs/assembly.md">docs/assembly.md</a>.</li>
+  <li>Power up on a current-limited supply and work through the checks in <a href="{{REPO}}/blob/main/docs/bringup.md">docs/bringup.md</a>.</li>
+  <li>Flash the bootloader and ArduPilot: <a href="{{REPO}}/blob/main/docs/firmware.md">docs/firmware.md</a>.</li>
+</ol>
+<p>How the circuits work, with the calculations: <a href="{{REPO}}/blob/main/docs/design.md">docs/design.md</a>.</p>
+</main>
+<footer>Hardware: CERN-OHL-P v2. Software and scripts: MIT. Generated from the design files in the repository.</footer>
+
+<script type="module">
+import { createViewer } from "./viewer.js";
+const GAP = 7.6;   // lower board top surface to upper board top surface: 6.0 mm standoff + 1.6 mm PCB
+const v = createViewer(document.getElementById("viewer"), [
+  { id: "lower",   url: "boards/lower/lower.glb",     pos: [0, 0, 0],    explodeDir: [0, -0.5, 0] },
+  { id: "upper",   url: "boards/upper/upper.glb",     pos: [0, GAP, 0],  explodeDir: [0, 0.5, 0] },
+  { id: "service", url: "boards/service/service.glb", pos: [34, 0, 0],   explodeDir: [0.6, 0, 0] },
+], { status: document.getElementById("status") });
+document.getElementById("explode").addEventListener("input", e => v.setExplode(+e.target.value));
+for (const id of ["upper", "lower", "service"])
+  document.getElementById("t-" + id).addEventListener("change", e => v.setVisible(id, e.target.checked));
+document.querySelectorAll("button[data-view]").forEach(b => b.addEventListener("click", () => v.view(b.dataset.view)));
+window.__viewer = v;
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "Connector")(type "KiCad")(uri "${KICAD9_SYMBOL_DIR}/Connector.kicad_sym")(options "")(descr ""))
+  (lib (name "Connector_Generic")(type "KiCad")(uri "${KICAD9_SYMBOL_DIR}/Connector_Generic.kicad_sym")(options "")(descr ""))
+  (lib (name "Device")(type "KiCad")(uri "${KICAD9_SYMBOL_DIR}/Device.kicad_sym")(options "")(descr ""))
+  (lib (name "Mechanical")(type "KiCad")(uri "${KICAD9_SYMBOL_DIR}/Mechanical.kicad_sym")(options "")(descr ""))
+  (lib (name "fc")(type "KiCad")(uri "${KIPRJMOD}/../lib/fc.kicad_sym")(options "")(descr ""))
+  (lib (name "fcpwr")(type "KiCad")(uri "${KIPRJMOD}/../lib/fcpwr.kicad_sym")(options "")(descr ""))
+)

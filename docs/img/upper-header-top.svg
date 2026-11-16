@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 642 182" font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Upper board 3 x 12 header - seen from ABOVE (header pointing away from you)</text>
+<text x="10" y="55.0" font-size="12" fill="currentColor">front edge</text>
+<rect x="72" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="93.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="118" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="139.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="164" y="36" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="185.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX6</text>
+<rect x="210" y="36" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="231.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX6</text>
+<rect x="256" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="277.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="302" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="323.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="348" y="36" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="369.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX7</text>
+<rect x="394" y="36" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="415.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX7</text>
+<rect x="440" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="461.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="486" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="507.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="532" y="36" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="553.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX8</text>
+<rect x="578" y="36" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="599.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX8</text>
+<text x="10" y="89.0" font-size="12" fill="currentColor">middle</text>
+<rect x="72" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="93.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="118" y="70" width="42" height="30" rx="5" fill="#ef6c00"/>
+<text x="139.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">4V5</text>
+<rect x="164" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="185.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX2</text>
+<rect x="210" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="231.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX2</text>
+<rect x="256" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="277.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="302" y="70" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="323.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="348" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="369.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX3</text>
+<rect x="394" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="415.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX3</text>
+<rect x="440" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="461.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="486" y="70" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="507.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="532" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="553.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX4</text>
+<rect x="578" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="599.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX4</text>
+<text x="10" y="123.0" font-size="12" fill="currentColor">inner row</text>
+<rect x="72" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="93.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="118" y="104" width="42" height="30" rx="5" fill="#ef6c00"/>
+<text x="139.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">4V5</text>
+<rect x="164" y="104" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="185.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX1</text>
+<rect x="210" y="104" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="231.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX1</text>
+<rect x="256" y="104" width="42" height="30" rx="5" fill="#6a1b9a"/>
+<text x="277.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">SDA</text>
+<rect x="302" y="104" width="42" height="30" rx="5" fill="#6a1b9a"/>
+<text x="323.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">SCL</text>
+<rect x="348" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="369.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="394" y="104" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="415.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="440" y="104" width="42" height="30" rx="5" fill="#00838f"/>
+<text x="461.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">CAM</text>
+<rect x="486" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="507.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="532" y="104" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="553.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="578" y="104" width="42" height="30" rx="5" fill="#00838f"/>
+<text x="599.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">VTX</text>
+<text x="10" y="172" font-size="11.5" fill="currentColor" opacity="0.75">This is how the labels are printed on the board.  Inner row = highest pins.</text>
+</svg>

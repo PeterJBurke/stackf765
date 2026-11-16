@@ -1,0 +1,10 @@
+build/
+__pycache__/
+*.so
+*-backups/
+*.kicad_prl
+*.lck
+fp-info-cache
+hardware/*/*.dsn
+hardware/*/*.ses
+~*

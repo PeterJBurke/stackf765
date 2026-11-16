@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StackF765 - open ArduPilot flight controller</title>
+<meta name="description" content="StackF765: an open-hardware STM32F765 ArduPilot flight controller made of two stacked 31.5 x 48 mm boards plus a USB/buzzer service board. KiCad sources, fabrication files, firmware and 3D models.">
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#16202b;--mut:#5a6978;--line:#dde3ea;--acc:#0b6bcb;--ok:#1b7f3b;--bad:#b3261e;--warn:#9a6700;--view:#e9edf2}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--card:#171e25;--ink:#e6edf3;--mut:#9aa7b4;--line:#2a343f;--acc:#58a6ff;--ok:#3fb950;--bad:#ff7b72;--warn:#d29922;--view:#1c242c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--acc)}
+header.top{padding:28px 16px 8px;max-width:1100px;margin:0 auto}
+h1{font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 6px;letter-spacing:-.01em}
+h2{font-size:1.45rem;margin:42px 0 12px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:1.15rem;margin:0 0 4px}
+p.lead{font-size:1.1rem;color:var(--mut);margin:0 0 14px;max-width:70ch}
+main{max-width:1100px;margin:0 auto;padding:0 16px 60px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+nav a,.links a{display:inline-block;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);text-decoration:none;font-size:.92rem}
+.note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:8px;padding:10px 14px;margin:14px 0;font-size:.95rem}
+#viewer{position:relative;height:min(68vh,620px);min-height:360px;background:var(--view);border:1px solid var(--line);border-radius:12px;overflow:hidden;touch-action:none}
+#viewer canvas{width:100%;height:100%;display:block}
+#status{position:absolute;left:12px;top:10px;font-size:.9rem;color:var(--mut)}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:10px 0 0;font-size:.93rem}
+.controls button{font:inherit;padding:5px 11px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
+.controls button:hover{border-color:var(--acc)}
+.controls label{display:inline-flex;align-items:center;gap:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.fact b{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);font-weight:600}
+.pin{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0;overflow-x:auto}
+.pin svg{min-width:560px;width:100%;height:auto;color:var(--ink)}
+.board{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}
+.sub{color:var(--mut);margin:0 0 10px;font-size:.95rem}
+.imgs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.imgs img{width:100%;height:230px;object-fit:contain;background:var(--view);border-radius:8px}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.ok,.warn{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:6px;color:#fff;background:var(--ok)}
+.warn{background:var(--warn)}
+details{margin:8px 0}summary{cursor:pointer;font-weight:600}
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin-top:8px}
+th,td{border-bottom:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600}
+.tw{overflow-x:auto}
+td.pass{color:var(--ok);font-weight:700}td.fail{color:var(--bad);font-weight:700}
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.layers figure{margin:0;background:#fff;border-radius:8px;padding:6px;border:1px solid var(--line)}
+.layers img{width:100%;height:auto}.layers figcaption{font-size:.78rem;color:#333;text-align:center}
+ol.steps li{margin:6px 0}
+footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);font-size:.9rem}
+@media (max-width:640px){.imgs{grid-template-columns:1fr}.imgs img{height:auto}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<header class="top">
+  <h1>StackF765</h1>
+  <p class="lead">An open-hardware ArduPilot flight controller: STM32F765, two stacked 31.5&nbsp;&times;&nbsp;48&nbsp;mm boards on a 20&nbsp;&times;&nbsp;20&nbsp;mm mount, plus a small USB / buzzer / boot board on a cable. Every pin is on a labelled 0.1&nbsp;inch right-angle header.</p>
+  <nav>
+    <a href="#view">3D view</a><a href="#facts">At a glance</a><a href="#pinout">Pinout</a><a href="#boards">Boards &amp; files</a>
+    <a href="#verify">Verification</a><a href="#build">Build one</a><a href="https://github.com/PeterJBurke/stackf765">GitHub repository</a>
+  </nav>
+  <div class="note"><b>Status:</b> design verified by rule checks, cross-checks and a firmware build (details below). <b>No hardware has been built or tested yet.</b> Follow the <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/bringup.md">bring-up procedure</a> on the first boards.</div>
+</header>
+<main>
+
+<h2 id="view">3D view</h2>
+<div id="viewer"><div id="status">Loading 3D models&hellip;</div></div>
+<div class="controls">
+  <span>Drag to rotate &middot; scroll or pinch to zoom &middot; right-drag to pan</span>
+  <label>Separate boards <input id="explode" type="range" min="0" max="30" value="0" step="0.5"></label>
+  <label><input type="checkbox" id="t-upper" checked> upper</label>
+  <label><input type="checkbox" id="t-lower" checked> lower</label>
+  <label><input type="checkbox" id="t-service" checked> service</label>
+  <button data-view="iso">3/4</button><button data-view="top">Top</button><button data-view="bottom">Bottom</button><button data-view="front">Front</button><button data-view="side">Side</button>
+</div>
+
+<h2 id="facts">At a glance</h2>
+<div class="grid">
+  <div class="fact"><b>Processor</b>STM32F765VIT6, 216&nbsp;MHz Cortex-M7, 2&nbsp;MB flash</div>
+  <div class="fact"><b>Firmware</b>ArduPilot (Copter / Plane / Rover), board name <code>StackF765</code></div>
+  <div class="fact"><b>Sensors</b>ICM-42688-P IMU (SPI), BMP388 barometer (I2C)</div>
+  <div class="fact"><b>Battery</b>2S&ndash;4S LiPo (6&ndash;17&nbsp;V), 50&nbsp;A continuous through a 0.5&nbsp;m&Omega; shunt</div>
+  <div class="fact"><b>Serial ports</b>7 UARTs + USB, all on labelled header pins</div>
+  <div class="fact"><b>Outputs</b>6 motor / servo outputs (DShot capable), addressable LED</div>
+  <div class="fact"><b>Video</b>Analog OSD (AT7456E): camera in, VTX out</div>
+  <div class="fact"><b>Logging</b>microSD (4-bit SDMMC)</div>
+  <div class="fact"><b>5&nbsp;V rails</b>3&nbsp;A for the flight controller and peripherals; a separate 3&nbsp;A for a companion computer</div>
+  <div class="fact"><b>Size</b>31.5 &times; 48 &times; about 17&nbsp;mm; 20 &times; 20&nbsp;mm grommet mounting</div>
+  <div class="fact"><b>Service board</b>USB-C, buzzer and DFU button on a 6-wire cable</div>
+  <div class="fact"><b>Parts cost</b>about $5 per set at single-unit prices (PCBs and assembly extra)</div>
+</div>
+
+<h2 id="pinout">Pinout</h2>
+<p>Labels are printed on the boards. <b>5V</b> pins are live only on battery; <b>4V5</b> pins are also live on USB, which is handy for setting up a GPS or receiver on the bench.</p>
+<div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 642 182" font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Upper board 3 x 12 header - looking INTO the pins from the front</text>
+<text x="10" y="55.0" font-size="12" fill="currentColor">top row</text>
+<rect x="72" y="36" width="42" height="30" rx="5" fill="#00838f"/>
+<text x="93.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">VTX</text>
+<rect x="118" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="139.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="164" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="185.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="210" y="36" width="42" height="30" rx="5" fill="#00838f"/>
+<text x="231.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">CAM</text>
+<rect x="256" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="277.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="302" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="323.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="348" y="36" width="42" height="30" rx="5" fill="#6a1b9a"/>
+<text x="369.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">SCL</text>
+<rect x="394" y="36" width="42" height="30" rx="5" fill="#6a1b9a"/>
+<text x="415.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">SDA</text>
+<rect x="440" y="36" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="461.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX1</text>
+<rect x="486" y="36" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="507.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX1</text>
+<rect x="532" y="36" width="42" height="30" rx="5" fill="#ef6c00"/>
+<text x="553.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">4V5</text>
+<rect x="578" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="599.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<text x="10" y="89.0" font-size="12" fill="currentColor">middle</text>
+<rect x="72" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="93.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX4</text>
+<rect x="118" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="139.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX4</text>
+<rect x="164" y="70" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="185.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="210" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="231.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="256" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="277.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX3</text>
+<rect x="302" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="323.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX3</text>
+<rect x="348" y="70" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="369.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="394" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="415.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="440" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="461.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX2</text>
+<rect x="486" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="507.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX2</text>
+<rect x="532" y="70" width="42" height="30" rx="5" fill="#ef6c00"/>
+<text x="553.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">4V5</text>
+<rect x="578" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="599.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<text x="10" y="123.0" font-size="12" fill="currentColor">bottom row</text>
+<rect x="72" y="104" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="93.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX8</text>
+<rect x="118" y="104" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="139.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX8</text>
+<rect x="164" y="104" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="185.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="210" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="231.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="256" y="104" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="277.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX7</text>
+<rect x="302" y="104" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="323.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX7</text>
+<rect x="348" y="104" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="369.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="394" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="415.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="440" y="104" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="461.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX6</text>
+<rect x="486" y="104" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="507.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX6</text>
+<rect x="532" y="104" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="553.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="578" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="599.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<text x="10" y="172" font-size="11.5" fill="currentColor" opacity="0.75">Bottom row is the one nearest the circuit board.  TX/RX are named from the flight controller&#x27;s side.</text>
+</svg></div>
+<div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 642 182" font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Upper board 3 x 12 header - seen from ABOVE (header pointing away from you)</text>
+<text x="10" y="55.0" font-size="12" fill="currentColor">front edge</text>
+<rect x="72" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="93.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="118" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="139.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="164" y="36" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="185.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX6</text>
+<rect x="210" y="36" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="231.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX6</text>
+<rect x="256" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="277.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="302" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="323.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="348" y="36" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="369.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX7</text>
+<rect x="394" y="36" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="415.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX7</text>
+<rect x="440" y="36" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="461.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="486" y="36" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="507.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="532" y="36" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="553.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX8</text>
+<rect x="578" y="36" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="599.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX8</text>
+<text x="10" y="89.0" font-size="12" fill="currentColor">middle</text>
+<rect x="72" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="93.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="118" y="70" width="42" height="30" rx="5" fill="#ef6c00"/>
+<text x="139.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">4V5</text>
+<rect x="164" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="185.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX2</text>
+<rect x="210" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="231.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX2</text>
+<rect x="256" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="277.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="302" y="70" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="323.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="348" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="369.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX3</text>
+<rect x="394" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="415.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX3</text>
+<rect x="440" y="70" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="461.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="486" y="70" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="507.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="532" y="70" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="553.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX4</text>
+<rect x="578" y="70" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="599.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX4</text>
+<text x="10" y="123.0" font-size="12" fill="currentColor">inner row</text>
+<rect x="72" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="93.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="118" y="104" width="42" height="30" rx="5" fill="#ef6c00"/>
+<text x="139.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">4V5</text>
+<rect x="164" y="104" width="42" height="30" rx="5" fill="#1565c0"/>
+<text x="185.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">TX1</text>
+<rect x="210" y="104" width="42" height="30" rx="5" fill="#2e7d32"/>
+<text x="231.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">RX1</text>
+<rect x="256" y="104" width="42" height="30" rx="5" fill="#6a1b9a"/>
+<text x="277.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">SDA</text>
+<rect x="302" y="104" width="42" height="30" rx="5" fill="#6a1b9a"/>
+<text x="323.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">SCL</text>
+<rect x="348" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="369.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="394" y="104" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="415.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="440" y="104" width="42" height="30" rx="5" fill="#00838f"/>
+<text x="461.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">CAM</text>
+<rect x="486" y="104" width="42" height="30" rx="5" fill="#2b2b2b"/>
+<text x="507.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="532" y="104" width="42" height="30" rx="5" fill="#c62828"/>
+<text x="553.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="578" y="104" width="42" height="30" rx="5" fill="#00838f"/>
+<text x="599.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">VTX</text>
+<text x="10" y="172" font-size="11.5" fill="currentColor" opacity="0.75">This is how the labels are printed on the board.  Inner row = highest pins.</text>
+</svg></div>
+<div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 610 148" font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Lower board 2 x 10 header - looking INTO the pins from the front</text>
+<text x="10" y="55.0" font-size="12" fill="currentColor">top row</text>
+<rect x="72" y="36" width="48" height="30" rx="5" fill="#ad1457"/>
+<text x="96.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">PI5V</text>
+<rect x="124" y="36" width="48" height="30" rx="5" fill="#ad1457"/>
+<text x="148.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">PI5V</text>
+<rect x="176" y="36" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="200.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="228" y="36" width="48" height="30" rx="5" fill="#f9a825"/>
+<text x="252.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#000">LED</text>
+<rect x="280" y="36" width="48" height="30" rx="5" fill="#455a64"/>
+<text x="304.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M6</text>
+<rect x="332" y="36" width="48" height="30" rx="5" fill="#455a64"/>
+<text x="356.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M5</text>
+<rect x="384" y="36" width="48" height="30" rx="5" fill="#455a64"/>
+<text x="408.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M4</text>
+<rect x="436" y="36" width="48" height="30" rx="5" fill="#455a64"/>
+<text x="460.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M3</text>
+<rect x="488" y="36" width="48" height="30" rx="5" fill="#455a64"/>
+<text x="512.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M2</text>
+<rect x="540" y="36" width="48" height="30" rx="5" fill="#455a64"/>
+<text x="564.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M1</text>
+<text x="10" y="89.0" font-size="12" fill="currentColor">bottom row</text>
+<rect x="72" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="96.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="124" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="148.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="176" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="200.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="228" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="252.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="280" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="304.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="332" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="356.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="384" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="408.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="436" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="460.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="488" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="512.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="540" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="564.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<text x="10" y="138" font-size="11.5" fill="currentColor" opacity="0.75">M1-M6 = motor / servo signals.  LED = addressable LED data.  PI5V = separate 5 V / 3 A regulator.</text>
+</svg></div>
+<div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 114" font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Lower board solder pads - seen from above</text>
+<text x="10" y="55.0" font-size="12" fill="currentColor">rear edge</text>
+<rect x="72" y="36" width="76" height="30" rx="5" fill="#777"/>
+<text x="110.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">BAT+</text>
+<rect x="152" y="36" width="76" height="30" rx="5" fill="#777"/>
+<text x="190.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">ESC+</text>
+<rect x="232" y="36" width="76" height="30" rx="5" fill="#777"/>
+<text x="270.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">ESC-</text>
+<rect x="312" y="36" width="76" height="30" rx="5" fill="#777"/>
+<text x="350.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">BAT-</text>
+<text x="10" y="104" font-size="11.5" fill="currentColor" opacity="0.75">Battery + passes through the current shunt to ESC +.  2S-4S LiPo, 50 A continuous.</text>
+</svg></div>
+<div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 474 114" font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Service cable (JST-SH 6 pin, wired 1:1)</text>
+<text x="10" y="55.0" font-size="12" fill="currentColor">pin 1 - 6</text>
+<rect x="72" y="36" width="60" height="30" rx="5" fill="#777"/>
+<text x="102.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">VBUS</text>
+<rect x="136" y="36" width="60" height="30" rx="5" fill="#777"/>
+<text x="166.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">D-</text>
+<rect x="200" y="36" width="60" height="30" rx="5" fill="#777"/>
+<text x="230.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">D+</text>
+<rect x="264" y="36" width="60" height="30" rx="5" fill="#2b2b2b"/>
+<text x="294.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="328" y="36" width="60" height="30" rx="5" fill="#777"/>
+<text x="358.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">BUZ</text>
+<rect x="392" y="36" width="60" height="30" rx="5" fill="#777"/>
+<text x="422.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">BOOT</text>
+<text x="10" y="104" font-size="11.5" fill="currentColor" opacity="0.75">Same order on the flight controller (J5) and on the service board (J2).</text>
+</svg></div>
+<p>Default ArduPilot mapping: SERIAL0 = USB, SERIAL1&hellip;7 = UART 1, 2, 3, 4, 6, 7, 8. Any port can be GPS, telemetry, receiver or ESC telemetry; set <code>SERIALn_PROTOCOL</code>. Full table: <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/pinout.md">docs/pinout.md</a>.</p>
+
+<h2 id="boards">Boards and files</h2>
+
+<article class="board" id="upper">
+  <h3>Upper board - flight controller <span class="warn">work in progress</span></h3>
+  <p class="sub">6-layer, 1.6 mm, 31.5 x 48 mm &middot; 74 parts &middot; 74 nets</p>
+  <div class="imgs">
+    <a href="boards/upper/upper-top.png"><img loading="lazy" src="boards/upper/upper-top.png" alt="Upper board - flight controller, top"></a>
+    <a href="boards/upper/upper-bottom.png"><img loading="lazy" src="boards/upper/upper-bottom.png" alt="Upper board - flight controller, bottom"></a>
+    <a href="boards/upper/upper-angle-top.png"><img loading="lazy" src="boards/upper/upper-angle-top.png" alt="Upper board - flight controller, angled"></a>
+  </div>
+  <p class="links">
+    <a href="boards/upper/upper-schematic.pdf">Schematic (PDF)</a>
+    <a href="https://github.com/PeterJBurke/stackf765/tree/main/hardware/upper">KiCad project</a>
+    <a href="https://github.com/PeterJBurke/stackf765/tree/main/fab/upper">Gerbers, BOM, placement</a>
+    <a href="boards/upper/upper.step">STEP</a>
+    <a href="boards/upper/upper.glb">GLB</a>
+  </p>
+  <details><summary>Bill of materials: 0 lines, 0 parts, about $0.00 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+</tbody></table></details>
+  <details><summary>Copper layers and assembly drawings</summary><div class="layers">
+    
+  </div></details>
+</article>
+
+<article class="board" id="lower">
+  <h3>Lower board - power <span class="ok">ERC / DRC clean</span></h3>
+  <p class="sub">4-layer, 1.6 mm, 2 oz outer copper, 31.5 x 48 mm &middot; 49 parts &middot; 30 nets</p>
+  <div class="imgs">
+    <a href="boards/lower/lower-top.png"><img loading="lazy" src="boards/lower/lower-top.png" alt="Lower board - power, top"></a>
+    <a href="boards/lower/lower-bottom.png"><img loading="lazy" src="boards/lower/lower-bottom.png" alt="Lower board - power, bottom"></a>
+    <a href="boards/lower/lower-angle-top.png"><img loading="lazy" src="boards/lower/lower-angle-top.png" alt="Lower board - power, angled"></a>
+  </div>
+  <p class="links">
+    <a href="boards/lower/lower-schematic.pdf">Schematic (PDF)</a>
+    <a href="https://github.com/PeterJBurke/stackf765/tree/main/hardware/lower">KiCad project</a>
+    <a href="https://github.com/PeterJBurke/stackf765/tree/main/fab/lower">Gerbers, BOM, placement</a>
+    <a href="boards/lower/lower.step">STEP</a>
+    <a href="boards/lower/lower.glb">GLB</a>
+  </p>
+  <details><summary>Bill of materials: 19 lines, 43 parts, about $3.76 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+<tr><td>C3 C12 C22</td><td>3</td><td>100n 50V</td><td>100 nF 50 V X7R</td><td>CL05B104KB54PNC</td><td><a href="https://www.lcsc.com/product-detail/C307331.html">C307331</a></td><td>0.004</td></tr>
+<tr><td>C4 C5 C14 C17 C24 C27</td><td>6</td><td>100n</td><td>100 nF 16 V X7R</td><td>CL05B104KO5NNNC</td><td><a href="https://www.lcsc.com/product-detail/C1525.html">C1525</a></td><td>0.002</td></tr>
+<tr><td>C10 C11 C20 C21</td><td>4</td><td>10u</td><td>10 uF 25 V X5R</td><td>CL21A106KAYNNNE</td><td><a href="https://www.lcsc.com/product-detail/C15850.html">C15850</a></td><td>0.015</td></tr>
+<tr><td>C13 C23</td><td>2</td><td>33n</td><td>33 nF 16 V X7R</td><td>CL05B333KO5NNNC</td><td><a href="https://www.lcsc.com/product-detail/C1532.html">C1532</a></td><td>0.003</td></tr>
+<tr><td>C15 C16 C25 C26</td><td>4</td><td>22u</td><td>22 uF 25 V X5R</td><td>CL21A226MAQNNNE</td><td><a href="https://www.lcsc.com/product-detail/C45783.html">C45783</a></td><td>0.03</td></tr>
+<tr><td>D1</td><td>1</td><td>SMBJ18CA</td><td>600 W bidirectional TVS, 18 V stand-off, 29.2 V clamp, SMB</td><td>SMBJ18CA</td><td><a href="https://www.lcsc.com/product-detail/C908850.html">C908850</a></td><td>0.04</td></tr>
+<tr><td>D2</td><td>1</td><td>GREEN</td><td>Green LED 0603</td><td>NCD0603G1</td><td><a href="https://www.lcsc.com/product-detail/C84267.html">C84267</a></td><td>0.016</td></tr>
+<tr><td>H1 H2 H3</td><td>3</td><td>M2 x 6 mm</td><td>Reflow-solder M2 standoff, 6.0 mm</td><td>SMTSO2060CTJ</td><td><a href="https://www.lcsc.com/product-detail/C2915628.html">C2915628</a></td><td>0.17</td></tr>
+<tr><td>J1</td><td>1</td><td>2x10 socket 1.27mm</td><td>2x10 SMD socket, 1.27 mm pitch, 4.3 mm body</td><td>PM127-2-10-S-4.3</td><td><a href="https://www.lcsc.com/product-detail/C3975136.html">C3975136</a></td><td>0.37</td></tr>
+<tr><td>J2</td><td>1</td><td>2x10 RA 2.54mm</td><td>2x10 right-angle pin header, 2.54 mm</td><td>PZ254R-12-20P</td><td><a href="https://www.lcsc.com/product-detail/C492438.html">C492438</a></td><td>0.18</td></tr>
+<tr><td>L1 L2</td><td>2</td><td>4.7uH 5A</td><td>4.7 uH shielded moulded inductor, Isat 5 A, 50 mohm, 5.5x5.2x3.0 mm</td><td>SMMS0530-4R7M</td><td><a href="https://www.lcsc.com/product-detail/C181722.html">C181722</a></td><td>0.11</td></tr>
+<tr><td>R1</td><td>1</td><td>0.5mR 1% 6W</td><td>0.5 mohm 1% 6 W metal-strip current shunt, 2512</td><td>ASR-M-3-0.5F</td><td><a href="https://www.lcsc.com/product-detail/C469426.html">C469426</a></td><td>0.28</td></tr>
+<tr><td>R2 R3</td><td>2</td><td>10R</td><td>10 ohm 1%</td><td>0402WGF100JTCE</td><td><a href="https://www.lcsc.com/product-detail/C25077.html">C25077</a></td><td>0.001</td></tr>
+<tr><td>R4 R12 R22</td><td>3</td><td>10k</td><td>10 k 1%</td><td>0402WGF1002TCE</td><td><a href="https://www.lcsc.com/product-detail/C25744.html">C25744</a></td><td>0.001</td></tr>
+<tr><td>R5</td><td>1</td><td>1k</td><td>1 k 1%</td><td>0402WGF1001TCE</td><td><a href="https://www.lcsc.com/product-detail/C11702.html">C11702</a></td><td>0.001</td></tr>
+<tr><td>R6 R11 R21</td><td>3</td><td>2.2k</td><td>2.2 k 1%</td><td>0402WGF2201TCE</td><td><a href="https://www.lcsc.com/product-detail/C25879.html">C25879</a></td><td>0.001</td></tr>
+<tr><td>R10 R20</td><td>2</td><td>51k</td><td>51 k 1%</td><td>0402WGF5102TCE</td><td><a href="https://www.lcsc.com/product-detail/C25794.html">C25794</a></td><td>0.001</td></tr>
+<tr><td>U1 U2</td><td>2</td><td>TPS62933DRLR</td><td>3.8-30 V 3 A synchronous buck, 500 kHz, SOT-583</td><td>TPS62933DRLR</td><td><a href="https://www.lcsc.com/product-detail/C3200405.html">C3200405</a></td><td>0.53</td></tr>
+<tr><td>U3</td><td>1</td><td>INA214AIDCKR</td><td>Zero-drift current-sense amplifier, gain 100 V/V, SC-70-6</td><td>INA214AIDCKR</td><td><a href="https://www.lcsc.com/product-detail/C105240.html">C105240</a></td><td>0.86</td></tr>
+</tbody></table></details>
+  <details><summary>Copper layers and assembly drawings</summary><div class="layers">
+    <figure><img loading="lazy" src="boards/lower/lower-B_Cu.svg"><figcaption>B.Cu</figcaption></figure><figure><img loading="lazy" src="boards/lower/lower-F_Cu.svg"><figcaption>F.Cu</figcaption></figure><figure><img loading="lazy" src="boards/lower/lower-In1_Cu.svg"><figcaption>In1.Cu</figcaption></figure><figure><img loading="lazy" src="boards/lower/lower-In2_Cu.svg"><figcaption>In2.Cu</figcaption></figure><figure><img loading="lazy" src="boards/lower/lower-assembly-bottom.svg"><figcaption>assembly-bottom</figcaption></figure><figure><img loading="lazy" src="boards/lower/lower-assembly-top.svg"><figcaption>assembly-top</figcaption></figure>
+  </div></details>
+</article>
+
+<article class="board" id="service">
+  <h3>Service board - USB / buzzer / boot <span class="ok">ERC / DRC clean</span></h3>
+  <p class="sub">2-layer, 1.6 mm, 18 x 32 mm &middot; 11 parts &middot; 10 nets</p>
+  <div class="imgs">
+    <a href="boards/service/service-top.png"><img loading="lazy" src="boards/service/service-top.png" alt="Service board - USB / buzzer / boot, top"></a>
+    <a href="boards/service/service-bottom.png"><img loading="lazy" src="boards/service/service-bottom.png" alt="Service board - USB / buzzer / boot, bottom"></a>
+    <a href="boards/service/service-angle-top.png"><img loading="lazy" src="boards/service/service-angle-top.png" alt="Service board - USB / buzzer / boot, angled"></a>
+  </div>
+  <p class="links">
+    <a href="boards/service/service-schematic.pdf">Schematic (PDF)</a>
+    <a href="https://github.com/PeterJBurke/stackf765/tree/main/hardware/service">KiCad project</a>
+    <a href="https://github.com/PeterJBurke/stackf765/tree/main/fab/service">Gerbers, BOM, placement</a>
+    <a href="boards/service/service.step">STEP</a>
+    <a href="boards/service/service.glb">GLB</a>
+  </p>
+  <details><summary>Bill of materials: 10 lines, 11 parts, about $1.28 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+<tr><td>BZ1</td><td>1</td><td>MLT-8530</td><td>Passive magnetic buzzer 8.5x8.5 mm, 2.7 kHz, 16 ohm</td><td>KLJ-8530-3627 / MLT-8530</td><td><a href="https://www.lcsc.com/product-detail/C189206.html">C189206</a></td><td>0.57</td></tr>
+<tr><td>C1</td><td>1</td><td>1u</td><td>1 uF 25 V X5R</td><td>CL05A105KA5NQNC</td><td><a href="https://www.lcsc.com/product-detail/C52923.html">C52923</a></td><td>0.004</td></tr>
+<tr><td>D1</td><td>1</td><td>B5819WS</td><td>Schottky diode 40 V 1 A SOD-323</td><td>B5819WS</td><td><a href="https://www.lcsc.com/product-detail/C916992.html">C916992</a></td><td>0.013</td></tr>
+<tr><td>J1</td><td>1</td><td>USB-C</td><td>USB Type-C 2.0 receptacle, 16-pin</td><td>TYPE-C-31-M-12</td><td><a href="https://www.lcsc.com/product-detail/C165948.html">C165948</a></td><td>0.19</td></tr>
+<tr><td>J2</td><td>1</td><td>JST-SH 6P</td><td>JST SH 6-pin side-entry header, 1.0 mm</td><td>SM06B-SRSS-TB(LF)(SN)</td><td><a href="https://www.lcsc.com/product-detail/C160405.html">C160405</a></td><td>0.3</td></tr>
+<tr><td>R1 R2</td><td>2</td><td>5.1k</td><td>5.1 k 1%</td><td>0402WGF5101TCE</td><td><a href="https://www.lcsc.com/product-detail/C25905.html">C25905</a></td><td>0.001</td></tr>
+<tr><td>R3</td><td>1</td><td>10R</td><td>10 ohm 1% 1/8 W</td><td>0805W8F100JT5E</td><td><a href="https://www.lcsc.com/product-detail/C17415.html">C17415</a></td><td>0.002</td></tr>
+<tr><td>R4</td><td>1</td><td>10k</td><td>10 k 1%</td><td>0402WGF1002TCE</td><td><a href="https://www.lcsc.com/product-detail/C25744.html">C25744</a></td><td>0.001</td></tr>
+<tr><td>SW1</td><td>1</td><td>BOOT</td><td>Tactile switch 5.1x5.1 mm</td><td>TS-1187A-B-A-B</td><td><a href="https://www.lcsc.com/product-detail/C318884.html">C318884</a></td><td>0.02</td></tr>
+<tr><td>U1</td><td>1</td><td>USBLC6-2SC6</td><td>USB ESD protection</td><td>USBLC6-2SC6</td><td><a href="https://www.lcsc.com/product-detail/C7519.html">C7519</a></td><td>0.18</td></tr>
+</tbody></table></details>
+  <details><summary>Copper layers and assembly drawings</summary><div class="layers">
+    <figure><img loading="lazy" src="boards/service/service-B_Cu.svg"><figcaption>B.Cu</figcaption></figure><figure><img loading="lazy" src="boards/service/service-F_Cu.svg"><figcaption>F.Cu</figcaption></figure><figure><img loading="lazy" src="boards/service/service-assembly-bottom.svg"><figcaption>assembly-bottom</figcaption></figure><figure><img loading="lazy" src="boards/service/service-assembly-top.svg"><figcaption>assembly-top</figcaption></figure>
+  </div></details>
+</article>
+
+<h2 id="verify">Verification</h2>
+<p>These checks are run by <code>make verify</code> from the files in the repository (last run ). They show the design is self-consistent and manufacturable; they do not replace testing real hardware.</p>
+<div class="tw"><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody></tbody></table></div>
+<p>How each check works and what is <em>not</em> covered: <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/verification.md">docs/verification.md</a>.</p>
+
+<h2 id="build">Build one</h2>
+<ol class="steps">
+  <li>Order the three PCBs with assembly using the files in <a href="https://github.com/PeterJBurke/stackf765/tree/main/fab">fab/</a>. Settings and stack-ups: <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/manufacturing.md">docs/manufacturing.md</a>.</li>
+  <li>Solder the two right-angle headers and the battery / ESC wires, then stack the boards: <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/assembly.md">docs/assembly.md</a>.</li>
+  <li>Power up on a current-limited supply and work through the checks in <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/bringup.md">docs/bringup.md</a>.</li>
+  <li>Flash the bootloader and ArduPilot: <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/firmware.md">docs/firmware.md</a>.</li>
+</ol>
+<p>How the circuits work, with the calculations: <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/design.md">docs/design.md</a>.</p>
+</main>
+<footer>Hardware: CERN-OHL-P v2. Software and scripts: MIT. Generated from the design files in the repository.</footer>
+
+<script type="module">
+import { createViewer } from "./viewer.js";
+const GAP = 7.6;   // lower board top surface to upper board top surface: 6.0 mm standoff + 1.6 mm PCB
+const v = createViewer(document.getElementById("viewer"), [
+  { id: "lower",   url: "boards/lower/lower.glb",     pos: [0, 0, 0],    explodeDir: [0, -0.5, 0] },
+  { id: "upper",   url: "boards/upper/upper.glb",     pos: [0, GAP, 0],  explodeDir: [0, 0.5, 0] },
+  { id: "service", url: "boards/service/service.glb", pos: [34, 0, 0],   explodeDir: [0.6, 0, 0] },
+], { status: document.getElementById("status") });
+document.getElementById("explode").addEventListener("input", e => v.setExplode(+e.target.value));
+for (const id of ["upper", "lower", "service"])
+  document.getElementById("t-" + id).addEventListener("change", e => v.setVisible(id, e.target.checked));
+document.querySelectorAll("button[data-view]").forEach(b => b.addEventListener("click", () => v.view(b.dataset.view)));
+window.__viewer = v;
+</script>
+</body>
+</html>
