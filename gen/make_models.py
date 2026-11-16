@@ -143,3 +143,6 @@ def header_127(n):
 header_2xN_ra(10)
 socket_127(10)
 header_127(10)
+
+# AT7456E body (KiCad ships no model for the EP 2.75 x 6.2 variant)
+shell("HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.2mm", -2.2, -4.85, 2.2, 4.85, 1.0, BLACK)

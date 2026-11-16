@@ -1987,7 +1987,7 @@
 			(uuid "a29bc1e7-2248-4b50-93ec-c1699a322e19")
 		)
 		(embedded_fonts no)
-		(model "${KICAD9_3DMODEL_DIR}/Package_SO.3dshapes/HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.2mm.step"
+		(model "${KIPRJMOD}/../lib/3d/HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.2mm.step"
 			(offset
 				(xyz 0 0 0)
 			)

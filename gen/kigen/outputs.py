@@ -157,7 +157,7 @@ def docs(proj_dir, name, out_dir, layers):
          "--layers", "B.Fab,B.SilkS,Edge.Cuts", "--mode-single", "--page-size-mode", "2", "--exclude-drawing-sheet",
          "--mirror"])
     run(["kicad-cli", "pcb", "export", "glb", pcb, "-o", os.path.join(out_dir, f"{name}.glb"), "--subst-models",
-         "--include-tracks", "--include-pads", "--include-zones", "--include-silkscreen", "--include-soldermask",
+         "--include-pads", "--include-silkscreen", "--include-soldermask",      # no tracks/zones: keeps the web model light
          "--user-origin", "100x100mm", "--force"])
     run(["kicad-cli", "pcb", "export", "step", pcb, "-o", os.path.join(out_dir, f"{name}.step"), "--subst-models",
          "--user-origin", "100x100mm", "--force"])

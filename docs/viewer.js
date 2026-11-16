@@ -5,6 +5,29 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
+// KiCad's GLB export makes the solder mask translucent and leaves many library IC models
+// uncoloured (white).  Make the mask opaque and give ICs / transistors / diodes a dark body.
+function tidyMaterials(root) {
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    let ref = "";
+    for (let p = o; p; p = p.parent) { if (/^[A-Z]+[0-9]+$/.test(p.name || "")) { ref = p.name; break; } }
+    const mats = Array.isArray(o.material) ? o.material : [o.material];
+    mats.forEach((mat, i) => {
+      if (!mat || !mat.color) return;
+      const c = mat.color, white = c.r > 0.9 && c.g > 0.9 && c.b > 0.9;
+      if (c.g > c.r * 1.5 && c.g > c.b && mat.opacity < 1) {          // solder mask
+        const n = mat.clone(); n.transparent = false; n.opacity = 1; n.color.setRGB(0.03, 0.16, 0.09);
+        n.roughness = 0.55; n.metalness = 0.1;
+        if (Array.isArray(o.material)) o.material[i] = n; else o.material = n;
+      } else if (white && /^(U|Q|D|Y)[0-9]+$/.test(ref) && mat.opacity >= 1) {
+        const n = mat.clone(); n.color.setRGB(0.07, 0.07, 0.08); n.roughness = 0.6;
+        if (Array.isArray(o.material)) o.material[i] = n; else o.material = n;
+      }
+    });
+  });
+}
+
 export function createViewer(el, boards, opts = {}) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -63,6 +86,7 @@ export function createViewer(el, boards, opts = {}) {
       const g = new THREE.Group();
       const m = gltf.scene;
       m.scale.setScalar(1000);        // KiCad exports metres
+      tidyMaterials(m);
       g.add(m);
       g.name = b.id;
       groups[b.id] = g;
