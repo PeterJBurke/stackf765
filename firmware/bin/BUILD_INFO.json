@@ -1,0 +1,7 @@
+{
+ "hwdef_sha256": "9d235e78286bc19483c80e5aa1e9bd1248075751bc07c78919f6b25177a882f9",
+ "ardupilot_version": "a995235",
+ "vehicle": "copter",
+ "flash_used": 1430984,
+ "bootloader_bytes": 16268
+}

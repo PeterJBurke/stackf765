@@ -1216,28 +1216,15 @@
 		(stroke (width 0) (type default))
 		(uuid "c71b3923-0cba-567e-827e-744add297959")
 	)
-	(symbol
-		(lib_id "fcpwr:VBUS")
+	(global_label "VBUS"
+		(shape passive)
 		(at 67.31 48.26 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "1b24cb07-9dd4-576b-a4ed-115d13976bd3")
-		(property "Reference" "#PWR0007" (at 67.31 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "VBUS" (at 67.31 44.704 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 67.31 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 67.31 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 67.31 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "5ba38bd0-33b7-557d-8c84-654880656c2f"))
-		(instances
-			(project "service"
-				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0007")
-					(unit 1)
-				)
-			)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify left))
+		(uuid "376e407a-07ce-58db-85f5-77767c239b5f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 67.31 48.26 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1394,28 +1381,15 @@
 		(stroke (width 0) (type default))
 		(uuid "ffbba173-16b9-5754-ac9f-57115b609b56")
 	)
-	(symbol
-		(lib_id "fcpwr:GND")
+	(global_label "GND"
+		(shape passive)
 		(at 97.79 41.91 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "aa74f115-00bd-5eb1-b4f5-dbe2a534a29b")
-		(property "Reference" "#PWR0008" (at 97.79 41.91 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "GND" (at 97.79 45.72 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 97.79 41.91 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 97.79 41.91 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 97.79 41.91 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "93fd5fbf-82d4-5dc5-a71e-8003615bdc69"))
-		(instances
-			(project "service"
-				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0008")
-					(unit 1)
-				)
-			)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify left))
+		(uuid "ac6da2d9-6459-553f-9036-4470aaa520bf")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 97.79 41.91 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(symbol
@@ -1474,28 +1448,15 @@
 		(stroke (width 0) (type default))
 		(uuid "bf0e6e7b-c1e9-5432-9f88-00384c24623c")
 	)
-	(symbol
-		(lib_id "fcpwr:GND")
+	(global_label "GND"
+		(shape passive)
 		(at 97.79 52.07 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "14123960-04b7-527a-af7d-7a2361389bf1")
-		(property "Reference" "#PWR0009" (at 97.79 52.07 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "GND" (at 97.79 55.88 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 97.79 52.07 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 97.79 52.07 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 97.79 52.07 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "8b05172b-6c0c-5d66-8085-ab1838d718a9"))
-		(instances
-			(project "service"
-				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0009")
-					(unit 1)
-				)
-			)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify left))
+		(uuid "3456410e-7d66-5241-9f06-b9b75eb57c45")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 97.79 52.07 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(symbol
@@ -1588,17 +1549,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "ecd40a97-8e7f-56fe-9d20-ff93f826e492")
-		(property "Reference" "#PWR0010" (at 125.73 62.23 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "1b24cb07-9dd4-576b-a4ed-115d13976bd3")
+		(property "Reference" "#PWR0007" (at 125.73 62.23 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "VBUS" (at 125.73 58.674 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 125.73 62.23 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 125.73 62.23 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 125.73 62.23 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "4c1ea1bd-56e4-54cd-a4b7-3c18c6d95af0"))
+		(pin "1" (uuid "5ba38bd0-33b7-557d-8c84-654880656c2f"))
 		(instances
 			(project "service"
 				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0010")
+					(reference "#PWR0007")
 					(unit 1)
 				)
 			)
@@ -1617,17 +1578,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "68767896-bd8c-51ce-b778-d7feea176d4e")
-		(property "Reference" "#PWR0011" (at 125.73 80.01 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "aa74f115-00bd-5eb1-b4f5-dbe2a534a29b")
+		(property "Reference" "#PWR0008" (at 125.73 80.01 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 125.73 83.82 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 125.73 80.01 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 125.73 80.01 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 125.73 80.01 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "21f3cb1e-a437-5e43-88e9-7c670437096d"))
+		(pin "1" (uuid "93fd5fbf-82d4-5dc5-a71e-8003615bdc69"))
 		(instances
 			(project "service"
 				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0011")
+					(reference "#PWR0008")
 					(unit 1)
 				)
 			)
@@ -1713,17 +1674,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "fb5e156c-5989-5088-b685-6c45e6fe6296")
-		(property "Reference" "#PWR0012" (at 93.98 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "14123960-04b7-527a-af7d-7a2361389bf1")
+		(property "Reference" "#PWR0009" (at 93.98 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "VBUS" (at 93.98 73.914 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 93.98 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 93.98 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 93.98 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "1de60d1e-03da-5139-98b7-426f0b6ab734"))
+		(pin "1" (uuid "8b05172b-6c0c-5d66-8085-ab1838d718a9"))
 		(instances
 			(project "service"
 				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0012")
+					(reference "#PWR0009")
 					(unit 1)
 				)
 			)
@@ -1742,17 +1703,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "86e3cb3c-2224-5135-ac94-9ba0ab5bf0f6")
-		(property "Reference" "#PWR0013" (at 93.98 90.17 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "ecd40a97-8e7f-56fe-9d20-ff93f826e492")
+		(property "Reference" "#PWR0010" (at 93.98 90.17 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 93.98 93.98 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 93.98 90.17 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 93.98 90.17 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 93.98 90.17 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "80115aa8-e87e-5a7a-b337-25845c9b9b04"))
+		(pin "1" (uuid "4c1ea1bd-56e4-54cd-a4b7-3c18c6d95af0"))
 		(instances
 			(project "service"
 				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0013")
+					(reference "#PWR0010")
 					(unit 1)
 				)
 			)
@@ -1806,28 +1767,15 @@
 		(stroke (width 0) (type default))
 		(uuid "419d4ae2-dc2f-5168-8a19-e330a1f43b08")
 	)
-	(symbol
-		(lib_id "fcpwr:VBUS")
-		(at 215.9 50.8 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "1b8f853f-0025-5256-b4b2-296a5f0ffd9b")
-		(property "Reference" "#PWR0014" (at 215.9 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "VBUS" (at 215.9 47.244 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 215.9 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 215.9 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 215.9 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "3c9c89a5-4e37-557b-adfa-e102a5f55a82"))
-		(instances
-			(project "service"
-				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0014")
-					(unit 1)
-				)
-			)
+	(global_label "VBUS"
+		(shape passive)
+		(at 215.9 50.8 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "1b1d973c-3689-5ee7-a7b8-1cb50b555618")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 215.9 50.8 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1867,28 +1815,15 @@
 		(stroke (width 0) (type default))
 		(uuid "a4cf5197-81b3-50fa-a412-0fe9c25188df")
 	)
-	(symbol
-		(lib_id "fcpwr:GND")
-		(at 215.9 58.42 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "5a86dc00-78f9-579d-a6ea-e4eaebd34f2b")
-		(property "Reference" "#PWR0015" (at 215.9 58.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "GND" (at 215.9 62.23 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 215.9 58.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 215.9 58.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 215.9 58.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "fff562d6-218e-59ce-b86d-0da9993b1837"))
-		(instances
-			(project "service"
-				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0015")
-					(unit 1)
-				)
-			)
+	(global_label "GND"
+		(shape passive)
+		(at 215.9 58.42 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "8cedb27d-54e8-5cf4-86d2-b0affe72a35e")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 215.9 58.42 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1936,17 +1871,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "89cacf74-6d70-5ed2-98fa-053cece19817")
-		(property "Reference" "#PWR0016" (at 223.52 71.12 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "68767896-bd8c-51ce-b778-d7feea176d4e")
+		(property "Reference" "#PWR0011" (at 223.52 71.12 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 223.52 74.93 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 223.52 71.12 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 223.52 71.12 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 223.52 71.12 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "a11c3f36-d0e2-518d-ae49-270e7d99fbb1"))
+		(pin "1" (uuid "21f3cb1e-a437-5e43-88e9-7c670437096d"))
 		(instances
 			(project "service"
 				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0016")
+					(reference "#PWR0011")
 					(unit 1)
 				)
 			)
@@ -2017,28 +1952,15 @@
 		(stroke (width 0) (type default))
 		(uuid "0835bf4e-9b93-5bbd-a1ab-2875f3e30872")
 	)
-	(symbol
-		(lib_id "fcpwr:GND")
-		(at 72.39 146.05 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "a0da294b-d764-59ab-b2b0-f93c93cd954d")
-		(property "Reference" "#PWR0017" (at 72.39 146.05 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "GND" (at 72.39 149.86 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 72.39 146.05 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 72.39 146.05 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 72.39 146.05 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "bf293e24-500b-5067-a597-6333f3536a16"))
-		(instances
-			(project "service"
-				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0017")
-					(unit 1)
-				)
-			)
+	(global_label "GND"
+		(shape passive)
+		(at 72.39 146.05 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "9c136f95-2bdf-5234-87d0-28c74c479b28")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 72.39 146.05 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(symbol
@@ -2108,17 +2030,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "fb99b184-33e7-5e00-86ff-28a328880a93")
-		(property "Reference" "#PWR0018" (at 111.76 137.16 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "fb5e156c-5989-5088-b685-6c45e6fe6296")
+		(property "Reference" "#PWR0012" (at 111.76 137.16 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 111.76 140.97 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 111.76 137.16 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 111.76 137.16 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 111.76 137.16 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "75bf08f0-1093-5fe5-84dc-7e351e92feeb"))
+		(pin "1" (uuid "1de60d1e-03da-5139-98b7-426f0b6ab734"))
 		(instances
 			(project "service"
 				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0018")
+					(reference "#PWR0012")
 					(unit 1)
 				)
 			)
@@ -2164,28 +2086,15 @@
 		(stroke (width 0) (type default))
 		(uuid "af3c13d9-8332-5cfd-82db-7e14a4a2bf8a")
 	)
-	(symbol
-		(lib_id "fcpwr:VBUS")
-		(at 195.58 139.7 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "017a281c-bd6b-5207-8536-feafd46acc9a")
-		(property "Reference" "#PWR0019" (at 195.58 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "VBUS" (at 195.58 136.144 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 195.58 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 195.58 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 195.58 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "1e350f8b-b067-5b06-9803-318cbcd1a2f6"))
-		(instances
-			(project "service"
-				(path "/19178588-d271-55ef-a172-6e1e42ce9fb5/81b67d0e-f6f9-5a39-9ddc-4a2cdce3c39f"
-					(reference "#PWR0019")
-					(unit 1)
-				)
-			)
+	(global_label "VBUS"
+		(shape passive)
+		(at 195.58 139.7 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "7cc968cb-6519-5c7e-a900-873614caa95d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 195.58 139.7 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire

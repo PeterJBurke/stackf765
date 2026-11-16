@@ -95,6 +95,25 @@ def main():
     bd.fill()
     project()
     viol, unconn, parity = outputs.drc(proj, name, rep)
+    for _pass in range(6):
+        stubs = [v for v in viol if v["type"] == "track_dangling"]
+        if not stubs:
+            break
+        import pcbnew
+        brd = pcbnew.LoadBoard(bd.path)
+        removed = 0
+        for v in stubs:
+            x, y = v["items"][0]["pos"]["x"], v["items"][0]["pos"]["y"]
+            for t in list(brd.GetTracks()):
+                if t.Type() == pcbnew.PCB_TRACE_T and t.GetLength() < pcbnew.FromMM(0.12) and \
+                        abs(pcbnew.ToMM(t.GetStart().x) - x) < 0.2 and abs(pcbnew.ToMM(t.GetStart().y) - y) < 0.2:
+                    brd.Remove(t)
+                    removed += 1
+        bd.b = brd                 # fill() saves bd.b, reloads it and fills the zones
+        bd.fill()
+        project()
+        viol, unconn, parity = outputs.drc(proj, name, rep)
+        print(f"[{name}] removed {removed} leftover stub(s)")
     print(f"[{name}] DRC violations: {outputs.summarize(viol)}")
     print(f"[{name}] unconnected: {len(unconn)}   schematic parity issues: {len(parity)}")
     json.dump(dict(parts=len(d.parts), nets=len(d.nets()), netlist_diffs=diffs, erc=[str(k) + ":" + str(v) for k, v in outputs.summarize(erc).items()],
@@ -105,7 +124,7 @@ def main():
         fab = os.path.join(ROOT, "fab", name)
         os.makedirs(fab, exist_ok=True)
         copper = ["F.Cu"] + [f"In{i}.Cu" for i in range(1, cfg["layers"] - 1)] + ["B.Cu"]
-        outputs.fab(proj, name, fab, copper)
+        outputs.fab(proj, name, fab, copper, hand=[r for r, p in d.parts.items() if p.fields.get("Assembly") == "hand"])
         outputs.bom(d, fab)
         outputs.docs(proj, name, os.path.join(ROOT, "docs", "boards", name), copper)
         print(f"[{name}] fab + docs written")

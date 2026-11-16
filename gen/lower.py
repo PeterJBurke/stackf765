@@ -190,8 +190,8 @@ def layout(bd):
     # --- connectors
     bd.place("J1", 0, 0, 90)
     bd.place("J2", -12.7, 17.1, 90)       # pin 1 (M1) at the left; pins point forward
-    bd.place("R6", -13.2, 14.6, 0)
-    bd.place("D2", -10.7, 14.6, 0)
+    bd.place("R6", -14.6, 10.6, 90)
+    bd.place("D2", -14.6, 7.6, 90)
 
     # --- copper zones.  High-current paths use all four layers, stitched by the pad vias.
     ALL = ["F.Cu", "In1.Cu", "In2.Cu", "B.Cu"]
@@ -207,12 +207,14 @@ def layout(bd):
     bd.zone("GND", ["F.Cu", "B.Cu"], full, priority=0, name="GND pour")
 
     # --- silkscreen
-    for name, x in PAD_X.items():
-        bd.text(name, x, -18.9 if name in ("ESC-", "BAT-") else -12.6 if name == "BAT+" else -18.9, size=1.0, thick=0.18)
-    for col, lab in enumerate(J2_LABELS):
-        bd.text(lab, -12.7 + col * 2.54, 15.6, size=0.62, thick=0.11, rot=90, justify="right")
-    bd.text("StackF765 LOWER rev A", 0, 3.5, "B.SilkS", size=1.0)
-    bd.text("2S-3S  50A  BAT+ ESC+ ESC- BAT-", 0, -17.0, "B.SilkS", size=0.9)
+    for name, x in (("BAT+", -11.25), ("ESC+", -4.7), ("ESC-", 3.75), ("BAT-", 11.25)):
+        bd.text(name, x, -19.1, size=0.8, thick=0.14)
+        bd.text(name, PAD_X[name], -19.0, "B.SilkS", size=1.0, thick=0.16)
+    for col, lab in enumerate(J2_LABELS):          # sideways, just left of each pin pair
+        for layer in ("F.SilkS", "B.SilkS"):
+            bd.text(lab, -12.7 + col * 2.54 - 1.2, 18.37, layer, size=0.62, thick=0.11, rot=90)
+    bd.text("StackF765 LOWER rev A", 0, 3.5, "B.SilkS", size=1.0, thick=0.16)
+    bd.text("2S-3S LiPo   50 A   bottom row of J2 = GND", 0, -15.0, "B.SilkS", size=0.8, thick=0.14)
 
 
 def router_config(bd):

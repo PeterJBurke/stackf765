@@ -40,7 +40,7 @@ PE1  UART8_TX UART8 NODMA
 PE0  UART8_RX UART8 NODMA
 
 # ---------------------------------------------------------------- SPI
-# SPI1: ICM-42688-P IMU
+# SPI1: ICM-45686 IMU (ICM-42688-P also fits; the driver detects which is fitted)
 PA5 SPI1_SCK SPI1
 PA6 SPI1_MISO SPI1
 PA7 SPI1_MOSI SPI1
@@ -53,7 +53,7 @@ PB14 SPI2_MISO SPI2
 PB15 SPI2_MOSI SPI2
 PB12 MAX7456_CS CS
 
-SPIDEV icm42688 SPI1 DEVID1 IMU1_CS    MODE3  2*MHZ 16*MHZ
+SPIDEV icm45686 SPI1 DEVID1 IMU1_CS    MODE3  2*MHZ 16*MHZ
 SPIDEV osd      SPI2 DEVID4 MAX7456_CS MODE0 10*MHZ 10*MHZ
 
 # ---------------------------------------------------------------- I2C
@@ -66,8 +66,9 @@ PB11 I2C2_SDA I2C2
 define HAL_I2C_INTERNAL_MASK 1
 
 # ---------------------------------------------------------------- sensors
-# IMU orientation is set from the PCB placement; verify on the bench (docs/bringup.md)
-IMU Invensensev3 SPI:icm42688 ROTATION_NONE
+# IMU sits on the top side with package +Y towards the header (forward), +X to the right, +Z up.
+# body X = chip Y, body Y = chip X, body Z = -chip Z  ->  ROLL_180_YAW_90.  Confirm on the bench (docs/bringup.md).
+IMU Invensensev3 SPI:icm45686 ROTATION_ROLL_180_YAW_90
 define HAL_DEFAULT_INS_FAST_SAMPLE 1
 BARO BMP388 I2C:0:0x76
 

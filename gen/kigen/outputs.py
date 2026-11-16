@@ -68,7 +68,7 @@ def compare_netlist(design, netfile):
     return errs
 
 
-def fab(proj_dir, name, out_dir, layers):
+def fab(proj_dir, name, out_dir, layers, hand=()):
     pcb = os.path.join(proj_dir, f"{name}.kicad_pcb")
     g = os.path.join(out_dir, "gerbers")
     os.makedirs(g, exist_ok=True)
@@ -89,6 +89,8 @@ def fab(proj_dir, name, out_dir, layers):
         w = csv.writer(f)
         w.writerow(["Designator", "Mid X", "Mid Y", "Layer", "Rotation"])
         for r in rows:
+            if r["Ref"] in hand:
+                continue
             w.writerow([r["Ref"], r["PosX"], r["PosY"], "Top" if r["Side"] == "top" else "Bottom", r["Rot"]])
     zipf = os.path.join(out_dir, f"{name}-gerbers.zip")
     if os.path.exists(zipf):
@@ -127,7 +129,7 @@ def bom(design, out_dir, side_of=None):
         w = csv.writer(f)
         w.writerow(["Comment", "Designator", "Footprint", "LCSC Part #"])
         for r in rows:
-            if not r["dnp"] and r["lcsc"]:
+            if not r["dnp"] and r["lcsc"] and design.parts[r["refs"][0]].fields.get("Assembly") != "hand":
                 w.writerow([r["value"], ",".join(r["refs"]), r["footprint"], r["lcsc"]])
     return rows
 

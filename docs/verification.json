@@ -1,0 +1,110 @@
+{
+ "date": "2026-11-16",
+ "checks": [
+  {
+   "name": "upper: electrical rules check (KiCad ERC)",
+   "ok": true,
+   "detail": "0 errors, 0 warnings"
+  },
+  {
+   "name": "upper: design rules check (KiCad DRC)",
+   "ok": true,
+   "detail": "0 violations"
+  },
+  {
+   "name": "upper: every net fully routed",
+   "ok": true,
+   "detail": "0 unconnected items"
+  },
+  {
+   "name": "upper: board matches schematic",
+   "ok": true,
+   "detail": "0 parity differences"
+  },
+  {
+   "name": "upper: fabrication files present and current",
+   "ok": true,
+   "detail": "gerbers, drill, BOM, placement"
+  },
+  {
+   "name": "upper: every BOM line has a manufacturer part number and an LCSC number",
+   "ok": true,
+   "detail": "33 lines"
+  },
+  {
+   "name": "lower: electrical rules check (KiCad ERC)",
+   "ok": true,
+   "detail": "0 errors, 0 warnings"
+  },
+  {
+   "name": "lower: design rules check (KiCad DRC)",
+   "ok": true,
+   "detail": "0 violations"
+  },
+  {
+   "name": "lower: every net fully routed",
+   "ok": true,
+   "detail": "0 unconnected items"
+  },
+  {
+   "name": "lower: board matches schematic",
+   "ok": true,
+   "detail": "0 parity differences"
+  },
+  {
+   "name": "lower: fabrication files present and current",
+   "ok": true,
+   "detail": "gerbers, drill, BOM, placement"
+  },
+  {
+   "name": "lower: every BOM line has a manufacturer part number and an LCSC number",
+   "ok": true,
+   "detail": "19 lines"
+  },
+  {
+   "name": "service: electrical rules check (KiCad ERC)",
+   "ok": true,
+   "detail": "0 errors, 0 warnings"
+  },
+  {
+   "name": "service: design rules check (KiCad DRC)",
+   "ok": true,
+   "detail": "0 violations"
+  },
+  {
+   "name": "service: every net fully routed",
+   "ok": true,
+   "detail": "0 unconnected items"
+  },
+  {
+   "name": "service: board matches schematic",
+   "ok": true,
+   "detail": "0 parity differences"
+  },
+  {
+   "name": "service: fabrication files present and current",
+   "ok": true,
+   "detail": "gerbers, drill, BOM, placement"
+  },
+  {
+   "name": "service: every BOM line has a manufacturer part number and an LCSC number",
+   "ok": true,
+   "detail": "9 lines"
+  },
+  {
+   "name": "firmware pin map (hwdef.dat) matches the schematic",
+   "ok": true,
+   "detail": "PASS: 49 MCU pins consistent between hwdef.dat, pinmap.py and the KiCad schematic"
+  },
+  {
+   "name": "boards fit together (connector alignment, standoffs, height budget, cable)",
+   "ok": true,
+   "detail": "board-to-board: 20 pins aligned (worst offset 0.150 mm) and nets identical; height budget in the 6.0 mm gap OK; tightest: J2 (lower, 4.1 mm) under J1 pin tails (upper, 1.5 mm) -> 0.40 mm spare"
+  },
+  {
+   "name": "ArduPilot bootloader and ArduCopter compile for this board",
+   "ok": true,
+   "detail": "ArduCopter a995235 built, 1430984 bytes of flash"
+  }
+ ]
+}

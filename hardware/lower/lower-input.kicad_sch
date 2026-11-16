@@ -990,28 +990,15 @@
 		(stroke (width 0) (type default))
 		(uuid "82635f76-3216-535d-a8d2-ea7b6f7d9ab8")
 	)
-	(symbol
-		(lib_id "fcpwr:VBAT")
-		(at 35.56 59.69 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "30acca2e-7b79-5d7f-8b58-63aa929884a6")
-		(property "Reference" "#PWR0013" (at 35.56 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "VBAT" (at 35.56 56.134 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 35.56 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 35.56 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 35.56 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "43b84544-2b15-58fe-b7ce-de9faa64d982"))
-		(instances
-			(project "lower"
-				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0013")
-					(unit 1)
-				)
-			)
+	(global_label "VBAT"
+		(shape passive)
+		(at 35.56 59.69 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "9660eabb-5d70-502f-9bdd-4f30a201186c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 35.56 59.69 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1019,28 +1006,15 @@
 		(stroke (width 0) (type default))
 		(uuid "1880d7d3-8c27-5349-86f0-ebc19452fcdd")
 	)
-	(symbol
-		(lib_id "fcpwr:VESC")
+	(global_label "VESC"
+		(shape passive)
 		(at 48.26 59.69 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "2fc5e8d3-265c-51f2-a5c6-ed10f942b1a3")
-		(property "Reference" "#PWR0014" (at 48.26 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "VESC" (at 48.26 56.134 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 48.26 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 48.26 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 48.26 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "2c8cfc3e-bbce-518d-9a1f-fcf359ed83e5"))
-		(instances
-			(project "lower"
-				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0014")
-					(unit 1)
-				)
-			)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify left))
+		(uuid "6594c334-72fb-5982-8617-b8efe04bda8d")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 48.26 59.69 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(symbol
@@ -1080,28 +1054,15 @@
 		(stroke (width 0) (type default))
 		(uuid "f50044a0-4dea-50ec-9a20-0ec4d73030a0")
 	)
-	(symbol
-		(lib_id "fcpwr:VBAT")
-		(at 22.86 77.47 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "689445f0-cb2d-5cac-9c2a-2508bad5675b")
-		(property "Reference" "#PWR0015" (at 22.86 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "VBAT" (at 22.86 73.914 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 22.86 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 22.86 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 22.86 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "1eb9f01a-79f8-5d54-8d7d-6c3d0dd2f8dc"))
-		(instances
-			(project "lower"
-				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0015")
-					(unit 1)
-				)
-			)
+	(global_label "VBAT"
+		(shape passive)
+		(at 22.86 77.47 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "5ab00313-accc-5119-a1be-1ffa25960489")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 22.86 77.47 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1157,28 +1118,15 @@
 		(stroke (width 0) (type default))
 		(uuid "43102db2-585e-5149-8e5d-4256b9eb15fc")
 	)
-	(symbol
-		(lib_id "fcpwr:VESC")
-		(at 50.8 77.47 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "4edd6f0f-823a-5e16-88ae-4f99e5895c3d")
-		(property "Reference" "#PWR0016" (at 50.8 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "VESC" (at 50.8 73.914 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 50.8 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 50.8 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 50.8 77.47 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "90cf64d8-46a0-5336-943b-5fa7a11d0ce3"))
-		(instances
-			(project "lower"
-				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0016")
-					(unit 1)
-				)
-			)
+	(global_label "VESC"
+		(shape passive)
+		(at 50.8 77.47 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "4348a38f-8638-530c-a6bf-26a4fbac6855")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 50.8 77.47 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1248,17 +1196,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "486f7f8c-cb26-5cbb-a108-eb76ece97614")
-		(property "Reference" "#PWR0017" (at 87.63 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "30acca2e-7b79-5d7f-8b58-63aa929884a6")
+		(property "Reference" "#PWR0013" (at 87.63 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "VESC" (at 87.63 62.484 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 87.63 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 87.63 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 87.63 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "ed3842ff-318c-5741-9203-2db39194c346"))
+		(pin "1" (uuid "43b84544-2b15-58fe-b7ce-de9faa64d982"))
 		(instances
 			(project "lower"
 				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0017")
+					(reference "#PWR0013")
 					(unit 1)
 				)
 			)
@@ -1277,17 +1225,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "5960fd9d-ee12-511e-81f5-02c1a3a8f467")
-		(property "Reference" "#PWR0018" (at 87.63 53.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "2fc5e8d3-265c-51f2-a5c6-ed10f942b1a3")
+		(property "Reference" "#PWR0014" (at 87.63 53.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 87.63 57.15 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 87.63 53.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 87.63 53.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 87.63 53.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "28a5e61f-c0eb-5bd0-ab6b-d35fe21236f7"))
+		(pin "1" (uuid "2c8cfc3e-bbce-518d-9a1f-fcf359ed83e5"))
 		(instances
 			(project "lower"
 				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0018")
+					(reference "#PWR0014")
 					(unit 1)
 				)
 			)
@@ -1588,28 +1536,15 @@
 		(stroke (width 0) (type default))
 		(uuid "f38819d9-a04c-5515-86b9-338d24595132")
 	)
-	(symbol
-		(lib_id "fcpwr:GND")
-		(at 190.5 48.26 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "c20dd1b8-98e0-59bb-85e8-7b1479773872")
-		(property "Reference" "#PWR0019" (at 190.5 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "GND" (at 190.5 52.07 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 190.5 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 190.5 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 190.5 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "28371490-15eb-559a-92f9-81abe7f4f94c"))
-		(instances
-			(project "lower"
-				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0019")
-					(unit 1)
-				)
-			)
+	(global_label "GND"
+		(shape passive)
+		(at 190.5 48.26 180)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify right))
+		(uuid "1c44da2f-34c9-5c08-a707-98ac9971562a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 190.5 48.26 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1617,28 +1552,15 @@
 		(stroke (width 0) (type default))
 		(uuid "d50146b6-7118-59c0-924d-f298d69081a6")
 	)
-	(symbol
-		(lib_id "fcpwr:+3V3")
+	(global_label "+3V3"
+		(shape passive)
 		(at 215.9 43.18 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "5eb14c71-b2d1-5ae7-9f51-d35a01bae5f9")
-		(property "Reference" "#PWR0020" (at 215.9 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "+3V3" (at 215.9 39.624 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 215.9 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 215.9 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 215.9 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "e00b1616-e2a9-523e-a370-ee1d6400abf9"))
-		(instances
-			(project "lower"
-				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0020")
-					(unit 1)
-				)
-			)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify left))
+		(uuid "fe6b7565-8dc2-5c79-a1ed-d56e330b6135")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 215.9 43.18 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(wire
@@ -1662,28 +1584,15 @@
 		(stroke (width 0) (type default))
 		(uuid "de1a0574-8f7d-548d-84c6-a2b5b0fa66eb")
 	)
-	(symbol
-		(lib_id "fcpwr:GND")
+	(global_label "GND"
+		(shape passive)
 		(at 215.9 48.26 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "55689ef6-eb2a-5bca-a388-53f624fb3c18")
-		(property "Reference" "#PWR0021" (at 215.9 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Value" "GND" (at 215.9 52.07 0) (effects (font (size 1 1))))
-		(property "Footprint" "" (at 215.9 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Datasheet" "" (at 215.9 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "" (at 215.9 48.26 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "4dec34a1-8f45-502f-89ba-3b4388b0ca79"))
-		(instances
-			(project "lower"
-				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0021")
-					(unit 1)
-				)
-			)
+		(fields_autoplaced yes)
+		(effects (font (size 1.1 1.1)) (justify left))
+		(uuid "02e04053-e847-55bf-a95e-a32c5b978575")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 215.9 48.26 0)
+			(effects (font (size 1 1)) (hide yes))
 		)
 	)
 	(symbol
@@ -1737,17 +1646,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "1577a689-72dc-55ad-ae29-2d5357baded1")
-		(property "Reference" "#PWR0022" (at 231.14 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "689445f0-cb2d-5cac-9c2a-2508bad5675b")
+		(property "Reference" "#PWR0015" (at 231.14 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "+3V3" (at 231.14 56.134 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 231.14 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 231.14 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 231.14 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "b4d43756-c5cd-578d-b8df-ba5046c2e8ba"))
+		(pin "1" (uuid "1eb9f01a-79f8-5d54-8d7d-6c3d0dd2f8dc"))
 		(instances
 			(project "lower"
 				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0022")
+					(reference "#PWR0015")
 					(unit 1)
 				)
 			)
@@ -1766,17 +1675,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "25d84b2d-c420-584c-a4bb-4c78aa0532fb")
-		(property "Reference" "#PWR0023" (at 231.14 72.39 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "4edd6f0f-823a-5e16-88ae-4f99e5895c3d")
+		(property "Reference" "#PWR0016" (at 231.14 72.39 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 231.14 76.2 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 231.14 72.39 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 231.14 72.39 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 231.14 72.39 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "60c47702-331e-5d2b-a4dd-d5b1ec5d86a3"))
+		(pin "1" (uuid "90cf64d8-46a0-5336-943b-5fa7a11d0ce3"))
 		(instances
 			(project "lower"
 				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0023")
+					(reference "#PWR0016")
 					(unit 1)
 				)
 			)
@@ -1830,17 +1739,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "d9a092d1-baca-5453-a46b-5eb6de75399c")
-		(property "Reference" "#PWR0024" (at 41.91 119.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "486f7f8c-cb26-5cbb-a108-eb76ece97614")
+		(property "Reference" "#PWR0017" (at 41.91 119.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "VBAT" (at 41.91 115.824 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 41.91 119.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 41.91 119.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 41.91 119.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "91006331-e0b1-507f-b51e-ac4824625248"))
+		(pin "1" (uuid "ed3842ff-318c-5741-9203-2db39194c346"))
 		(instances
 			(project "lower"
 				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0024")
+					(reference "#PWR0017")
 					(unit 1)
 				)
 			)
@@ -1926,17 +1835,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "fa312a45-5b7d-54f4-99ef-4737ad16ada5")
-		(property "Reference" "#PWR0025" (at 41.91 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "5960fd9d-ee12-511e-81f5-02c1a3a8f467")
+		(property "Reference" "#PWR0018" (at 41.91 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 41.91 153.67 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 41.91 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 41.91 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 41.91 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "c781f01c-a757-5f96-8320-8334d2348028"))
+		(pin "1" (uuid "28a5e61f-c0eb-5bd0-ab6b-d35fe21236f7"))
 		(instances
 			(project "lower"
 				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0025")
+					(reference "#PWR0018")
 					(unit 1)
 				)
 			)
@@ -2009,17 +1918,17 @@
 		(in_bom no)
 		(on_board yes)
 		(dnp no)
-		(uuid "8a74f6ce-6f99-5b57-bc57-a2740db9ddac")
-		(property "Reference" "#PWR0026" (at 59.69 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(uuid "c20dd1b8-98e0-59bb-85e8-7b1479773872")
+		(property "Reference" "#PWR0019" (at 59.69 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Value" "GND" (at 59.69 153.67 0) (effects (font (size 1 1))))
 		(property "Footprint" "" (at 59.69 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 59.69 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Description" "" (at 59.69 149.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(pin "1" (uuid "25c7a3de-57e6-519d-a9a0-cdd3742f1257"))
+		(pin "1" (uuid "28371490-15eb-559a-92f9-81abe7f4f94c"))
 		(instances
 			(project "lower"
 				(path "/283a3593-953c-5d1e-aeab-1773de96ab3e/18fad7f8-e711-50f7-8309-5927e7a90d1b"
-					(reference "#PWR0026")
+					(reference "#PWR0019")
 					(unit 1)
 				)
 			)

@@ -27,7 +27,7 @@ GROMMETS = [(-10, 10), (10, 10), (-10, -10), (10, -10)]
 # part heights above their board surface, by footprint name fragment (mm)
 HEIGHTS = [("PinHeader_2x10_P2.54mm_Horizontal", 5.0), ("PinSocket_2x10_P1.27mm", 4.6), ("PinHeader_2x10_P1.27mm", 1.5),
            ("Standoff", 6.0), ("L_SXN", 3.0), ("D_SMB", 2.4), ("R_Shunt", 0.6), ("SOT-583", 0.6), ("SC-70", 1.1),
-           ("SOT-23", 1.2), ("LED_0603", 0.7), ("C_0805", 1.35), ("C_0603", 0.9), ("L_0603", 0.9), ("C_0402", 0.6),
+           ("SOT-23", 1.2), ("LED_0603", 0.7), ("C_0805", 1.35), ("R_0805", 0.6), ("R_1206", 0.65), ("D_SOD-123F", 1.1), ("C_0603", 0.9), ("L_0603", 0.9), ("C_0402", 0.6),
            ("R_0402", 0.4), ("Crystal_SMD_3225", 0.8), ("TestPoint", 0.05), ("WirePad", 4.0), ("NetTie", 0.0),
            ("Hole", 0.0)]
 

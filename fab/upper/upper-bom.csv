@@ -9,7 +9,7 @@ D1,1,BLUE,Blue LED 0603,LED_0603_1608Metric,Nationstar,NCD0603B1,C84266,0.017,ye
 D2,1,GREEN,Green LED 0603,LED_0603_1608Metric,Nationstar,NCD0603G1,C84267,0.016,yes
 D3,1,SMF5.0CA,"200 W bidirectional TVS, 5 V stand-off, SOD-123FL",D_SOD-123F,MCC,SMF5.0CA-TP,C914432,0.053,yes
 FB1,1,120R@100MHz,"Ferrite bead 120 ohm, 2 A, 0603",L_0603_1608Metric,Murata,BLM18PG121SN1D,C14709,0.015,yes
-J1,1,3x12 RA 2.54mm,"3x12 right-angle pin header, 2.54 mm (four 3x3 pieces or one Samtec TSW)",PinHeader_3x12_P2.54mm_Horizontal,HCTL / Samtec,PZ254-3-03-W-2.5-G0 (x4) or TSW-112-08-G-T-RA,C7429379,0.96,yes
+J1,1,3x12 RA 2.54mm,"3x12 right-angle pin header, 2.54 mm: four 3x3 pieces or one Samtec TSW (hand-soldered)",PinHeader_3x12_P2.54mm_Horizontal,HCTL / Samtec,PZ254-3-03-W-2.5-G0 (x4) or TSW-112-08-G-T-RA,C7429379,0.96,yes
 J3,1,2x10 header 1.27mm,"2x10 SMD pin header, 1.27 mm pitch, 1.0 mm plastic",PinHeader_2x10_P1.27mm_Vertical_SMD,HCTL,PZ127-2-10-S,C3975193,0.18,yes
 J4,1,microSD,microSD push-push socket,microSD_HC_Molex_104031-0811,Molex,104031-0811,C585350,0.68,yes
 J5,1,JST-SH 6P,"JST SH 6-pin side-entry header, 1.0 mm",JST_SH_SM06B-SRSS-TB_1x06-1MP_P1.00mm_Horizontal,JST,SM06B-SRSS-TB(LF)(SN),C160405,0.3,yes
@@ -24,7 +24,7 @@ R14 R15,2,1k,1 k 1%,R_0402_1005Metric,UNI-ROYAL,0402WGF1001TCE,C11702,0.001,yes
 R16 R17,2,4.7R,4.7 ohm 1% 1/8 W,R_0805_2012Metric,FOJAN,FRC0805F4R70TS,C2933459,0.005,yes
 R18,1,10R,"10 ohm 1% 1 W, 1206",R_1206_3216Metric,(high-power thick film),MFCR1206F10R0QHR,C42460620,0.09,yes
 U1,1,STM32F765VIT6,"Cortex-M7 216 MHz, 2 MB flash, LQFP-100",LQFP-100_14x14mm_P0.5mm,STMicroelectronics,STM32F765VIT6,C710319,16.34,yes
-U2,1,ICM-42688-P,"6-axis IMU, SPI, LGA-14 2.5x3 mm (ICM-45686 fits the same footprint)",LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y,TDK InvenSense,ICM-42688-P,C1850418,17.01,yes
+U2,1,ICM-45686,"6-axis IMU, SPI, LGA-14 2.5x3 mm (ICM-42688-P is a drop-in alternative)",LGA-14_3x2.5mm_P0.5mm_LayoutBorder3x4y,TDK InvenSense,ICM-45686,C22459454,14.35,yes
 U3,1,BMP388,"Barometric pressure sensor, I2C, LGA-10 2x2 mm",Bosch_LGA-10_2x2mm_P0.5mm,Bosch Sensortec,BMP388,C779278,2.39,yes
 U4,1,AT7456E,Single-channel monochrome OSD generator (MAX7456 compatible),HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.2mm,Zhongkewei,AT7456E,C82351,3.29,yes
 U5,1,LM66200DRLR,"Dual ideal diode OR, 2.5 A, 40 mohm",SOT-583-8,Texas Instruments,LM66200DRLR,C3235556,0.49,yes

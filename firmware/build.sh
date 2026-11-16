@@ -29,4 +29,14 @@ cp build/$BOARD/bin/ardu${VEHICLE}.apj "$HERE/bin/" 2>/dev/null || true
 cp build/$BOARD/bin/ardu${VEHICLE}.bin "$HERE/bin/" 2>/dev/null || true
 cp build/$BOARD/bin/ardu${VEHICLE}_with_bl.hex "$HERE/bin/" 2>/dev/null || true
 cp build/$BOARD/hwdef.h "$HERE/bin/hwdef.generated.h" 2>/dev/null || true
+python3 - "$HERE" "$AP" "$VEHICLE" <<'PY'
+import hashlib, json, os, subprocess, sys
+here, ap, vehicle = sys.argv[1:4]
+sha = hashlib.sha256(open(os.path.join(here, "hwdef/StackF765/hwdef.dat"), "rb").read()).hexdigest()
+ver = subprocess.run(["git", "-C", ap, "describe", "--always", "--dirty"], capture_output=True, text=True).stdout.strip()
+size = os.path.getsize(os.path.join(here, "bin", f"ardu{vehicle}.bin"))
+json.dump(dict(hwdef_sha256=sha, ardupilot_version=ver, vehicle=vehicle, flash_used=size,
+               bootloader_bytes=os.path.getsize(os.path.join(here, "bin", "StackF765_bl.bin"))),
+          open(os.path.join(here, "bin", "BUILD_INFO.json"), "w"), indent=1)
+PY
 ls -la "$HERE/bin"

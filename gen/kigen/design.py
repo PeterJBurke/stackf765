@@ -488,8 +488,8 @@ class Design:
                 L = 2.54
                 ex, ey = px + dx * L, py + dy * L
                 wire(px, py, ex, ey, f"{part.ref}.{p.number}")
-                if net in self.grounds or net in self.rails:
-                    power(net, ex, ey)
+                if (net in self.grounds or net in self.rails) and dx == 0:
+                    power(net, ex, ey)          # power symbols only on vertical stubs; sideways ones get a label
                 else:
                     ang = {(1, 0): 0, (-1, 0): 180, (0, -1): 90, (0, 1): 270}[(dx, dy)]
                     glabel(net, ex, ey, ang, f"{part.ref}.{p.number}")

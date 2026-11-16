@@ -130,14 +130,14 @@
 
 
 // SPI device table
-#define HAL_SPI_DEVICE0  SPIDesc("icm42688"       ,  0,  1, PAL_LINE(GPIOC,4U) , SPIDEV_MODE3,   2*MHZ,  16*MHZ)
+#define HAL_SPI_DEVICE0  SPIDesc("icm45686"       ,  0,  1, PAL_LINE(GPIOC,4U) , SPIDEV_MODE3,   2*MHZ,  16*MHZ)
 #define HAL_SPI_DEVICE1  SPIDesc("osd"            ,  1,  4, PAL_LINE(GPIOB,12U), SPIDEV_MODE0,  10*MHZ,  10*MHZ)
 
 // spi devices table
 #define HAL_SPI_DEVICE_LIST \
    HAL_SPI_DEVICE0,\
    HAL_SPI_DEVICE1
-#define HAL_WITH_SPI_ICM42688 1
+#define HAL_WITH_SPI_ICM45686 1
 #define HAL_WITH_SPI_OSD 1
 
 // ADC config
@@ -223,16 +223,16 @@
 #define HAL_GPIO_PIN_USART6_RX            PAL_LINE(GPIOC,7U)
 #define HAL_GPIO_PIN_USART6_TX            PAL_LINE(GPIOC,6U)
 
-#define HAL_INS_PROBE1  ADD_BACKEND(AP_InertialSensor_Invensensev3::probe(*this,hal.spi->get_device("icm42688"),ROTATION_NONE))
+#define HAL_INS_PROBE1  ADD_BACKEND(AP_InertialSensor_Invensensev3::probe(*this,hal.spi->get_device("icm45686"),ROTATION_ROLL_180_YAW_90))
 #ifndef INS_MAX_INSTANCES
 #define INS_MAX_INSTANCES 1
 #endif
 #define HAL_INS_PROBE_LIST HAL_INS_PROBE1
 
 
-#define HAL_BARO_PROBE1 probe_i2c_dev(AP_Baro_DPS310::probe, 0, 118); RETURN_IF_NO_SPACE;
-#undef AP_BARO_DPS310_ENABLED
-#define AP_BARO_DPS310_ENABLED 1
+#define HAL_BARO_PROBE1 probe_i2c_dev(AP_Baro_BMP388::probe, 0, 118); RETURN_IF_NO_SPACE;
+#undef AP_BARO_BMP388_ENABLED
+#define AP_BARO_BMP388_ENABLED 1
 #define HAL_BARO_PROBE_LIST HAL_BARO_PROBE1
 
 // peripherals enabled

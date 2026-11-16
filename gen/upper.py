@@ -133,7 +133,7 @@ def design():
 
     # ------------------------------------------------------------------ sheet: sensors
     s = d.sheet("sensors", "IMU and barometer")
-    s.frame(15, 20, 190, 220, "U2: ICM-42688-P 6-axis IMU on SPI1 (ICM-45686 fits the same footprint)")
+    s.frame(15, 20, 190, 220, "U2: ICM-45686 6-axis IMU on SPI1 (ICM-42688-P fits the same footprint)")
     B.part(s, "U2", "imu", 110, 90, nets={"SCLK": "IMU_SCK", "SDI": "IMU_MOSI", "SDO": "IMU_MISO", "CS": "IMU_CS",
                                          "INT1": "IMU_INT", "INT2/FSYNC": "GND", "VDD": "+3V3_SENS",
                                          "VDDIO": "+3V3_SENS", "RESV7": "GND", "GND": "GND"},
@@ -294,11 +294,13 @@ def layout(bd):
     bd.zone("GND", ["In1.Cu"], full, priority=1, name="GND plane")
     bd.zone("+3V3", ["In4.Cu"], full, priority=1, name="+3V3 plane")
     bd.zone("GND", ["F.Cu", "B.Cu", "In2.Cu", "In3.Cu"], full, priority=0, name="GND pour")
-    # --- silkscreen: one label per header pin, printed just in front of its hole
+    # --- silkscreen: one label per header pin, printed sideways just to the LEFT of its hole,
+    #     in the gap between pin columns so the bent pins do not cover it
     for r, row in enumerate("ABC"):
         for i, (lab, _) in enumerate(J1_ROWS[row]):
-            bd.text(lab, -13.97 + i * 2.54, 14.46 + r * 2.54 + 1.27, size=0.7, thick=0.12)
-            bd.text(lab, -13.97 + i * 2.54, 14.46 + r * 2.54 + 1.27, "B.SilkS", size=0.7, thick=0.12)
+            for layer in ("F.SilkS", "B.SilkS"):
+                bd.text(lab, -13.97 + i * 2.54 - 1.2, 14.46 + r * 2.54, layer, size=0.62, thick=0.11, rot=90)
+    bd.text("J5: 1 VBUS 2 D- 3 D+ 4 G 5 BUZ 6 BOOT", 0, -7.0, "B.SilkS", size=0.7, thick=0.12)
     bd.text("StackF765 UPPER rev A", 0, -3.6, "B.SilkS", size=0.9)
 
 
