@@ -63,11 +63,12 @@ def pinouts():
         [C, Bq, A], ["front edge", "middle", "inner row"],
         "Upper board 3 x 12 header - seen from ABOVE (header pointing away from you)",
         "This is how the labels are printed on the board.  Inner row = highest pins.")
-    top = lower.J2_LABELS
+    LA, LB, LC = ([l for l, _ in lower.J2_ROWS[r]] for r in "ABC")
     svgs["lower-header-front"] = grid_svg(
-        [top[::-1], ["G"] * 10], ["top row", "bottom row"],
-        "Lower board 2 x 10 header - looking INTO the pins from the front",
-        "M1-M6 = motor / servo signals.  LED = addressable LED data.  PI5V = separate 5 V / 3 A regulator.", cell=52)
+        [LA[::-1], LB[::-1], LC[::-1]], ["top row: signal", "middle: 5 V", "bottom: ground"],
+        "Lower board 3 x 9 header - looking INTO the pins from the front",
+        "Each column takes a standard 3-pin plug (signal on top, ground nearest the board).  PI5V = separate 5 V / 3 A.",
+        cell=52)
     svgs["power-pads"] = grid_svg(
         [["BAT+", "ESC+", "ESC-", "BAT-"]], ["rear edge"],
         "Lower board solder pads - seen from above",
@@ -109,13 +110,15 @@ def pinout_md():
          "| B1-B4: G 4V5 TX2 RX2 | Radio receiver (CRSF / ELRS) |",
          "| A7-A9, A10-A12 | Camera (G 5V CAM) and video transmitter (G 5V VTX) |",
          "| other G 5V TX RX groups | Telemetry radio, ESC telemetry, VTX control, companion computer |", "",
-         "## Lower board, 2 x 10 header (J2)", "",
-         "Seen from above with the header pointing away from you.", "",
-         "| Row | " + " | ".join(str(i) for i in range(1, 11)) + " |", "|---|" + "---|" * 10,
-         "| top row (signal) | " + " | ".join(lower.J2_LABELS) + " |",
-         "| bottom row | " + " | ".join(["G"] * 10) + " |", "",
+         "## Lower board, 3 x 9 header (J2)", "",
+         "Seen from above with the header pointing away from you. Each column takes a standard 3-pin servo / ESC plug.", "",
+         "| Row | " + " | ".join(str(i) for i in range(1, 10)) + " |", "|---|" + "---|" * 9,
+         "| C: nearest the board edge, lowest pins | " + " | ".join(l for l, _ in lower.J2_ROWS["C"]) + " |",
+         "| B: middle | " + " | ".join(l for l, _ in lower.J2_ROWS["B"]) + " |",
+         "| A: inner row, highest pins (signal) | " + " | ".join(l for l, _ in lower.J2_ROWS["A"]) + " |", "",
          "M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). "
-         "5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer.", "",
+         "5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer "
+         "(two columns: signal and middle pins are PI5V, bottom pin is ground).", "",
          "## Lower board, power pads", "", "Rear edge, seen from above: `BAT+  ESC+  ESC-  BAT-`. 2S-3S LiPo, 50 A continuous.", "",
          "## Service cable (J5 on the upper board, J2 on the service board)", "",
          "| Pin | 1 | 2 | 3 | 4 | 5 | 6 |", "|---|---|---|---|---|---|---|", "| Signal | VBUS | D- | D+ | GND | BUZ | BOOT |", "",

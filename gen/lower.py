@@ -14,10 +14,17 @@ for _c, (_t, _b) in enumerate(B2B_COLS):
     B2B[2 * _c + 1] = _t
     B2B[2 * _c + 2] = _b
 
-# 2x10 right-angle header, column 1..10 = (top-row pin, bottom-row pin)
-J2 = [("M1", "GND"), ("M2", "GND"), ("M3", "GND"), ("M4", "GND"), ("M5", "GND"), ("M6", "GND"),
-      ("LED_STRIP", "GND"), ("+5V", "GND"), ("+5V_PI", "GND"), ("+5V_PI", "GND")]
-J2_LABELS = ["M1", "M2", "M3", "M4", "M5", "M6", "LED", "5V", "PI5V", "PI5V"]
+# 3 x 9 right-angle header.  Each column takes a standard 1x3 servo/ESC plug:
+# row A (highest pin) = signal, row B = 5 V, row C (nearest the board) = ground.
+J2_LABELS = ["M1", "M2", "M3", "M4", "M5", "M6", "LED", "PI5V", "PI5V"]
+J2_ROWS = {
+    "A": [("M1", "M1"), ("M2", "M2"), ("M3", "M3"), ("M4", "M4"), ("M5", "M5"), ("M6", "M6"), ("LED", "LED_STRIP"),
+          ("PI5V", "+5V_PI"), ("PI5V", "+5V_PI")],
+    "B": [("5V", "+5V")] * 7 + [("PI5V", "+5V_PI")] * 2,
+    "C": [("G", "GND")] * 9,
+}
+HDR_ROW_A_Y = 17.72        # header hole rows at 17.72 / 20.26 / 22.80: the plastic body hangs off the front edge
+J2_X0 = -10.16             # 9 columns centred; half a pitch off the upper header's columns so pins interleave
 
 W, H = 31.5, 48.0
 PAD_Y = -21.75
@@ -49,7 +56,7 @@ def buck(d, B, sh, n, out, x, y):
 
 
 def design():
-    d = Design("lower", "StackF765 lower board (power)", rev="A", date="2026-11-16",
+    d = Design("lower", "StackF765 lower board (power)", rev="B", date="2026-11-16",
                rails=("VBAT", "VESC", "+5V", "+5V_PI", "+3V3"))
     B = Blocks(d)
     d.root_notes = [
@@ -106,13 +113,18 @@ def design():
     j = B.part(s, "J1", "b2b_socket", 100, 80)
     for pin, net in B2B.items():
         j[str(pin)] = net
-    s.frame(205, 20, 195, 130, "J2: motor / LED / companion-power header (2x10 right-angle, 2.54 mm)")
-    j = B.part(s, "J2", "hdr2x10", 300, 80)
-    for col, (top, bot) in enumerate(J2):
-        j[str(2 * col + 1)] = top
-        j[str(2 * col + 2)] = bot
-    s.text(210, 140, "Top row: M1 M2 M3 M4 M5 M6 LED 5V PI5V PI5V     Bottom row: all GND", 1.6)
-    s.frame(15, 160, 180, 80, "Power indicator and standoffs (M2 x 6 mm, soldered, grounded)")
+    s.frame(205, 20, 195, 130, "J2: motor / LED / companion-power header (3x9 right-angle): column = SIG / 5V / G")
+    from kigen.design import box
+    sym = box("HDR_3x9", left=[(f"A{i + 1}", f"A{i + 1} {J2_ROWS['A'][i][0]}") for i in range(9)] + [None] +
+              [(f"C{i + 1}", f"C{i + 1} {J2_ROWS['C'][i][0]}") for i in range(9)],
+              right=[(f"B{i + 1}", f"B{i + 1} {J2_ROWS['B'][i][0]}") for i in range(9)], ref="J", width=30.48)
+    j = d.part("J2", sym, "fc:PinHeader_3x09_P2.54mm_Horizontal", "3x9 RA 2.54mm",
+               **{k: v for k, v in parts.PARTS["hdr3x9"].items() if k not in ("symbol", "footprint", "value")})
+    for row, cols in J2_ROWS.items():
+        for i, (_, net) in enumerate(cols):
+            j[f"{row}{i + 1}"] = net
+    s.place(j, 300, 85)
+    s.frame(15, 160, 180, 80, "Power indicator and standoffs (M2 x 8 mm, soldered, grounded)")
     B.R(s, "R6", "2.2k", "+5V", "LED_A", 40, 195, 0)
     B.part(s, "D2", "led_green", 40, 215, 90, nets={"A": "LED_A", "K": "GND"})
     for i in range(3):
@@ -189,7 +201,7 @@ def layout(bd):
     _buck_cluster(bd, 2, -2.9, 9.2)       # +5V_PI (front), output next to J2 columns 9-10
     # --- connectors
     bd.place("J1", 0, 0, 90)
-    bd.place("J2", -12.7, 17.1, 90)       # pin 1 (M1) at the left; pins point forward
+    bd.place("J2", J2_X0, HDR_ROW_A_Y, 90)   # column 1 (M1) at the left; pins point forward
     bd.place("R6", -14.6, 10.6, 90)
     bd.place("D2", -14.6, 7.6, 90)
 
@@ -210,14 +222,20 @@ def layout(bd):
     for name, x in (("BAT+", -11.25), ("ESC+", -4.7), ("ESC-", 3.75), ("BAT-", 11.25)):
         bd.text(name, x, -19.1, size=0.8, thick=0.14)
         bd.text(name, PAD_X[name], -19.0, "B.SilkS", size=1.0, thick=0.16)
-    for col, lab in enumerate(J2_LABELS):          # sideways, just left of each pin pair
+    for col, lab in enumerate(J2_LABELS):          # sideways, just left of each column
         for layer in ("F.SilkS", "B.SilkS"):
-            bd.text(lab, -12.7 + col * 2.54 - 1.2, 18.37, layer, size=0.62, thick=0.11, rot=90)
-    bd.text("StackF765 LOWER rev A", 0, 3.5, "B.SilkS", size=1.0, thick=0.16)
-    bd.text("2S-3S LiPo   50 A   bottom row of J2 = GND", 0, -15.0, "B.SilkS", size=0.8, thick=0.14)
+            bd.text(lab, J2_X0 + col * 2.54 - 1.25, HDR_ROW_A_Y + 2.54, layer, size=0.62, thick=0.11, rot=90)
+    for r, lab in enumerate(("S", "5V", "G")):     # row legend at the right-hand end
+        for layer in ("F.SilkS", "B.SilkS"):
+            bd.text(lab, J2_X0 + 8 * 2.54 + 1.9, HDR_ROW_A_Y + r * 2.54, layer, size=0.7, thick=0.12)
+    bd.text("StackF765 LOWER rev B", 0, 3.5, "B.SilkS", size=1.0, thick=0.16)
+    bd.text("2S-3S LiPo  50 A   J2 columns: S / 5V / G", 0, -15.0, "B.SilkS", size=0.8, thick=0.14)
 
 
 def router_config(bd):
     return dict(layers=["F.Cu", "B.Cu"], grid=0.05, track=0.2, clear=0.2, via_dia=0.7, via_drill=0.3,
                 plane_nets=("GND", "VESC"),
                 widths={"+5V": 0.6, "+5V_PI": 0.8, "VBAT": 0.4})
+
+
+ROUTER = "sequential"

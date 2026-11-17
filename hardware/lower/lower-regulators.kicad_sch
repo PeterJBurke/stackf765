@@ -7,7 +7,7 @@
 	(title_block
 		(title "StackF765 lower board (power) - 5 V regulators")
 		(date "2026-11-16")
-		(rev "A")
+		(rev "B")
 		(company "StackF765 lower board (power)")
 		(comment 1 "Sheet 3: 5 V regulators")
 	)

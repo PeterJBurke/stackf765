@@ -34,6 +34,9 @@ def circle(x, y, r, layer, w=0.1):
     return f'  (fp_circle (center {x:.3f} {y:.3f}) (end {x + r:.3f} {y:.3f}) (stroke (width {w}) (type solid)) (fill no) (layer "{layer}"))\n'
 
 
+# Samtec SFMC-1xx-02 socket land pattern (pad length, row centre), see research/samtec-b2b.md
+SFMC_PAD_LEN, SFMC_ROW_C = 2.22, 1.365      # Samtec footprint SFMC-D-SM rev D: pads 0.74 x 2.22, outer span 4.95
+
 # ---------------------------------------------------------------------------
 # 3 x 12 right-angle 2.54 mm pin header (HCTL PZ254-3-xx-W-2.5 / Samtec TSW-112-08-x-T-RA)
 # Rows along +X: A (x=0, highest pins), B (x=2.54), C (x=5.08, lowest pins, nearest the body).
@@ -90,7 +93,7 @@ def smt_standoff(name, height):
         b += (f'  (pad "1" smd circle (at {x:.3f} {y:.3f}) (size 0.9 0.9) (layers "F.Cu" "F.Paste"))\n')
     b += circle(0, 0, 2.78, "F.Fab")
     b += circle(0, 0, 3.35, "F.CrtYd", 0.05)
-    fp(name, f"Sinhoo SMTSO20{int(height*10):02d}CTJ reflow M2 standoff, {height} mm, dia 5.56, PCB hole 3.75", b,
+    fp(name, f"Sinhoo SMTSO20{int(height * 10):02d}CTJ reflow M2 standoff, {height} mm, dia 5.56, PCB hole 3.75", b,
        attr="smd", model=f"{name}.step")
 
 
@@ -137,7 +140,34 @@ def bmp388():
 
 
 bmp388()
+def b2b_127(name, descr, pad_len, row_c, first_pad_x_sign, body_w, body_len, model):
+    """2x10 1.27 mm SMD connector.  Pads numbered like KiCad's PinHeader/PinSocket 1.27 mm footprints:
+    pad 1 and 2 share the first row position (y = -5.715); first_pad_x_sign gives the side of pad 1,
+    so that a header on the bottom of one board mates pad N to pad N of a socket on the top of the other."""
+    b = ""
+    for i in range(10):
+        y = -5.715 + i * 1.27
+        for k, sx in enumerate((first_pad_x_sign, -first_pad_x_sign)):
+            b += (f'  (pad "{2 * i + 1 + k}" smd roundrect (at {sx * row_c:.3f} {y:.3f}) (size {pad_len} 0.74) '
+                  f'(layers "F.Cu" "F.Paste" "F.Mask") (roundrect_rratio 0.15))\n')
+    b += rect(-body_w / 2, -body_len / 2, body_w / 2, body_len / 2, "F.Fab")
+    ex, ey = row_c + pad_len / 2 + 0.25, body_len / 2 + 0.25
+    b += rect(-ex, -ey, ex, ey, "F.CrtYd", 0.05)
+    b += line(-body_w / 2, -ey + 0.1, body_w / 2, -ey + 0.1) + line(-body_w / 2, ey - 0.1, body_w / 2, ey - 0.1)
+    b += circle(first_pad_x_sign * (row_c + pad_len / 2 + 0.1), -5.715 - 0.9, 0.1, "F.SilkS", 0.2)
+    fp(name, descr, b, attr="smd", model=model)
+
+
+# Samtec FTSH-110-xx-x-DV terminal strip: pads 0.74 x 2.79, outer span 6.86 (Samtec footprint rev H)
+b2b_127("Samtec_FTSH-110-xx-x-DV", "Samtec FTSH-110-xx-x-DV 2x10 1.27 mm SMT terminal strip", 2.79, 2.035, -1, 3.43, 12.7,
+        "Samtec_FTSH-110-04-x-DV.step")
+# Samtec SFMC-110-02-x-D socket: land pattern per research/samtec-b2b.md
+b2b_127("Samtec_SFMC-110-02-x-D", "Samtec SFMC-110-02-x-D 2x10 1.27 mm SMT socket", SFMC_PAD_LEN, SFMC_ROW_C, 1, 3.05, 13.08,
+        "Samtec_SFMC-110-02-x-D.step")
+
 header_3xN(12)
+header_3xN(9)
+smt_standoff("Standoff_SMT_M2_H8.0", 8.0)
 wire_pad("WirePad_5x4mm", 5.0, 4.0)
 smt_standoff("Standoff_SMT_M2_H6.0", 6.0)
 screw_hole("Hole_M2_Screw", 2.2, 4.2)

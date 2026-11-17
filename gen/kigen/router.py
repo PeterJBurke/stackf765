@@ -380,8 +380,7 @@ class Router:
             if len(kept) != len(items):
                 items[:] = kept
                 self._rebuild_soft()
-            anchored = [c for p in pads if p["tht"] for c in p["centre"]] + \
-                self._cells_of(items + [it for i, it in enumerate(allit[len(items):]) if True])
+            anchored = [c for p in pads if p["tht"] for c in p["centre"]] + self._cells_of(list(items) + list(fixed))
             todo = [p for p in pads if not p["tht"]]
             # hardest (most boxed-in) pads first: smallest pads tend to be IC pins
             todo.sort(key=lambda p: -p["hx"] * p["hy"])     # capacitors first, IC pins then join them
@@ -616,12 +615,11 @@ class Router:
                     self.routes[n] = []
                     self._rebuild_soft()
         log(f"  first pass: {len(planes) + len(sig) - len(failed)}/{len(planes) + len(sig)} routed; failed {failed}")
-        best = (len(failed), copy.deepcopy(self.routes), list(failed))
-        for rnd in range(rip_rounds):
-            if not failed:
-                break
+        best = (len(failed) + 1, copy.deepcopy(self.routes), list(failed))
+        for rnd in range(rip_rounds + 4):
             still = []
-            for n in failed:
+            # plane nets are re-checked every round: a rip-up may have removed one of their fan-out vias
+            for n in list(dict.fromkeys(failed + planes)):
                 self.failed = []
                 if self.route_net(n):
                     continue
@@ -663,8 +661,10 @@ class Router:
                     self._rebuild_soft()
             failed = list(dict.fromkeys(still))
             log(f"  rip-up round {rnd + 1}: still failing {failed}")
-            if len(failed) < best[0]:
+            if len(failed) < best[0] or (not failed):
                 best = (len(failed), copy.deepcopy(self.routes), list(failed))
+            if not failed:
+                break
         self.routes = best[1]
         self._rebuild_soft()
         self.unrouted = best[2]

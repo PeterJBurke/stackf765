@@ -1,19 +1,26 @@
 # Assembling the stack
 
-You need: the three assembled boards, the two right-angle headers, three M2 × 4 mm screws,
+You need: the three assembled boards, the two right-angle headers, the two Samtec board-to-board
+connectors if they were not factory-fitted, three M2 × 4 mm screws,
 four grommets with M2 hardware, a 6-wire JST-SH cable (wired 1:1), battery and ESC wires.
 
 Do the electrical checks in [bringup.md](bringup.md) on each board **before** stacking them.
 
-## 1. Solder the headers
+## 1. Solder the headers and board-to-board connectors
 
-**Lower board, J2 (2 × 10 right-angle).** Fit it on the top side at the front edge with the pins
-pointing off the board. Top row: `M1 M2 M3 M4 M5 M6 LED 5V PI5V PI5V`. Bottom row: all ground.
+**Board-to-board connectors (if not factory-fitted).** Socket SFMC-110-02-L-D on the top of the lower
+board (J1), header FTSH-110-04-L-DV on the bottom of the upper board (J3). They are 1.27 mm-pitch
+surface-mount parts: tack one corner pin, check alignment, then solder the rest with flux and a fine tip.
+
+**Lower board, J2 (3 × 9 right-angle, three 3 × 3 pieces).** Top side, front edge, pins pointing off the
+board; the plastic body hangs just beyond the board edge. Columns left to right: `M1 M2 M3 M4 M5 M6 LED PI5V PI5V`.
+In each column the top pin is signal, the middle pin 5 V, the bottom pin ground.
 
 **Upper board, J1 (3 × 12 right-angle).** Top side, front edge, pins pointing off the board.
 You can use one Samtec TSW-112-08-G-T-RA or four generic 3 × 3 pieces side by side.
-Trim the pin tails under the upper board to **1.5 mm or less**: they sit above the pins of the lower
-header with about 0.4 mm to spare (the two headers are offset sideways by half a pitch for this reason).
+The plastic body hangs just beyond the board edge. Trim the pin tails under the upper board to
+**1.5 mm or less**. The two headers are offset sideways by half a pitch so these tails sit between the
+pins of the lower header, not on top of them.
 
 ## 2. Solder the power wires
 
@@ -35,7 +42,7 @@ with M2 screws. The area around each grommet is kept free of parts.
 ## 4. Fit the upper board
 
 Line up the 20-pin connector on the underside of the upper board with the socket on the lower
-board, press down until the board rests on the three standoffs, and fasten with three M2 × 4 mm
+board, press down until the board rests on the three 8 mm standoffs (the connector is designed to stop about 0.35 mm short of fully seated), and fasten with three M2 × 4 mm
 screws. Do not use longer screws.
 
 ## 5. Connect the service board

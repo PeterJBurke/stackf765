@@ -84,13 +84,13 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
   <div class="fact"><b>Sensors</b>ICM-45686 IMU (SPI), BMP388 barometer (I2C)</div>
   <div class="fact"><b>Battery</b>2S&ndash;3S LiPo (6&ndash;13&nbsp;V), 50&nbsp;A continuous through a 0.5&nbsp;m&Omega; shunt</div>
   <div class="fact"><b>Serial ports</b>7 UARTs + USB, all on labelled header pins</div>
-  <div class="fact"><b>Outputs</b>6 motor / servo outputs (DShot capable), addressable LED</div>
+  <div class="fact"><b>Outputs</b>6 motor / servo outputs (DShot capable) on standard 3-pin G / 5V / SIG columns, addressable LED</div>
   <div class="fact"><b>Video</b>Analog OSD (AT7456E): camera in, VTX out</div>
   <div class="fact"><b>Logging</b>microSD (4-bit SDMMC)</div>
   <div class="fact"><b>5&nbsp;V rails</b>3&nbsp;A for the flight controller and peripherals; a separate 3&nbsp;A for a companion computer</div>
-  <div class="fact"><b>Size</b>31.5 &times; 48 &times; about 17&nbsp;mm; 20 &times; 20&nbsp;mm grommet mounting</div>
+  <div class="fact"><b>Size</b>31.5 &times; 48 &times; about 19&nbsp;mm; 20 &times; 20&nbsp;mm grommet mounting</div>
   <div class="fact"><b>Service board</b>USB-C, buzzer and DFU button on a 6-wire cable</div>
-  <div class="fact"><b>Parts cost</b>about $45 per set at single-unit prices (PCBs and assembly extra)</div>
+  <div class="fact"><b>Parts cost</b>about $55 per set at single-unit prices (PCBs and assembly extra)</div>
 </div>
 
 <h2 id="pinout">Pinout</h2>
@@ -253,51 +253,66 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <text x="599.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">VTX</text>
 <text x="10" y="172" font-size="11.5" fill="currentColor" opacity="0.75">This is how the labels are printed on the board.  Inner row = highest pins.</text>
 </svg></div>
-<div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 610 148" font-family="system-ui,Segoe UI,Arial,sans-serif">
-<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Lower board 2 x 10 header - looking INTO the pins from the front</text>
-<text x="10" y="55.0" font-size="12" fill="currentColor">top row</text>
+<div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 558 182" font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Lower board 3 x 9 header - looking INTO the pins from the front</text>
+<text x="10" y="55.0" font-size="12" fill="currentColor">top row: signal</text>
 <rect x="72" y="36" width="48" height="30" rx="5" fill="#ad1457"/>
 <text x="96.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">PI5V</text>
 <rect x="124" y="36" width="48" height="30" rx="5" fill="#ad1457"/>
 <text x="148.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">PI5V</text>
-<rect x="176" y="36" width="48" height="30" rx="5" fill="#c62828"/>
-<text x="200.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
-<rect x="228" y="36" width="48" height="30" rx="5" fill="#f9a825"/>
-<text x="252.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#000">LED</text>
+<rect x="176" y="36" width="48" height="30" rx="5" fill="#f9a825"/>
+<text x="200.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#000">LED</text>
+<rect x="228" y="36" width="48" height="30" rx="5" fill="#455a64"/>
+<text x="252.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M6</text>
 <rect x="280" y="36" width="48" height="30" rx="5" fill="#455a64"/>
-<text x="304.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M6</text>
+<text x="304.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M5</text>
 <rect x="332" y="36" width="48" height="30" rx="5" fill="#455a64"/>
-<text x="356.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M5</text>
+<text x="356.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M4</text>
 <rect x="384" y="36" width="48" height="30" rx="5" fill="#455a64"/>
-<text x="408.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M4</text>
+<text x="408.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M3</text>
 <rect x="436" y="36" width="48" height="30" rx="5" fill="#455a64"/>
-<text x="460.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M3</text>
+<text x="460.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M2</text>
 <rect x="488" y="36" width="48" height="30" rx="5" fill="#455a64"/>
-<text x="512.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M2</text>
-<rect x="540" y="36" width="48" height="30" rx="5" fill="#455a64"/>
-<text x="564.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M1</text>
-<text x="10" y="89.0" font-size="12" fill="currentColor">bottom row</text>
-<rect x="72" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="96.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="124" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="148.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="176" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="200.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="228" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="252.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="280" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="304.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="332" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="356.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="384" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="408.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="436" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="460.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="488" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="512.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<rect x="540" y="70" width="48" height="30" rx="5" fill="#2b2b2b"/>
-<text x="564.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
-<text x="10" y="138" font-size="11.5" fill="currentColor" opacity="0.75">M1-M6 = motor / servo signals.  LED = addressable LED data.  PI5V = separate 5 V / 3 A regulator.</text>
+<text x="512.0" y="55.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">M1</text>
+<text x="10" y="89.0" font-size="12" fill="currentColor">middle: 5 V</text>
+<rect x="72" y="70" width="48" height="30" rx="5" fill="#ad1457"/>
+<text x="96.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">PI5V</text>
+<rect x="124" y="70" width="48" height="30" rx="5" fill="#ad1457"/>
+<text x="148.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">PI5V</text>
+<rect x="176" y="70" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="200.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="228" y="70" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="252.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="280" y="70" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="304.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="332" y="70" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="356.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="384" y="70" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="408.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="436" y="70" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="460.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<rect x="488" y="70" width="48" height="30" rx="5" fill="#c62828"/>
+<text x="512.0" y="89.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">5V</text>
+<text x="10" y="123.0" font-size="12" fill="currentColor">bottom: ground</text>
+<rect x="72" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="96.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="124" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="148.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="176" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="200.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="228" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="252.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="280" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="304.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="332" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="356.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="384" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="408.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="436" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="460.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<rect x="488" y="104" width="48" height="30" rx="5" fill="#2b2b2b"/>
+<text x="512.0" y="123.5" font-size="12.5" font-weight="600" text-anchor="middle" fill="#fff">G</text>
+<text x="10" y="172" font-size="11.5" fill="currentColor" opacity="0.75">Each column takes a standard 3-pin plug (signal on top, ground nearest the board).  PI5V = separate 5 V / 3 A.</text>
 </svg></div>
 <div class="pin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 114" font-family="system-ui,Segoe UI,Arial,sans-serif">
 <text x="10" y="20" font-size="15" font-weight="700" fill="currentColor">Lower board solder pads - seen from above</text>
@@ -348,7 +363,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
     <a href="boards/upper/upper.step">STEP</a>
     <a href="boards/upper/upper.glb">GLB</a>
   </p>
-  <details><summary>Bill of materials: 33 lines, 72 parts, about $40.07 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+  <details><summary>Bill of materials: 33 lines, 72 parts, about $44.08 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
 <tr><td>C1 C3 C4 C7 C46</td><td>5</td><td>10u</td><td>10 uF 25 V X5R</td><td>CL10A106MA8NRNC</td><td><a href="https://www.lcsc.com/product-detail/C96446.html">C96446</a></td><td>0.012</td></tr>
 <tr><td>C2 C5 C6 C8 C9 C19</td><td>6</td><td>1u</td><td>1 uF 25 V X5R</td><td>CL05A105KA5NQNC</td><td><a href="https://www.lcsc.com/product-detail/C52923.html">C52923</a></td><td>0.004</td></tr>
 <tr><td>C10 C11 C12 C13 C14 C16 C20 C23 C30 C32 C33 C34 C40 C41 C42 C44 C45 C50 C51</td><td>19</td><td>100n</td><td>100 nF 16 V X7R</td><td>CL05B104KO5NNNC</td><td><a href="https://www.lcsc.com/product-detail/C1525.html">C1525</a></td><td>0.002</td></tr>
@@ -360,7 +375,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <tr><td>D3</td><td>1</td><td>SMF5.0CA</td><td>200 W bidirectional TVS, 5 V stand-off, SOD-123FL</td><td>SMF5.0CA-TP</td><td><a href="https://www.lcsc.com/product-detail/C914432.html">C914432</a></td><td>0.053</td></tr>
 <tr><td>FB1</td><td>1</td><td>120R@100MHz</td><td>Ferrite bead 120 ohm, 2 A, 0603</td><td>BLM18PG121SN1D</td><td><a href="https://www.lcsc.com/product-detail/C14709.html">C14709</a></td><td>0.015</td></tr>
 <tr><td>J1</td><td>1</td><td>3x12 RA 2.54mm</td><td>3x12 right-angle pin header, 2.54 mm: four 3x3 pieces or one Samtec TSW (hand-soldered)</td><td>PZ254-3-03-W-2.5-G0 (x4) or TSW-112-08-G-T-RA</td><td><a href="https://www.lcsc.com/product-detail/C7429379.html">C7429379</a></td><td>0.96</td></tr>
-<tr><td>J3</td><td>1</td><td>2x10 header 1.27mm</td><td>2x10 SMD pin header, 1.27 mm pitch, 1.0 mm plastic</td><td>PZ127-2-10-S</td><td><a href="https://www.lcsc.com/product-detail/C3975193.html">C3975193</a></td><td>0.18</td></tr>
+<tr><td>J3</td><td>1</td><td>FTSH-110-04-L-DV</td><td>2x10 SMT terminal strip, 1.27 mm, 3.81 mm posts (buy from a distributor; hand-solder or consign)</td><td>FTSH-110-04-L-DV</td><td><a href="https://www.lcsc.com/product-detail/C7279869.html">C7279869</a></td><td>4.19</td></tr>
 <tr><td>J4</td><td>1</td><td>microSD</td><td>microSD push-push socket</td><td>104031-0811</td><td><a href="https://www.lcsc.com/product-detail/C585350.html">C585350</a></td><td>0.68</td></tr>
 <tr><td>J5</td><td>1</td><td>JST-SH 6P</td><td>JST SH 6-pin side-entry header, 1.0 mm</td><td>SM06B-SRSS-TB(LF)(SN)</td><td><a href="https://www.lcsc.com/product-detail/C160405.html">C160405</a></td><td>0.3</td></tr>
 <tr><td>Q1</td><td>1</td><td>2N7002</td><td>N-MOSFET 60 V SOT-23</td><td>2N7002</td><td><a href="https://www.lcsc.com/product-detail/C8545.html">C8545</a></td><td>0.016</td></tr>
@@ -403,7 +418,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
     <a href="boards/lower/lower.step">STEP</a>
     <a href="boards/lower/lower.glb">GLB</a>
   </p>
-  <details><summary>Bill of materials: 19 lines, 43 parts, about $3.78 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
+  <details><summary>Bill of materials: 19 lines, 43 parts, about $9.45 in components</summary><table class="bom"><thead><tr><th>Ref</th><th>Qty</th><th>Value</th><th>Description</th><th>MPN</th><th>LCSC</th><th>$ each</th></tr></thead><tbody>
 <tr><td>C3 C12 C22</td><td>3</td><td>100n 50V</td><td>100 nF 50 V X7R</td><td>CL05B104KB54PNC</td><td><a href="https://www.lcsc.com/product-detail/C307331.html">C307331</a></td><td>0.004</td></tr>
 <tr><td>C4 C5 C14 C17 C24 C27</td><td>6</td><td>100n</td><td>100 nF 16 V X7R</td><td>CL05B104KO5NNNC</td><td><a href="https://www.lcsc.com/product-detail/C1525.html">C1525</a></td><td>0.002</td></tr>
 <tr><td>C10 C11 C20 C21</td><td>4</td><td>10u</td><td>10 uF 25 V X5R</td><td>CL21A106KAYNNNE</td><td><a href="https://www.lcsc.com/product-detail/C15850.html">C15850</a></td><td>0.015</td></tr>
@@ -411,9 +426,9 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <tr><td>C15 C16 C25 C26</td><td>4</td><td>22u</td><td>22 uF 25 V X5R</td><td>CL21A226MAQNNNE</td><td><a href="https://www.lcsc.com/product-detail/C45783.html">C45783</a></td><td>0.03</td></tr>
 <tr><td>D1</td><td>1</td><td>SMBJ15CA</td><td>600 W bidirectional TVS, 15 V stand-off, 24.4 V clamp, SMB</td><td>SMBJ15CA</td><td><a href="https://www.lcsc.com/product-detail/C211759.html">C211759</a></td><td>0.065</td></tr>
 <tr><td>D2</td><td>1</td><td>GREEN</td><td>Green LED 0603</td><td>NCD0603G1</td><td><a href="https://www.lcsc.com/product-detail/C84267.html">C84267</a></td><td>0.016</td></tr>
-<tr><td>H1 H2 H3</td><td>3</td><td>M2 x 6 mm</td><td>Reflow-solder M2 standoff, 6.0 mm</td><td>SMTSO2060CTJ</td><td><a href="https://www.lcsc.com/product-detail/C2915628.html">C2915628</a></td><td>0.17</td></tr>
-<tr><td>J1</td><td>1</td><td>2x10 socket 1.27mm</td><td>2x10 SMD socket, 1.27 mm pitch, 4.3 mm body</td><td>PM127-2-10-S-4.3</td><td><a href="https://www.lcsc.com/product-detail/C3975136.html">C3975136</a></td><td>0.37</td></tr>
-<tr><td>J2</td><td>1</td><td>2x10 RA 2.54mm</td><td>2x10 right-angle pin header, 2.54 mm (hand-soldered)</td><td>PZ254R-12-20P</td><td><a href="https://www.lcsc.com/product-detail/C492438.html">C492438</a></td><td>0.18</td></tr>
+<tr><td>H1 H2 H3</td><td>3</td><td>M2 x 8 mm</td><td>Reflow-solder M2 standoff, 8.0 mm</td><td>SMTSO2080CTJ</td><td><a href="https://www.lcsc.com/product-detail/C2916357.html">C2916357</a></td><td>0.17</td></tr>
+<tr><td>J1</td><td>1</td><td>SFMC-110-02-L-D</td><td>2x10 SMT socket, 1.27 mm, 4.70 mm tall (buy from a distributor; hand-solder or consign)</td><td>SFMC-110-02-L-D</td><td><a href="https://www.lcsc.com/product-detail/C3323057.html">C3323057</a></td><td>5.5</td></tr>
+<tr><td>J2</td><td>1</td><td>3x9 RA 2.54mm</td><td>3x9 right-angle pin header, 2.54 mm: three 3x3 pieces (hand-soldered)</td><td>PZ254-3-03-W-2.5-G0 (x3)</td><td><a href="https://www.lcsc.com/product-detail/C7429379.html">C7429379</a></td><td>0.72</td></tr>
 <tr><td>L1 L2</td><td>2</td><td>4.7uH 5A</td><td>4.7 uH shielded moulded inductor, Isat 5 A, 50 mohm, 5.5x5.2x3.0 mm</td><td>SMMS0530-4R7M</td><td><a href="https://www.lcsc.com/product-detail/C181722.html">C181722</a></td><td>0.11</td></tr>
 <tr><td>R1</td><td>1</td><td>0.5mR 1% 6W</td><td>0.5 mohm 1% 6 W metal-strip current shunt, 2512</td><td>ASR-M-3-0.5F</td><td><a href="https://www.lcsc.com/product-detail/C469426.html">C469426</a></td><td>0.28</td></tr>
 <tr><td>R2 R3</td><td>2</td><td>10R</td><td>10 ohm 1%</td><td>0402WGF100JTCE</td><td><a href="https://www.lcsc.com/product-detail/C25077.html">C25077</a></td><td>0.001</td></tr>
@@ -461,8 +476,8 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 </article>
 
 <h2 id="verify">Verification</h2>
-<p>These checks are run by <code>make verify</code> from the files in the repository (last run 2026-11-16). They show the design is self-consistent and manufacturable; they do not replace testing real hardware.</p>
-<div class="tw"><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody><tr><td>upper: electrical rules check (KiCad ERC)</td><td class="pass">PASS</td><td>0 errors, 0 warnings</td></tr><tr><td>upper: design rules check (KiCad DRC)</td><td class="pass">PASS</td><td>0 violations</td></tr><tr><td>upper: every net fully routed</td><td class="pass">PASS</td><td>0 unconnected items</td></tr><tr><td>upper: board matches schematic</td><td class="pass">PASS</td><td>0 parity differences</td></tr><tr><td>upper: fabrication files present and current</td><td class="pass">PASS</td><td>gerbers, drill, BOM, placement</td></tr><tr><td>upper: every BOM line has a manufacturer part number and an LCSC number</td><td class="pass">PASS</td><td>33 lines</td></tr><tr><td>lower: electrical rules check (KiCad ERC)</td><td class="pass">PASS</td><td>0 errors, 0 warnings</td></tr><tr><td>lower: design rules check (KiCad DRC)</td><td class="pass">PASS</td><td>0 violations</td></tr><tr><td>lower: every net fully routed</td><td class="pass">PASS</td><td>0 unconnected items</td></tr><tr><td>lower: board matches schematic</td><td class="pass">PASS</td><td>0 parity differences</td></tr><tr><td>lower: fabrication files present and current</td><td class="pass">PASS</td><td>gerbers, drill, BOM, placement</td></tr><tr><td>lower: every BOM line has a manufacturer part number and an LCSC number</td><td class="pass">PASS</td><td>19 lines</td></tr><tr><td>service: electrical rules check (KiCad ERC)</td><td class="pass">PASS</td><td>0 errors, 0 warnings</td></tr><tr><td>service: design rules check (KiCad DRC)</td><td class="pass">PASS</td><td>0 violations</td></tr><tr><td>service: every net fully routed</td><td class="pass">PASS</td><td>0 unconnected items</td></tr><tr><td>service: board matches schematic</td><td class="pass">PASS</td><td>0 parity differences</td></tr><tr><td>service: fabrication files present and current</td><td class="pass">PASS</td><td>gerbers, drill, BOM, placement</td></tr><tr><td>service: every BOM line has a manufacturer part number and an LCSC number</td><td class="pass">PASS</td><td>9 lines</td></tr><tr><td>firmware pin map (hwdef.dat) matches the schematic</td><td class="pass">PASS</td><td>PASS: 49 MCU pins consistent between hwdef.dat, pinmap.py and the KiCad schematic</td></tr><tr><td>boards fit together (connector alignment, standoffs, height budget, cable)</td><td class="pass">PASS</td><td>board-to-board: 20 pins aligned (worst offset 0.150 mm) and nets identical; height budget in the 6.0 mm gap OK; tightest: J2 (lower, 4.1 mm) under J1 pin tails (upper, 1.5 mm) -&gt; 0.40 mm spare</td></tr><tr><td>ArduPilot bootloader and ArduCopter compile for this board</td><td class="pass">PASS</td><td>ArduCopter a995235 built, 1430984 bytes of flash</td></tr></tbody></table></div>
+<p>These checks are run by <code>make verify</code> from the files in the repository (last run 2026-11-17). They show the design is self-consistent and manufacturable; they do not replace testing real hardware.</p>
+<div class="tw"><table><thead><tr><th>Check</th><th>Result</th><th>Detail</th></tr></thead><tbody><tr><td>upper: electrical rules check (KiCad ERC)</td><td class="pass">PASS</td><td>0 errors, 0 warnings</td></tr><tr><td>upper: design rules check (KiCad DRC)</td><td class="pass">PASS</td><td>0 violations</td></tr><tr><td>upper: every net fully routed</td><td class="pass">PASS</td><td>0 unconnected items</td></tr><tr><td>upper: board matches schematic</td><td class="pass">PASS</td><td>0 parity differences</td></tr><tr><td>upper: fabrication files present and current</td><td class="pass">PASS</td><td>gerbers, drill, BOM, placement</td></tr><tr><td>upper: every BOM line has a manufacturer part number and an LCSC number</td><td class="pass">PASS</td><td>33 lines</td></tr><tr><td>lower: electrical rules check (KiCad ERC)</td><td class="pass">PASS</td><td>0 errors, 0 warnings</td></tr><tr><td>lower: design rules check (KiCad DRC)</td><td class="pass">PASS</td><td>0 violations</td></tr><tr><td>lower: every net fully routed</td><td class="pass">PASS</td><td>0 unconnected items</td></tr><tr><td>lower: board matches schematic</td><td class="pass">PASS</td><td>0 parity differences</td></tr><tr><td>lower: fabrication files present and current</td><td class="pass">PASS</td><td>gerbers, drill, BOM, placement</td></tr><tr><td>lower: every BOM line has a manufacturer part number and an LCSC number</td><td class="pass">PASS</td><td>19 lines</td></tr><tr><td>service: electrical rules check (KiCad ERC)</td><td class="pass">PASS</td><td>0 errors, 0 warnings</td></tr><tr><td>service: design rules check (KiCad DRC)</td><td class="pass">PASS</td><td>0 violations</td></tr><tr><td>service: every net fully routed</td><td class="pass">PASS</td><td>0 unconnected items</td></tr><tr><td>service: board matches schematic</td><td class="pass">PASS</td><td>0 parity differences</td></tr><tr><td>service: fabrication files present and current</td><td class="pass">PASS</td><td>gerbers, drill, BOM, placement</td></tr><tr><td>service: every BOM line has a manufacturer part number and an LCSC number</td><td class="pass">PASS</td><td>9 lines</td></tr><tr><td>firmware pin map (hwdef.dat) matches the schematic</td><td class="pass">PASS</td><td>PASS: 49 MCU pins consistent between hwdef.dat, pinmap.py and the KiCad schematic</td></tr><tr><td>boards fit together (connector alignment, standoffs, height budget, cable)</td><td class="pass">PASS</td><td>board-to-board: 20 pins aligned (worst offset 0.670 mm) and nets identical; height budget in the 8.0 mm gap OK; tightest: J11 (lower, 4.0 mm) under C46 (upper, 0.9 mm) -&gt; 3.10 mm spare</td></tr><tr><td>ArduPilot bootloader and ArduCopter compile for this board</td><td class="pass">PASS</td><td>ArduCopter a995235 built, 1430984 bytes of flash</td></tr></tbody></table></div>
 <p>How each check works and what is <em>not</em> covered: <a href="https://github.com/PeterJBurke/stackf765/blob/main/docs/verification.md">docs/verification.md</a>.</p>
 
 <h2 id="build">Build one</h2>
@@ -478,7 +493,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 
 <script type="module">
 import { createViewer } from "./viewer.js";
-const GAP = 7.6;   // lower board top surface to upper board top surface: 6.0 mm standoff + 1.6 mm PCB
+const GAP = 9.6;   // lower board top surface to upper board top surface: 8.0 mm standoff + 1.6 mm PCB
 const v = createViewer(document.getElementById("viewer"), [
   { id: "lower",   url: "boards/lower/lower.glb",     pos: [0, 0, 0],    explodeDir: [0, -0.5, 0] },
   { id: "upper",   url: "boards/upper/upper.glb",     pos: [0, GAP, 0],  explodeDir: [0, 0.5, 0] },

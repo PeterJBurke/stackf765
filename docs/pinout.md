@@ -35,16 +35,17 @@ Suggested use (any UART can be given any role with `SERIALn_PROTOCOL`):
 | A7-A9, A10-A12 | Camera (G 5V CAM) and video transmitter (G 5V VTX) |
 | other G 5V TX RX groups | Telemetry radio, ESC telemetry, VTX control, companion computer |
 
-## Lower board, 2 x 10 header (J2)
+## Lower board, 3 x 9 header (J2)
 
-Seen from above with the header pointing away from you.
+Seen from above with the header pointing away from you. Each column takes a standard 3-pin servo / ESC plug.
 
-| Row | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
-|---|---|---|---|---|---|---|---|---|---|---|
-| top row (signal) | M1 | M2 | M3 | M4 | M5 | M6 | LED | 5V | PI5V | PI5V |
-| bottom row | G | G | G | G | G | G | G | G | G | G |
+| Row | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|---|
+| C: nearest the board edge, lowest pins | G | G | G | G | G | G | G | G | G |
+| B: middle | 5V | 5V | 5V | 5V | 5V | 5V | 5V | PI5V | PI5V |
+| A: inner row, highest pins (signal) | M1 | M2 | M3 | M4 | M5 | M6 | LED | PI5V | PI5V |
 
-M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). 5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer.
+M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). 5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer (two columns: signal and middle pins are PI5V, bottom pin is ground).
 
 ## Lower board, power pads
 

@@ -39,9 +39,12 @@ choose "specify a location" or pay to omit it.
 ## Assembly notes
 
 * **Hand-soldered parts (not in the JLCPCB files):** the two right-angle headers,
-  `J1` on the upper board (3 × 12) and `J2` on the lower board (2 × 10). See [assembly.md](assembly.md).
-* **Standoffs H1–H3** on the lower board are reflow-soldered M2 standoffs (Sinhoo SMTSO2060CTJ).
-  If your assembler will not place them, solder them by hand or use loose M2 × 6 mm standoffs
+  `J1` on the upper board (3 × 12) and `J2` on the lower board (3 × 9), and the two Samtec
+  board-to-board connectors (`J1` lower: SFMC-110-02-L-D, `J3` upper: FTSH-110-04-L-DV). LCSC had only a
+  handful of the Samtec parts when checked, so buy them from DigiKey, Mouser or Samtec and either
+  hand-solder them or send them to the assembler as consigned parts. See [assembly.md](assembly.md).
+* **Standoffs H1–H3** on the lower board are reflow-soldered M2 standoffs, 8.0 mm (Sinhoo SMTSO2080CTJ).
+  If your assembler will not place them, solder them by hand or use loose M2 × 8 mm standoffs
   with screws from below.
 * **Check rotations in the assembler's preview.** Placement files use KiCad's rotation convention;
   JLCPCB's library sometimes differs by 90° or 180° for ICs, diodes, the USB-C socket and the
@@ -61,6 +64,7 @@ Stock at LCSC/JLCPCB was checked on 2026-11-16; re-check before you order.
 | USB-C socket, microSD socket, JST-SH connectors | Stock could not be confirmed through the parts API on the day; confirm on the order page. |
 | Buzzer BZ1 | KLJ-8530-3627 or MLT-8530. The "+" mark on the part goes to pad 1 (marked "+" on the board). |
 | 27 MHz crystal Y2 | Only about 1,100 in stock when checked. |
+| Samtec SFMC-110-02-L-D / FTSH-110-04-L-DV | Board-to-board pair. Use lead style **-04** on the FTSH (3.81 mm posts); other styles do not mate correctly at 8.0 mm. Do not order the FTSH with the -K option. |
 
 Approximate component cost at single-unit prices is shown per board on the
 [project page](https://peterjburke.github.io/stackf765/#boards). PCB fabrication,

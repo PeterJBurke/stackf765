@@ -7,7 +7,7 @@
 	(title_block
 		(title "StackF765 upper board (flight controller) - Power: 5 V OR-ing and 3.3 V regulators")
 		(date "2026-11-16")
-		(rev "A")
+		(rev "B")
 		(company "StackF765 upper board (flight controller)")
 		(comment 1 "Sheet 2: Power: 5 V OR-ing and 3.3 V regulators")
 	)

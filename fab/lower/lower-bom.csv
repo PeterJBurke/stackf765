@@ -6,9 +6,9 @@ C13 C23,2,33n,33 nF 16 V X7R,C_0402_1005Metric,Samsung,CL05B333KO5NNNC,C1532,0.0
 C15 C16 C25 C26,4,22u,22 uF 25 V X5R,C_0805_2012Metric,Samsung,CL21A226MAQNNNE,C45783,0.03,yes
 D1,1,SMBJ15CA,"600 W bidirectional TVS, 15 V stand-off, 24.4 V clamp, SMB",D_SMB,various,SMBJ15CA,C211759,0.065,yes
 D2,1,GREEN,Green LED 0603,LED_0603_1608Metric,Nationstar,NCD0603G1,C84267,0.016,yes
-H1 H2 H3,3,M2 x 6 mm,"Reflow-solder M2 standoff, 6.0 mm",Standoff_SMT_M2_H6.0,Sinhoo,SMTSO2060CTJ,C2915628,0.17,yes
-J1,1,2x10 socket 1.27mm,"2x10 SMD socket, 1.27 mm pitch, 4.3 mm body",PinSocket_2x10_P1.27mm_Vertical_SMD,HCTL,PM127-2-10-S-4.3,C3975136,0.37,yes
-J2,1,2x10 RA 2.54mm,"2x10 right-angle pin header, 2.54 mm (hand-soldered)",PinHeader_2x10_P2.54mm_Horizontal,XFCN,PZ254R-12-20P,C492438,0.18,yes
+H1 H2 H3,3,M2 x 8 mm,"Reflow-solder M2 standoff, 8.0 mm",Standoff_SMT_M2_H8.0,Sinhoo,SMTSO2080CTJ,C2916357,0.17,yes
+J1,1,SFMC-110-02-L-D,"2x10 SMT socket, 1.27 mm, 4.70 mm tall (buy from a distributor; hand-solder or consign)",Samtec_SFMC-110-02-x-D,Samtec,SFMC-110-02-L-D,C3323057,5.5,yes
+J2,1,3x9 RA 2.54mm,"3x9 right-angle pin header, 2.54 mm: three 3x3 pieces (hand-soldered)",PinHeader_3x09_P2.54mm_Horizontal,HCTL,PZ254-3-03-W-2.5-G0 (x3),C7429379,0.72,yes
 L1 L2,2,4.7uH 5A,"4.7 uH shielded moulded inductor, Isat 5 A, 50 mohm, 5.5x5.2x3.0 mm",L_SXN_SMMS0530,SXN (Shun Xiang Nuo),SMMS0530-4R7M,C181722,0.11,yes
 R1,1,0.5mR 1% 6W,"0.5 mohm 1% 6 W metal-strip current shunt, 2512",R_Shunt_2512_ASR-M-3,Yezhan,ASR-M-3-0.5F,C469426,0.28,yes
 R2 R3,2,10R,10 ohm 1%,R_0402_1005Metric,UNI-ROYAL,0402WGF100JTCE,C25077,0.001,yes

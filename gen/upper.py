@@ -5,7 +5,7 @@ import math
 from kigen.design import Design, box
 from blocks import Blocks
 from pinmap import PINMAP
-from lower import B2B, STANDOFFS
+from lower import B2B, STANDOFFS, HDR_ROW_A_Y
 
 W, H = 31.5, 48.0
 
@@ -34,7 +34,7 @@ def _hdr_symbol():
 
 
 def design():
-    d = Design("upper", "StackF765 upper board (flight controller)", rev="A", date="2026-11-16",
+    d = Design("upper", "StackF765 upper board (flight controller)", rev="B", date="2026-11-16",
                rails=("+5V", "+5V_SYS", "+3V3", "+3V3_SENS", "VBUS"))
     B = Blocks(d)
     d.root_notes = [
@@ -272,7 +272,7 @@ def layout(bd):
         bd.hole(x, y, 2.2)
         bd.circle("User.Comments", x, y, 2.1)
     # --- connectors
-    bd.place("J1", -13.97, 14.46, 90)                 # A1 at the left; pins point forward
+    bd.place("J1", -13.97, HDR_ROW_A_Y, 90)           # A1 at the left; holes at the edge, body overhangs
     bd.place("J3", 0, 0, 270, side="bottom")           # mates with J1 on the lower board
     bd.place("J5", 12.3, -8.0, 90)                    # service connector on the right edge
     bd.place("J4", -8.3, -16.3, 180)                  # microSD, card inserts from the rear edge
@@ -299,9 +299,9 @@ def layout(bd):
     for r, row in enumerate("ABC"):
         for i, (lab, _) in enumerate(J1_ROWS[row]):
             for layer in ("F.SilkS", "B.SilkS"):
-                bd.text(lab, -13.97 + i * 2.54 - 1.2, 14.46 + r * 2.54, layer, size=0.62, thick=0.11, rot=90)
+                bd.text(lab, -13.97 + i * 2.54 - 1.2, HDR_ROW_A_Y + r * 2.54, layer, size=0.62, thick=0.11, rot=90)
     bd.text("J5: 1 VBUS 2 D- 3 D+ 4 G 5 BUZ 6 BOOT", 0, -7.0, "B.SilkS", size=0.7, thick=0.12)
-    bd.text("StackF765 UPPER rev A", 0, -3.6, "B.SilkS", size=0.9)
+    bd.text("StackF765 UPPER rev B", 0, -3.6, "B.SilkS", size=0.9)
 
 
 def router_config(bd):
@@ -313,3 +313,6 @@ def router_config(bd):
 
 
 ROUTER = "sequential"
+
+# long nets from the far side of the MCU to the header are routed first
+ROUTE_ORDER = ["TX8", "RX8", "TX2", "RX2", "TX4", "RX4", "SCL", "SDA"]

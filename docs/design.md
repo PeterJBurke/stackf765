@@ -8,12 +8,14 @@ Reference designators match the schematics (`docs/boards/*/*-schematic.pdf`).
 | Board | Job | Layers | Size |
 |---|---|---|---|
 | **Upper** | Flight controller: MCU, sensors, OSD, microSD, 3 × 12 header | 6 | 31.5 × 48 mm |
-| **Lower** | Power: battery/ESC pads, current and voltage sensing, two 5 V regulators, 2 × 10 header | 4 (2 oz outer) | 31.5 × 48 mm |
+| **Lower** | Power: battery/ESC pads, current and voltage sensing, two 5 V regulators, 3 × 9 motor header | 4 (2 oz outer) | 31.5 × 48 mm |
 | **Service** | USB-C socket, buzzer, BOOT button, on a 6-wire cable | 2 | 18 × 32 mm |
 
 The lower board mounts to the frame on four rubber grommets (20 × 20 mm pattern).
-The upper board plugs into it through a 20-pin 1.27 mm connector and is held by
-three soldered M2 standoffs, 6.0 mm tall. The two boards therefore move as one
+The upper board plugs into it through a 20-pin 1.27 mm connector (Samtec SFMC socket below,
+FTSH header above) and is held by three soldered M2 standoffs, 8.0 mm tall. The 8 mm gap is what
+lets the three-row motor header on the lower board fit under the upper board. Both right-angle
+headers have their solder holes at the front edge, so the plastic bodies hang off the board. The two boards therefore move as one
 rigid block on the grommets.
 
 Signals that cross between the boards (connector J1 lower / J3 upper):
@@ -67,6 +69,12 @@ brown-out or noise on the companion's rail cannot reset the flight controller.
   At 12.6 V in the peak is 3.65 A.
 * Dropout: the converter reaches 98 % duty cycle, so it holds 5 V down to about 5.6 V in at full load.
 * **Rating: 3 A per rail.** The header pins themselves limit each 5 V pin to about 3 A.
+
+### Motor header
+
+J2 is a 3 × 9 right-angle header. Each column takes a standard 3-pin plug: signal on the top pin,
+5 V in the middle, ground nearest the board. Columns 1–6 are motors M1–M6, column 7 is the LED
+output, and columns 8–9 carry the companion-computer rail (PI5V on the top and middle pins).
 
 ### Copper for 50 A
 

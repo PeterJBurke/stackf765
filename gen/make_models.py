@@ -146,3 +146,45 @@ header_127(10)
 
 # AT7456E body (KiCad ships no model for the EP 2.75 x 6.2 variant)
 shell("HTSSOP-28-1EP_4.4x9.7mm_P0.65mm_EP2.75x6.2mm", -2.2, -4.85, 2.2, 4.85, 1.0, BLACK)
+
+
+# ---- rev B: 8 mm stack -------------------------------------------------------------------
+header_3xN(9)
+standoff("Standoff_SMT_M2_H8.0", 8.0)
+
+
+def samtec_sfmc():
+    body = cq.Workplane("XY").box(3.05, 13.08, 4.70, centered=(True, True, False))
+    holes = leads = None
+    for i in range(10):
+        y = (i - 4.5) * 1.27
+        for x in (-0.635, 0.635):
+            h = cq.Workplane("XY").box(0.6, 0.6, 4.0, centered=(True, True, False)).translate((x, y, 0.9))
+            holes = h if holes is None else holes.union(h)
+        for x in (-1.85, 1.85):
+            l = cq.Workplane("XY").box(0.7, 0.4, 0.25, centered=(True, True, False)).translate((x, y, 0))
+            leads = l if leads is None else leads.union(l)
+    a = cq.Assembly()
+    a.add(body.cut(holes), name="body", color=cq.Color(*BLACK))
+    a.add(leads, name="leads", color=cq.Color(*GOLD))
+    save(a, "Samtec_SFMC-110-02-x-D")
+
+
+def samtec_ftsh():
+    body = cq.Workplane("XY").box(3.43, 12.7, 2.51, centered=(True, True, False)).translate((0, 0, 0.41))
+    pins = None
+    for i in range(10):
+        y = (i - 4.5) * 1.27
+        for x in (-0.635, 0.635):
+            p = cq.Workplane("XY").box(0.41, 0.41, 2.92 + 3.81, centered=(True, True, False)).translate((x, y, 0))
+            lead = cq.Workplane("XY").box(2.3, 0.41, 0.3, centered=(True, True, False)).translate((x * 2.75, y, 0))
+            q = p.union(lead)
+            pins = q if pins is None else pins.union(q)
+    a = cq.Assembly()
+    a.add(body, name="body", color=cq.Color(*BLACK))
+    a.add(pins, name="pins", color=cq.Color(*GOLD))
+    save(a, "Samtec_FTSH-110-04-x-DV")
+
+
+samtec_sfmc()
+samtec_ftsh()

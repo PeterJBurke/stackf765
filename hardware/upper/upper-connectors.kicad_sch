@@ -7,7 +7,7 @@
 	(title_block
 		(title "StackF765 upper board (flight controller) - Connectors, buzzer driver, analog filters")
 		(date "2026-11-16")
-		(rev "A")
+		(rev "B")
 		(company "StackF765 upper board (flight controller)")
 		(comment 1 "Sheet 7: Connectors, buzzer driver, analog filters")
 	)
@@ -1718,26 +1718,30 @@
 		(dnp no)
 		(uuid "7f9e7158-848a-5d38-ae71-85eb311aaf17")
 		(property "Reference" "J3" (at 162.56 36.83 0) (effects (font (size 1.27 1.27)) (justify left)))
-		(property "Value" "2x10 header 1.27mm"
+		(property "Value" "FTSH-110-04-L-DV"
 			(at 162.56 64.77 0)
 			(effects (font (size 1.27 1.27)) (justify left))
 		)
-		(property "Footprint" "Connector_PinHeader_1.27mm:PinHeader_2x10_P1.27mm_Vertical_SMD"
+		(property "Footprint" "fc:Samtec_FTSH-110-xx-x-DV"
 			(at 161.29 49.53 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C3975193.pdf"
+		(property "Datasheet" "https://suddendocs.samtec.com/catalog_english/ftsh_smt.pdf"
 			(at 161.29 49.53 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "2x10 SMD pin header, 1.27 mm pitch, 1.0 mm plastic"
+		(property "Description" "2x10 SMT terminal strip, 1.27 mm, 3.81 mm posts (buy from a distributor; hand-solder or consign)"
 			(at 161.29 49.53 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "MPN" "PZ127-2-10-S" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "HCTL" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "LCSC" "C3975193" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.18" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "FTSH-110-04-L-DV"
+			(at 161.29 49.53 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Manufacturer" "Samtec" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C7279869" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "4.19" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Assembly" "hand" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "938dcfcd-30b4-5694-9e7e-c2987afb4eda"))
 		(pin "3" (uuid "a0758cc9-5ed9-5566-8990-0c9be294842b"))
 		(pin "5" (uuid "d4ee5340-d19b-5704-a6dc-17699ad079c5"))

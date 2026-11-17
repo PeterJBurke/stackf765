@@ -1,5 +1,5 @@
 {
- "date": "2026-11-16",
+ "date": "2026-11-17",
  "checks": [
   {
    "name": "upper: electrical rules check (KiCad ERC)",
@@ -99,7 +99,7 @@
   {
    "name": "boards fit together (connector alignment, standoffs, height budget, cable)",
    "ok": true,
-   "detail": "board-to-board: 20 pins aligned (worst offset 0.150 mm) and nets identical; height budget in the 6.0 mm gap OK; tightest: J2 (lower, 4.1 mm) under J1 pin tails (upper, 1.5 mm) -> 0.40 mm spare"
+   "detail": "board-to-board: 20 pins aligned (worst offset 0.670 mm) and nets identical; height budget in the 8.0 mm gap OK; tightest: J11 (lower, 4.0 mm) under C46 (upper, 0.9 mm) -> 3.10 mm spare"
   },
   {
    "name": "ArduPilot bootloader and ArduCopter compile for this board",

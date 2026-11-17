@@ -26,11 +26,11 @@ board on a cable. Every connection is a labelled 0.1 inch right-angle header pin
 | Sensors | ICM-45686 IMU (SPI), BMP388 barometer (I2C) |
 | Battery | 2S–3S LiPo (6–13 V), 50 A continuous through a 0.5 mΩ shunt |
 | Serial | 7 UARTs + USB |
-| Outputs | 6 motor/servo outputs, addressable LED |
+| Outputs | 6 motor/servo outputs on standard 3-pin columns (signal / 5 V / ground), addressable LED |
 | Video | Analog OSD (AT7456E), camera in / VTX out |
 | Logging | microSD |
 | 5 V rails | 3 A for the flight controller and peripherals, a separate 3 A for a companion computer |
-| Size | 31.5 × 48 × about 17 mm, 20 × 20 mm grommet mount |
+| Size | 31.5 × 48 × about 19 mm, 20 × 20 mm grommet mount |
 
 ## Pinout in brief
 
@@ -42,7 +42,7 @@ Upper board header, seen from above with the header pointing away from you:
 | middle | G | 4V5 | TX2 | RX2 | G | 5V | TX3 | RX3 | G | 5V | TX4 | RX4 |
 | inner | G | 4V5 | TX1 | RX1 | SDA | SCL | G | 5V | CAM | G | 5V | VTX |
 
-Lower board header top row: `M1 M2 M3 M4 M5 M6 LED 5V PI5V PI5V` (bottom row all ground).
+Lower board header, columns left to right: `M1 M2 M3 M4 M5 M6 LED PI5V PI5V`; each column is signal / 5 V / ground, top to bottom, for a standard 3-pin plug.
 Power pads at the rear: `BAT+ ESC+ ESC− BAT−`. Full details: [docs/pinout.md](docs/pinout.md).
 
 ## What is in this repository

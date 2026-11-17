@@ -5,7 +5,7 @@
      lower-board socket pad with the same number, and both carry the same net.
   2. Standoffs on the lower board line up with screw holes on the upper board.
   3. Both main boards have the same outline.
-  4. Height budget in the 6.0 mm gap: (lower-board top part height) + (upper-board
+  4. Height budget in the 8.0 mm gap: (lower-board top part height) + (upper-board
      bottom part height) must fit wherever two parts overlap in plan view.
   5. Grommet nut zones (lower board 20 x 20 mm mounting) are free of lower-board parts,
      and only low parts of the upper board hang above them.
@@ -19,14 +19,13 @@ import sys
 import pcbnew
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-GAP = 6.0            # mm between the boards (standoff height)
+GAP = 8.0            # mm between the boards (standoff height)
 NUT_ZONE_R = 3.5     # mm radius reserved around each grommet centre
 NUT_HEIGHT = 4.0     # mm: grommet flange + M2 nut + screw end above the lower board (estimate)
 GROMMETS = [(-10, 10), (10, 10), (-10, -10), (10, -10)]
 
 # part heights above their board surface, by footprint name fragment (mm)
-HEIGHTS = [("PinHeader_2x10_P2.54mm_Horizontal", 5.0), ("PinSocket_2x10_P1.27mm", 4.6), ("PinHeader_2x10_P1.27mm", 1.5),
-           ("Standoff", 6.0), ("L_SXN", 3.0), ("D_SMB", 2.4), ("R_Shunt", 0.6), ("SOT-583", 0.6), ("SC-70", 1.1),
+HEIGHTS = [("Samtec_SFMC", 4.7), ("Samtec_FTSH", 2.92), ("Standoff", 8.0), ("L_SXN", 3.0), ("D_SMB", 2.4), ("R_Shunt", 0.6), ("SOT-583", 0.6), ("SC-70", 1.1),
            ("SOT-23", 1.2), ("LED_0603", 0.7), ("C_0805", 1.35), ("R_0805", 0.6), ("R_1206", 0.65), ("D_SOD-123F", 1.1), ("C_0603", 0.9), ("L_0603", 0.9), ("C_0402", 0.6),
            ("R_0402", 0.4), ("Crystal_SMD_3225", 0.8), ("TestPoint", 0.05), ("WirePad", 4.0), ("NetTie", 0.0),
            ("Hole", 0.0)]
@@ -72,7 +71,7 @@ for n in sorted(lp, key=int):
     a, b = mm(lp[n].GetPosition()), mm(up[n].GetPosition())
     d = math.hypot(a[0] - b[0], a[1] - b[1])
     worst = max(worst, d)
-    if d > 0.2:      # header and socket land patterns differ by 0.15 mm in row spacing by design
+    if abs(a[0] - b[0]) > 0.05 or abs(a[1] - b[1]) > 0.8 or (a[1] > 0) != (b[1] > 0):   # same column, same row side (row spacing differs by design)
         errors.append(f"B2B pin {n}: lower pad at {a}, upper pad at {b}")
     if lp[n].GetNetname() != up[n].GetNetname():
         errors.append(f"B2B pin {n}: lower net {lp[n].GetNetname()} != upper net {up[n].GetNetname()}")
@@ -121,14 +120,21 @@ for fp in named(lower):
     if fp.IsFlipped():
         continue
     n = str(fp.GetFPID().GetLibItemName())
-    if "PinHeader_2x10_P2.54mm_Horizontal" in n:
-        b = bbox(fp)
-        ltop.append((fp, (b[0], 21.3, b[2], b[3]), 5.0))      # plastic body
-        ltop.append((fp, (b[0], b[1], b[2], 21.3), 4.1))      # bent pins
+    if "PinHeader_3x" in n:
+        # The plastic body hangs off the front edge (not under the upper board).  Under the upper board
+        # there are only the bent pins: one 0.64 mm wide strip per column, top row 6.6 mm above the board.
+        for pad in fp.Pads():
+            if pad.GetNumber().startswith("A"):
+                x, y = mm(pad.GetPosition())
+                ltop.append((fp, (x - 0.4, y - 0.4, x + 0.4, 24.0), 6.61))
     else:
         ltop.append((fp, shape(fp), height(fp)))
 ubot = [(fp, shape(fp), height(fp)) for fp in named(upper) if fp.IsFlipped()]
-tails = [(None, (-15.3, 13.6, 15.3, 20.5), 1.5)]     # through-hole tails of the 3x12 header under the upper board
+# solder tails of the upper board's 3x12 header: one per pin, 1.5 mm below the upper board
+tails = []
+for pad in U["J1"].Pads():
+    x, y = mm(pad.GetPosition())
+    tails.append((None, (x - 0.4, y - 0.4, x + 0.4, y + 0.4), 1.5))
 tight = (GAP, "")
 for fa, ba, ha in ltop:
     if ha is None:
@@ -150,6 +156,13 @@ for fa, ba, ha in ltop:
 if unknown:
     errors.append(f"no height data for footprints: {sorted(unknown)}")
 notes.append(f"height budget in the {GAP} mm gap OK; tightest: {tight[1]} -> {tight[0]:.2f} mm spare")
+# the two right-angle headers must be offset sideways by half a pitch so pins and tails interleave
+lx = sorted({mm(p.GetPosition())[0] for p in L["J2"].Pads()})
+ux = sorted({mm(p.GetPosition())[0] for p in U["J1"].Pads()})
+near = min(abs(a - b) for a in lx for b in ux)
+if near < 1.0:
+    errors.append(f"lower header columns are only {near:.2f} mm from upper header columns (need half-pitch offset)")
+notes.append(f"header columns interleave: nearest lower/upper column offset {near:.2f} mm")
 
 # 5. grommet nut zones
 for gx, gy in GROMMETS:

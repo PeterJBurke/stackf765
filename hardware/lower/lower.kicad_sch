@@ -7,7 +7,7 @@
 	(title_block
 		(title "StackF765 lower board (power)")
 		(date "2026-11-16")
-		(rev "A")
+		(rev "B")
 		(company "StackF765 lower board (power)")
 		(comment 1 "Index sheet - generated from gen/*.py")
 	)
