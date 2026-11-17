@@ -21,7 +21,6 @@ export const DIM = {
   hole: 10,            // 20 x 20 mm mounting pattern: holes at +-10 mm
   post: 7.0,           // frame post under each grommet (illustrative, as in the reference)
   grommet: 6.6,        // rubber grommet height (illustrative, as in the reference)
-  tape: 1.0,           // foam tape under the service board (assumed)
 };
 DIM.zLower = DIM.post + (DIM.grommet - DIM.pcb) / 2;   // bottom face of the lower PCB: 9.5
 DIM.zUpper = DIM.zLower + DIM.gap;                     // bottom face of the upper PCB: 17.1

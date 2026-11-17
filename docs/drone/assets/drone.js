@@ -13,9 +13,10 @@ groups.roof.visible = false;
 groups.hardware = makeMountHardware();
 scene.add(groups.frame, groups.roof, groups.fc, groups.service, groups.hardware);
 
-// Where the service board sits: flat on the bottom plate behind the stack, long axis across the frame,
-// USB socket toward the left side (-X), cable connector toward the right.
-const SERVICE = { x: 0, y: -42, rotZ: Math.PI / 2 };
+// Where the service board is shown: a loose accessory, not fixed to the frame.  It lies flat on the
+// ground grid to the right of the frame, between the two right-hand arms, component side up, with its
+// cable connector (J2) toward the stack.  The user mounts it wherever suits the airframe.
+const SERVICE = { x: 80, y: 0, z: FLOOR_Z + 0.1, rotZ: -Math.PI / 2 };
 const CABLE_LENGTH = 100;
 
 const penny = makePenny(() => update());
@@ -27,7 +28,7 @@ const presets = {
   top: [Math.PI, 0.0001, 430, [0, 0, 6]],
   side: [Math.PI / 2, Math.PI / 2 - 0.025, 380, [0, 0, 14]],
   detail: [0.7, 1.25, 165, [4, -8, 12]],
-  service: [-2.25, 1.02, 150, [0, -30, 8]],
+  service: [0.95, 1.0, 170, [58, 2, -2]],
 };
 let view = 'iso';
 function setView(name) {
@@ -37,7 +38,7 @@ function setView(name) {
   penny.rotation.set(Math.PI / 2, 0, 0);
   penny.position.set(104, -40, FLOOR_Z);
   if (name === 'detail') penny.position.set(38, -20, 0);
-  if (name === 'service') penny.position.set(-36, -44, 0);
+  if (name === 'service') penny.position.set(84, -26, FLOOR_Z);
   if (name === 'side') { penny.rotation.set(0, 0, -Math.PI / 2); penny.position.set(0, -88, 14); }
   [st.theta, st.phi, st.radius] = presets[name];
   st.radius *= Math.max(1, 1 / stage.camera.aspect);
@@ -50,8 +51,8 @@ function setView(name) {
 let showLabels = true;
 const labelDefs = [   // element, anchor (mm), pixel offset, pixel offset in top and side views, visible?
   ['fcLabel', [12, 0, 25], [130, -110], [130, -110], [130, -110], () => groups.fc.visible],
-  ['serviceLabel', [SERVICE.x, SERVICE.y - 9, 3], [-275, -75], [-95, 60], [-270, 48], () => groups.service.visible],
-  ['frameLabel', [70, -52, -3], [-10, 28], [-10, 28], [40, 40], () => true]];
+  ['serviceLabel', [SERVICE.x, SERVICE.y, -5], [-250, 40], [-70, 45], [40, 30], () => groups.service.visible],
+  ['frameLabel', [70, -52, -3], [-150, -45], [-10, 28], [40, 40], () => true]];
 st.onUpdate = () => {
   for (const [id, p, off, offTop, offSide, on] of labelDefs) {
     const [dx, dy] = view === 'top' ? offTop : view === 'side' ? offSide : off;
@@ -95,19 +96,27 @@ setView(new URLSearchParams(location.search).get('view') in presets ? new URLSea
 
 // ---- boards ----
 function routeCable() {
-  // From the upper board's cable connector (J5, opens toward +X): the slack is folded forward and down
-  // beside the stack, then the cable runs back along the right edge of the plate into the service
-  // board's connector (J2).  The fold is sized so the drawn cable is the real 100 mm.
+  // From the upper board's cable connector (J5, on the right-hand edge, opening toward +X) the cable
+  // leaves horizontally, drapes over the edge of the bottom plate down to the ground, and lies there in
+  // one slack bow into the loose service board's connector (J2).  The bow is sized so the drawn cable
+  // is the real 100 mm.
   const a = partBox(boards.upper, 'J5'), b = partBox(boards.service, 'J2');
   if (!a || !b) return null;
-  const ac = a.getCenter(new THREE.Vector3()), bc = b.getCenter(new THREE.Vector3());
-  const ax = a.max.x, bx = b.max.x, az = ac.z + 0.2, bz = bc.z;
-  const path = (h) => [[ax - 1.5, ac.y, az], [ax + 2.5, ac.y, az], [ax + 4.2, ac.y + 0.45 * h, az - 5], [ax + 4.6, ac.y + h, 9],
-    [ax + 5.6, ac.y + 0.55 * h, 4.4], [21.6, -20, 3.2], [21.7, -31, 3.2], [bx + 5.5, bc.y + 5, bz + 0.3], [bx + 2.5, bc.y, bz], [bx - 1.5, bc.y, bz]];
-  let lo = 0, hi = 45, cable = null;
+  const R = 1.25, ac = a.getCenter(new THREE.Vector3()), bc = b.getCenter(new THREE.Vector3());
+  const ax = a.max.x, ay = ac.y, az = ac.z + 0.2, bx = b.min.x, by = bc.y, bz = bc.z, g = FLOOR_Z + R + 0.05;
+  const x0 = ax + 21, run = bx - 7 - x0;                 // where it reaches the ground; length of the ground run
+  const lie = (t, h) => [x0 + t * run, ay + (by - ay) * t + h * Math.sin(Math.PI * t) ** 1.5, g];
+  const path = (h) => [[ax - 1.5, ay, az], [ax + 3, ay, az], [ax + 9, ay, az - 3.5], [ax + 14, ay, az - 12],
+    [ax + 17.5, ay, g + 6], lie(0, h), lie(0.14, h), lie(0.28, h), lie(0.5, h), lie(0.72, h), lie(0.86, h), lie(1, h),
+    [bx - 2.5, by, bz], [bx + 1.5, by, bz]];
+  const build = (h) => {                                 // smooth path, kept from dipping below the ground
+    const c = new THREE.CatmullRomCurve3(path(h).map((q) => new THREE.Vector3(...q)), false, 'centripetal');
+    return makeCable(c.getPoints(160).map((q) => [q.x, q.y, Math.max(q.z, g)]), R);
+  };
+  let lo = 0, hi = 34, cable = null;
   for (let i = 0; i < 18; i++) {
     const h = (lo + hi) / 2;
-    cable = makeCable(path(h));
+    cable = build(h);
     if (cable.userData.length < CABLE_LENGTH) lo = h; else hi = h;
     if (i < 17) cable.geometry.dispose();
   }
@@ -119,11 +128,9 @@ loadBoards($('status')).then((b) => {
   if (b.lower) { b.lower.position.z = DIM.zLower; groups.fc.add(b.lower); }
   if (b.upper) { b.upper.position.z = DIM.zUpper; groups.fc.add(b.upper); }
   if (b.service) {
-    b.service.position.set(SERVICE.x, SERVICE.y, DIM.tape);
+    b.service.position.set(SERVICE.x, SERVICE.y, SERVICE.z);
     b.service.rotation.z = SERVICE.rotZ;
-    const tape = new THREE.Mesh(new THREE.BoxGeometry(28, 14, DIM.tape - 0.1), new THREE.MeshStandardMaterial({ color: 0xd9dbde, roughness: 0.9 }));
-    tape.position.set(SERVICE.x, SERVICE.y, DIM.tape / 2);
-    groups.service.add(b.service, tape);
+    groups.service.add(b.service);
     const cable = routeCable();
     if (cable) { groups.service.add(cable); window.STACKF765_CABLE_MM = cable.userData.length; }
   }

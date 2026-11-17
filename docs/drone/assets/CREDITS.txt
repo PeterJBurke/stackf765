@@ -28,5 +28,5 @@ Scale coin: assets/penny.js (copied unchanged from dronerenders fc/assets/penny.
 
 three.js r160 (MIT licence, Copyright 2010-2023 three.js authors) is loaded from cdn.jsdelivr.net.
 
-Mounting posts, rubber grommets, washers, screws, foam tape and the service cable are simple
+Mounting posts, rubber grommets, washers, screws and the service cable are simple
 illustrative shapes generated in assets/stackf765.js and assets/drone.js; they are not CAD models.
