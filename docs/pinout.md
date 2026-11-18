@@ -19,7 +19,7 @@ Looking into the pins from the front, the order is mirrored (column 12 on the le
 | Label | Meaning |
 |---|---|
 | G | Ground |
-| 5V | 5 V from the battery regulator (off on USB power) |
+| 5V | 5 V from the battery regulator (off on USB power) Keep the upper header's 5V pins to 2 A in total. |
 | 4V5 | 5 V that is also live on USB power |
 | TXn / RXn | UART n (3.3 V logic). ArduPilot SERIAL1-7 = UART 1, 2, 3, 4, 6, 7, 8 |
 | SDA / SCL | I2C bus for an external compass etc. (3.3 V, 2.2 k pull-ups fitted) |

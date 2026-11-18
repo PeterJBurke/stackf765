@@ -35,12 +35,27 @@ rotated by 180°, which no rule check would have flagged.
   flight-controller side, regulator heat sharing, 3 A regulator rating explained, firmware
   rebuilt for the fitted barometer). The full report is `research/design-review.md`.
 
+## Layout review
+
+The routed boards were reviewed against the points a layout engineer would check
+(2026-11-18). Details and numbers are in `research/layout-review.md`.
+
+| Area | Result |
+|---|---|
+| 50 A path (lower) | Pads, shunt and return are joined by solid copper on all four layers; about 0.15 mΩ of copper besides the 0.5 mΩ shunt. No change. |
+| 5 V rails (lower) | 0.6 mm and 0.8 mm tracks in 2 oz copper carry 3 A with roughly 20 °C rise. No change. |
+| 5 V feed into the supply selector U5 (upper) | Was 0.15 mm wide for 6.7 mm. Re-routed: now 0.5 mm except a 5 mm stretch at 0.24 mm between a via and the chip. Adequate for the board's own load plus 0.5 A on the 4V5 pins. |
+| Decoupling (upper) | Every processor supply pin has its capacitor within 2.8 mm and a plane via within 1.4 mm. No change. |
+| Adjacent inner signal layers (upper) | Only 2.9 mm of parallel overlap between the two inner signal layers in total. No change. |
+| Sensitive nets | Video, ADC, crystal and reset tracks have no long parallel runs beside clocks or motor signals. No change. |
+| Crystals | The 8 MHz crystal is 5 mm from the processor and its tracks (7 and 9 mm) each use two vias. Acceptable at 8 MHz; a candidate for tidying in a later revision. |
+
 ## Known limitations and open items
 
 | Item | Detail |
 |---|---|
 | No hardware test | No board has been fabricated, powered or flown. |
-| Autorouted layout | Tracks were routed by the script in `gen/kigen/router.py`. It respects clearances but does not length-match or impedance-control. USB runs at full speed (12 Mbit/s) over an unshielded cable and the SD bus is short, so neither needs it, but the layout has not been reviewed by a human layout engineer. |
+| Autorouted layout | Tracks were routed by the script in `gen/kigen/router.py`. It respects clearances but does not length-match or impedance-control. USB runs at full speed (12 Mbit/s) over an unshielded cable and the SD bus is short, so neither needs it, and the layout has had a scripted review (above) but not one by a human layout engineer. |
 | Thermal | 50 A continuous rating is by calculation (about 1.7 W near the shunt). Measure it (bring-up section E). |
 | IMU orientation | Set from the footprint drawing; confirm on the bench (bring-up C9). |
 | Buzzer polarity | "+" on the part goes to pad 1; the land pattern was checked against the MLT-8530 drawing, the KLJ part's drawing is less explicit. |

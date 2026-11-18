@@ -41,6 +41,61 @@ def write_symbol_libs(libdir):
             f.write(dump(tree) + "\n")
 
 
+def widen_tracks(brd, targets, clear):
+    """Where the router necked a supply track down to reach a pad, widen each such segment again as far
+    as the neighbouring copper allows.  targets = {net: wanted width in mm}.  The check is conservative
+    (pads are treated as their bounding boxes); KiCad's DRC is still the judge afterwards."""
+    import math
+    import pcbnew
+    mm = pcbnew.ToMM
+
+    def seg_seg(a, b, c, d):
+        def pt_seg(p, a, b):
+            vx, vy = b[0] - a[0], b[1] - a[1]
+            L = vx * vx + vy * vy
+            t = 0 if L == 0 else max(0, min(1, ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / L))
+            return math.hypot(p[0] - a[0] - t * vx, p[1] - a[1] - t * vy)
+
+        def ccw(p, q, r):
+            return (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
+        if ccw(a, b, c) * ccw(a, b, d) < 0 and ccw(c, d, a) * ccw(c, d, b) < 0:
+            return 0.0
+        return min(pt_seg(a, c, d), pt_seg(b, c, d), pt_seg(c, a, b), pt_seg(d, a, b))
+
+    def xy(p):
+        return (mm(p.x), mm(p.y))
+    obstacles = []          # [net, layer or None for all layers, [segments], radius, track or None]
+    for t in brd.GetTracks():
+        if t.Type() == pcbnew.PCB_VIA_T:
+            p = xy(t.GetPosition())
+            obstacles.append([t.GetNetname(), None, [(p, p)], mm(t.GetWidth(pcbnew.F_Cu)) / 2, None])
+        else:
+            obstacles.append([t.GetNetname(), t.GetLayer(), [(xy(t.GetStart()), xy(t.GetEnd()))], mm(t.GetWidth()) / 2, t])
+    for p in brd.GetPads():
+        bb = p.GetBoundingBox()
+        x0, y0, x1, y1 = mm(bb.GetLeft()), mm(bb.GetTop()), mm(bb.GetRight()), mm(bb.GetBottom())
+        box = [((x0, y0), (x1, y0)), ((x1, y0), (x1, y1)), ((x1, y1), (x0, y1)), ((x0, y1), (x0, y0)),
+               ((x0, y0), (x1, y1))]
+        obstacles.append([p.GetNetname(), None if p.HasHole() else p.GetLayer(), box, 0.0, None])
+    done, left = 0, 0
+    for ob in obstacles:
+        t = ob[4]
+        want = targets.get(ob[0]) if t is not None else None
+        if not want or mm(t.GetWidth()) >= want - 1e-6:
+            continue
+        a, b = xy(t.GetStart()), xy(t.GetEnd())
+        room = min((seg_seg(a, b, c, d) - r for net, lay, segs, r, _ in obstacles
+                    if net != t.GetNetname() and lay in (None, t.GetLayer()) for c, d in segs), default=9)
+        w = min(want, math.floor((2 * (room - clear - 0.01)) * 100) / 100)
+        if w > mm(t.GetWidth()) + 1e-6:
+            t.SetWidth(pcbnew.FromMM(w))
+            ob[3] = w / 2          # later segments must keep clear of the new width
+            done += 1
+        if mm(t.GetWidth()) < want - 1e-6:
+            left += 1
+    return done, left
+
+
 def main():
     name = sys.argv[1]
     do_route = "--no-route" not in sys.argv
@@ -90,6 +145,9 @@ def main():
             pass
         rt.commit()
         print(f"[{name}] routing took {time.time() - t0:.0f}s; unrouted nets: {unrouted}")
+        if getattr(mod, "WIDEN", None):
+            n, left = widen_tracks(bd.b, mod.WIDEN, mod.router_config(bd).get("clear", 0.15))
+            print(f"[{name}] widened {n} necked-down supply segment(s); still below target: {left}")
     if hasattr(mod, "post_route"):
         mod.post_route(bd)
     bd.fill()

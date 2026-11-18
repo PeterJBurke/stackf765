@@ -315,4 +315,6 @@ def router_config(bd):
 ROUTER = "sequential"
 
 # long nets from the far side of the MCU to the header are routed first
-ROUTE_ORDER = ["TX8", "RX8", "TX2", "RX2", "TX4", "RX4", "SCL", "SDA"]
+# supply tracks the router necked down are widened again afterwards, as far as neighbouring copper allows
+WIDEN = {"+5V": 0.5, "+5V_SYS": 0.4}
+ROUTE_ORDER = ["+5V", "TX8", "RX8", "TX2", "RX2", "TX4", "RX4", "SCL", "SDA"]
