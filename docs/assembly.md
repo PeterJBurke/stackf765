@@ -19,7 +19,7 @@ In each column the top pin is signal, the middle pin 5 V, the bottom pin ground.
 **Upper board, J1 (3 × 12 right-angle).** Top side, front edge, pins pointing off the board.
 You can use one Samtec TSW-112-08-G-T-RA or four generic 3 × 3 pieces side by side.
 The plastic body hangs just beyond the board edge. Trim the pin tails under the upper board to
-**1.5 mm or less**. The two headers are offset sideways by half a pitch so these tails sit between the
+**1.0 mm or less** (they are about 1.4 mm as supplied). Trimmed, they clear the lower header's pins by about 0.4 mm; the two headers are also offset sideways by half a pitch so these tails sit between the
 pins of the lower header, not on top of them.
 
 ## 2. Solder the power wires

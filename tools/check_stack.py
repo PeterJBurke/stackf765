@@ -130,11 +130,11 @@ for fp in named(lower):
     else:
         ltop.append((fp, shape(fp), height(fp)))
 ubot = [(fp, shape(fp), height(fp)) for fp in named(upper) if fp.IsFlipped()]
-# solder tails of the upper board's 3x12 header: one per pin, 1.5 mm below the upper board
+# solder tails of the upper board's 3x12 header: one per pin, trimmed to 1.0 mm below the upper board
 tails = []
 for pad in U["J1"].Pads():
     x, y = mm(pad.GetPosition())
-    tails.append((None, (x - 0.4, y - 0.4, x + 0.4, y + 0.4), 1.5))
+    tails.append((None, (x - 0.4, y - 0.4, x + 0.4, y + 0.4), 1.0))
 tight = (GAP, "")
 for fa, ba, ha in ltop:
     if ha is None:
