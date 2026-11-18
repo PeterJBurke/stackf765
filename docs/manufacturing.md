@@ -55,16 +55,18 @@ choose "specify a location" or pay to omit it.
 
 ## Parts that need attention before ordering
 
-Stock at LCSC/JLCPCB was checked on 2026-11-16; re-check before you order.
+LCSC stock was checked for every part on the three BOMs on 2026-11-18 (LCSC product lookup). JLCPCB's own
+assembly-library stock could not be read by script, so confirm it on the order page; parts JLCPCB does not hold can
+usually be pre-ordered from LCSC through its parts manager. All parts not listed below had more than 2,500 in stock.
 
 | Part | Note |
 |---|---|
-| STM32F765VIT6 (U1) | About 50 in stock when checked. STM32F767VIT6 is pin-compatible and works with the same firmware. |
-| ICM-45686 (U2) | About 1,200 in stock. ICM-42688-P fits the same footprint; the firmware detects either. |
-| USB-C socket, microSD socket, JST-SH connectors | Stock could not be confirmed through the parts API on the day; confirm on the order page. |
+| STM32F765VIT6 (U1) | **48 in stock.** The scarcest part; order it first. STM32F767VIT6 is pin-compatible and works with the same firmware. |
+| ICM-45686 (U2) | 492 in stock (down from about 1,200 two days earlier). ICM-42688-P fits the same footprint; the firmware detects either. |
+| TPS62933DRLR (lower U1, U2) | 817 in stock. |
 | Buzzer BZ1 | KLJ-8530-3627 or MLT-8530. The "+" mark on the part goes to pad 1 (marked "+" on the board). |
-| 27 MHz crystal Y2 | Only about 1,100 in stock when checked. |
-| Samtec SFMC-110-02-L-D / FTSH-110-04-L-DV | Board-to-board pair. Use lead style **-04** on the FTSH (3.81 mm posts); other styles do not mate correctly at 8.0 mm. Do not order the FTSH with the -K option. |
+| 27 MHz crystal Y2 | 905 in stock. |
+| Samtec SFMC-110-02-L-D / FTSH-110-04-L-DV | LCSC holds 30 and 5 of close variants only; buy from DigiKey, Mouser or Samtec. Board-to-board pair. Use lead style **-04** on the FTSH (3.81 mm posts); other styles do not mate correctly at 8.0 mm. Do not order the FTSH with the -K option. |
 
 Approximate component cost at single-unit prices is shown per board on the
 [project page](https://peterjburke.github.io/stackf765/#boards). PCB fabrication,

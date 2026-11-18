@@ -878,10 +878,13 @@
 			(at 59.69 46.99 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C307331" (at 59.69 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "CL05B104KB54PNC" (at 59.69 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "Samsung" (at 59.69 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.004" (at 59.69 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C77020" (at 59.69 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "GRM155R71H104KE14D"
+			(at 59.69 46.99 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Manufacturer" "Murata" (at 59.69 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.009" (at 59.69 46.99 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "47fe7d4f-584f-5c29-b6a4-b7c35858c73e"))
 		(pin "2" (uuid "c71f1f5c-60b6-5c56-8e94-ecaf8c751429"))
 		(instances
@@ -967,14 +970,17 @@
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Datasheet" "" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "33 nF 16 V X7R"
+		(property "Description" "33 nF 50 V X7R"
 			(at 62.23 57.15 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C1532" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "CL05B333KO5NNNC" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "Samsung" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.003" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C106862" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "CC0402KRX7R9BB333"
+			(at 62.23 57.15 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Manufacturer" "Yageo" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.005" (at 62.23 57.15 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "3e22c5e2-8572-5da6-b8df-ac49918c8fab"))
 		(pin "2" (uuid "e972771c-2d5f-539f-b7c0-c9adab55c726"))
 		(instances
@@ -2040,13 +2046,13 @@
 			(at 59.69 134.62 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C307331" (at 59.69 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "CL05B104KB54PNC" (at 59.69 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "Samsung"
+		(property "LCSC" "C77020" (at 59.69 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "GRM155R71H104KE14D"
 			(at 59.69 134.62 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Price" "0.004" (at 59.69 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "Murata" (at 59.69 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.009" (at 59.69 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "ef6ceb12-ce5f-5b41-ade7-2eccdcbf7481"))
 		(pin "2" (uuid "a93f5d1c-e3e5-528c-b122-6bd5c3154c4d"))
 		(instances
@@ -2132,17 +2138,17 @@
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Datasheet" "" (at 62.23 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "33 nF 16 V X7R"
+		(property "Description" "33 nF 50 V X7R"
 			(at 62.23 144.78 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C1532" (at 62.23 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "CL05B333KO5NNNC" (at 62.23 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "Samsung"
+		(property "LCSC" "C106862" (at 62.23 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "CC0402KRX7R9BB333"
 			(at 62.23 144.78 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Price" "0.003" (at 62.23 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "Yageo" (at 62.23 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.005" (at 62.23 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "78e34dbe-cd7b-5f8a-80a3-3e8481adf8d9"))
 		(pin "2" (uuid "97d7d7b3-1537-5b6e-9142-0bfc9477eedb"))
 		(instances

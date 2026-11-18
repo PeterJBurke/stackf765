@@ -1160,7 +1160,7 @@
 			(at 87.63 59.69 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C211759.pdf"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C169449.pdf"
 			(at 87.63 59.69 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
@@ -1169,9 +1169,12 @@
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "MPN" "SMBJ15CA" (at 87.63 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "various" (at 87.63 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "LCSC" "C211759" (at 87.63 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.065" (at 87.63 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "Jingdao (or equivalent SMBJ15CA)"
+			(at 87.63 59.69 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "LCSC" "C169449" (at 87.63 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.039" (at 87.63 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "1c65d77d-6bab-5065-aa23-1558d2b4c7bf"))
 		(pin "2" (uuid "829bc07a-7cfa-5729-867c-d3c8d9e1f95e"))
 		(instances
@@ -1401,13 +1404,13 @@
 			(at 179.07 66.04 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C307331" (at 179.07 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "CL05B104KB54PNC" (at 179.07 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "Samsung"
+		(property "LCSC" "C77020" (at 179.07 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "GRM155R71H104KE14D"
 			(at 179.07 66.04 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Price" "0.004" (at 179.07 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "Murata" (at 179.07 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.009" (at 179.07 66.04 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "1d7d1b87-437d-5b39-986c-3c0c93402bbc"))
 		(pin "2" (uuid "5bcb4847-f2ef-54af-a05a-e327d0c61a74"))
 		(instances

@@ -7,9 +7,9 @@ from kigen.design import box
 # (kind, value, size) -> (LCSC, MPN, manufacturer, description, unit price USD)
 _PASSIVES = {
     ("C", "100n", "0402"): ("C1525", "CL05B104KO5NNNC", "Samsung", "100 nF 16 V X7R", 0.002),
-    ("C", "100n 50V", "0402"): ("C307331", "CL05B104KB54PNC", "Samsung", "100 nF 50 V X7R", 0.004),
+    ("C", "100n 50V", "0402"): ("C77020", "GRM155R71H104KE14D", "Murata", "100 nF 50 V X7R", 0.009),
     ("C", "10n", "0402"): ("C15195", "CL05B103KB5NNNC", "Samsung", "10 nF 50 V X7R", 0.002),
-    ("C", "33n", "0402"): ("C1532", "CL05B333KO5NNNC", "Samsung", "33 nF 16 V X7R", 0.003),
+    ("C", "33n", "0402"): ("C106862", "CC0402KRX7R9BB333", "Yageo", "33 nF 50 V X7R", 0.005),
     ("C", "15p", "0402"): ("C1548", "0402CG150J500NT", "FH", "15 pF 50 V C0G", 0.002),
     ("C", "1u", "0402"): ("C52923", "CL05A105KA5NQNC", "Samsung", "1 uF 25 V X5R", 0.004),
     ("C", "2.2u", "0402"): ("C12530", "CL05A225MQ5NSNC", "Samsung", "2.2 uF 6.3 V X5R", 0.005),
@@ -117,9 +117,9 @@ PARTS = {
                   Description="0.5 mohm 1% 6 W metal-strip current shunt, 2512",
                   Datasheet="https://www.lcsc.com/datasheet/C469426.pdf"),
     "tvs": dict(symbol="Device:D_TVS", footprint="Diode_SMD:D_SMB", value="SMBJ15CA",
-                MPN="SMBJ15CA", Manufacturer="various", LCSC="C211759", Price=0.065,
+                MPN="SMBJ15CA", Manufacturer="Jingdao (or equivalent SMBJ15CA)", LCSC="C169449", Price=0.039,
                 Description="600 W bidirectional TVS, 15 V stand-off, 24.4 V clamp, SMB",
-                Datasheet="https://www.lcsc.com/datasheet/C211759.pdf"),
+                Datasheet="https://www.lcsc.com/datasheet/C169449.pdf"),
     "tvs5": dict(symbol="Device:D_TVS", footprint="Diode_SMD:D_SOD-123F", value="SMF5.0CA",
                  MPN="SMF5.0CA-TP", Manufacturer="MCC", LCSC="C914432", Price=0.053,
                  Description="200 W bidirectional TVS, 5 V stand-off, SOD-123FL",
