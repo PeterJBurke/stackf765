@@ -72,7 +72,8 @@ def compare_netlist(design, netfile):
 # to the KiCad rotation, by LCSC part number (fitted pad by pad against JLCPCB's/EasyEDA's footprint for
 # that exact part, 2026-11-19; see docs/ordering-jlcpcb.md).  A substitute part needs its own entry.
 JLC_ROT = {"C710319": 270, "C82351": 270, "C779278": 90, "C404027": 180, "C2862740": 180, "C585350": 180,
-           "C3235556": 270, "C8545": 180, "C15127": 180, "C3200405": 180, "C105240": 180, "C7519": 270}
+           "C3235556": 270, "C8545": 180, "C15127": 180, "C3200405": 180, "C105240": 180, "C7519": 270,
+           "C94599": 270}   # MLT-8530: seen in JLCPCB preview 2026-11-19, "+" must sit on pad 1
 # JLCPCB footprint origin differs from KiCad's: shift of the placement point in the footprint's own frame (mm)
 JLC_SHIFT = {"C165948": (0.0, 1.57)}
 

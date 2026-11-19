@@ -28,6 +28,19 @@ Read this list first. Each item can cost you a board run.
 
 Minimum quantities: 5 bare boards per design; 2 assembled. Order 5 and assemble all 5.
 
+## Notes from preparing a real cart (2026-11-19)
+
+- **BMP388 (upper U3) is left unticked** in the parts list because JLCPCB marks it "difficult to process". Tick its
+  "Select" box, or it will not be fitted.
+- **Buzzer rotation** was wrong by a quarter turn in the first placement file and is corrected (270).
+  All other polarised parts on all three boards matched the preview.
+- Choosing stack-up JLC06161H-3313 brings up a notice that the finished thickness is 1.54 mm, not 1.6 mm. Accept it.
+- On 4- and 6-layer boards "Tented" is not offered; the defaults ("Plugged" for 4 layers, "Epoxy Filled & Capped"
+  for 6) are fine and free.
+- The lower board can only be ordered as Standard PCBA (Economic is greyed out with 2 oz copper).
+- The quote step asks for a customs "Product Description" before it will save to the cart.
+- Quotes for 5 assembled of each, before shipping: service $36.74, lower $143.17, upper $397.36.
+
 ## 1. Files you upload
 
 | Board | Gerber zip | BOM | Placement (CPL) |
@@ -223,7 +236,7 @@ How the "needs" column was worked out: the pad layout of JLCPCB's own library fo
 | U1 | USBLC6-2SC6 | SOT-23-6 | 0 | **270** | High. A 90° error is obvious. |
 | J1 | USB-C socket | HRO TYPE-C-31-M-12 | 180 | 180 | Medium (the community list says 0). The opening must face the board edge. The part may also show about **1.6 mm** off its pads, because the two footprints use different centre points. Drag it onto the pads, or leave it: JLCPCB's engineers align connectors to the pads. |
 | D1 | 1N5819WS | SOD-323 | 90 | 90 | Medium. Cathode bar matches the silkscreen bar. |
-| BZ1 | Buzzer | 8.5 × 8.5 mm | 0 | 0 | Medium. "+" of the part on the pad marked "+". |
+| BZ1 | Buzzer | 8.5 × 8.5 mm | 0 | 270 | Corrected from JLCPCB's preview on 2026-11-19. "+" of the part on the pad marked "+" (top-left with USB at the top). |
 | SW1 | Tact switch | 5.1 × 5.1 mm | 90 | 90 | High (180° is equivalent) |
 | J2 | JST-SH 6-pin | SM06B-SRSS | 0 | 0 | Medium. Opening faces the board edge. |
 
