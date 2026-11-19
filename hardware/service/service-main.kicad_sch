@@ -7,7 +7,7 @@
 	(title_block
 		(title "StackF765 service board (USB / buzzer / boot) - USB-C, buzzer, boot button")
 		(date "2026-11-16")
-		(rev "A")
+		(rev "B")
 		(company "StackF765 service board (USB / buzzer / boot)")
 		(comment 1 "Sheet 2: USB-C, buzzer, boot button")
 	)
@@ -963,7 +963,7 @@
 		(effects (font (size 1.9 1.9) (bold yes)) (justify left bottom))
 		(uuid "8d646ef4-55c5-5ae2-8a47-b77486f6f936")
 	)
-	(text "1 VBUS   2 D-   3 D+   4 GND   5 BUZ   6 BOOT"
+	(text "1 VBUS   2 GND   3 D-   4 D+   5 BOOT   6 BUZ"
 		(exclude_from_sim no)
 		(at 171.5 98 0)
 		(effects (font (size 1.36 1.36)) (justify left bottom))
@@ -1783,7 +1783,7 @@
 		(stroke (width 0) (type default))
 		(uuid "20b711cf-1466-57d4-831d-46b7ce216fcd")
 	)
-	(global_label "USB_DM"
+	(global_label "GND"
 		(shape passive)
 		(at 215.9 53.34 180)
 		(fields_autoplaced yes)
@@ -1799,7 +1799,7 @@
 		(stroke (width 0) (type default))
 		(uuid "f31d2ccc-4aeb-55c7-8af6-54439cecc81a")
 	)
-	(global_label "USB_DP"
+	(global_label "USB_DM"
 		(shape passive)
 		(at 215.9 55.88 180)
 		(fields_autoplaced yes)
@@ -1815,7 +1815,7 @@
 		(stroke (width 0) (type default))
 		(uuid "a4cf5197-81b3-50fa-a412-0fe9c25188df")
 	)
-	(global_label "GND"
+	(global_label "USB_DP"
 		(shape passive)
 		(at 215.9 58.42 180)
 		(fields_autoplaced yes)
@@ -1831,7 +1831,7 @@
 		(stroke (width 0) (type default))
 		(uuid "162d1356-ad50-5064-bd20-7b5ce5eadcbb")
 	)
-	(global_label "BUZ_OUT"
+	(global_label "BOOT0"
 		(shape passive)
 		(at 215.9 60.96 180)
 		(fields_autoplaced yes)
@@ -1847,7 +1847,7 @@
 		(stroke (width 0) (type default))
 		(uuid "7de941b4-9fa3-5ffc-950d-45bb89e20308")
 	)
-	(global_label "BOOT0"
+	(global_label "BUZ_OUT"
 		(shape passive)
 		(at 215.9 63.5 180)
 		(fields_autoplaced yes)
@@ -1902,7 +1902,7 @@
 			(at 77.47 143.51 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C189206.pdf"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C94599.pdf"
 			(at 77.47 143.51 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
@@ -1910,16 +1910,13 @@
 			(at 77.47 143.51 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "MPN" "KLJ-8530-3627 / MLT-8530"
+		(property "MPN" "MLT-8530" (at 77.47 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "Huaneng"
 			(at 77.47 143.51 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Manufacturer" "Keliking / Huaneng"
-			(at 77.47 143.51 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "LCSC" "C189206" (at 77.47 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.57" (at 77.47 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C94599" (at 77.47 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.2" (at 77.47 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "5e5f9c24-aeab-579c-b7fc-b03c77f21dde"))
 		(pin "2" (uuid "28567180-454b-5d08-9ca9-af92ccd4b3b0"))
 		(instances
@@ -1973,7 +1970,7 @@
 		(dnp no)
 		(uuid "bfdb01ed-f1a2-5a92-a70c-05fc44f714c9")
 		(property "Reference" "D1" (at 113.76 142.51 0) (effects (font (size 1 1)) (justify left)))
-		(property "Value" "B5819WS" (at 113.76 144.51 0) (effects (font (size 1 1)) (justify left)))
+		(property "Value" "1N5819WS" (at 113.76 144.51 0) (effects (font (size 1 1)) (justify left)))
 		(property "Footprint" "Diode_SMD:D_SOD-323"
 			(at 111.76 143.51 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
@@ -1983,12 +1980,12 @@
 			(at 111.76 143.51 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "MPN" "B5819WS" (at 111.76 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "various"
+		(property "MPN" "1N5819WS" (at 111.76 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "Hottech"
 			(at 111.76 143.51 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C916992" (at 111.76 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C191023" (at 111.76 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Price" "0.013" (at 111.76 143.51 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "444a6e0d-2e77-5c2a-bb26-65a65a195a05"))
 		(pin "2" (uuid "f2305a1a-7567-5fe3-b1ac-0fcff3a3b3e7"))

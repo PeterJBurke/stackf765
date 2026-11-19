@@ -93,7 +93,7 @@ class Board:
             net = part.conn.get(num)
             if net == "__NC__":
                 pname = next(p.name for p in part.symbol.pins if p.number == num)
-                pad.SetNet(self.net(f"unconnected-({ref}-{pname}-Pad{num})"))
+                pad.SetNet(self.net(f"unconnected-({ref}-{pname.replace('/', '{slash}')}-Pad{num})"))
             elif net:
                 pad.SetNet(self.net(net))
         missing = [n for n, net in part.conn.items() if net != "__NC__" and n not in padnums]

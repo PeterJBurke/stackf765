@@ -143,8 +143,9 @@ ESD protection on the data lines, the buzzer, and the BOOT button. The cable is 
 
 | Pin | 1 | 2 | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|---|---|
-| Signal | VBUS | D− | D+ | GND | BUZ | BOOT |
+| Signal | VBUS | GND | D− | D+ | BOOT | BUZ |
 
 **Check your cable.** Some ready-made JST-SH cables are wired reversed (pin 1 to pin 6).
-A reversed cable puts USB 5 V on the BOOT line and buzzer pulses on a USB data line.
-Test continuity pin 1 to pin 1 before use.
+The pin order is chosen so that a reversed cable does no damage: it swaps VBUS with BUZ
+(5 V then reaches the board only through the 10 Ω buzzer resistor), GND with BOOT, and D− with D+.
+USB simply does not connect. Test continuity pin 1 to pin 1, and swap the cable if USB is dead.

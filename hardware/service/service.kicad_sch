@@ -7,7 +7,7 @@
 	(title_block
 		(title "StackF765 service board (USB / buzzer / boot)")
 		(date "2026-11-16")
-		(rev "A")
+		(rev "B")
 		(company "StackF765 service board (USB / buzzer / boot)")
 		(comment 1 "Index sheet - generated from gen/*.py")
 	)
@@ -51,17 +51,23 @@
 		(effects (font (size 1.8 1.8)) (justify left bottom))
 		(uuid "50ced969-820a-5e94-aae4-e530e768730f")
 	)
-	(text "The buzzer is driven with 5 V pulses from the flight controller (BUZ wire, current-limited there by 10 ohm)."
+	(text "A cable wired 6-to-1 does no harm (USB simply does not connect): swap it for a 1:1 cable."
 		(exclude_from_sim no)
 		(at 20 78.4 0)
 		(effects (font (size 1.8 1.8)) (justify left bottom))
 		(uuid "2243c320-6907-53d2-b0d1-3db455f55e24")
 	)
-	(text "BOOT button: hold while plugging in USB to start the STM32 DFU bootloader."
+	(text "The buzzer is driven with 5 V pulses from the flight controller (BUZ wire, current-limited there by 10 ohm)."
 		(exclude_from_sim no)
 		(at 20 82.6 0)
 		(effects (font (size 1.8 1.8)) (justify left bottom))
 		(uuid "878ee7da-09ab-5645-9809-b8556c2568ec")
+	)
+	(text "BOOT button: hold while plugging in USB to start the STM32 DFU bootloader."
+		(exclude_from_sim no)
+		(at 20 86.8 0)
+		(effects (font (size 1.8 1.8)) (justify left bottom))
+		(uuid "bf6c51e8-2166-507f-86c1-40aa36d4a713")
 	)
 	(sheet_instances (path "/" (page "1")))
 	(embedded_fonts no)

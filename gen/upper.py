@@ -20,7 +20,9 @@ J1_ROWS = {
           ("TX7", "TX7"), ("RX7", "RX7"), ("G", "GND"), ("5V", "+5V"), ("TX8", "TX8"), ("RX8", "RX8")],
 }
 # service cable (JST-SH 6): pin -> net
-SVC = {1: "VBUS", 2: "USB_DM", 3: "USB_DP", 4: "GND", 5: "BUZ_OUT", 6: "BOOT0"}
+# Service cable.  The order is chosen so that a cable wired 6-to-1 instead of 1-to-1 does no harm: it swaps
+# VBUS with BUZ (5 V reaches the board through the 10 ohm buzzer resistor), GND with BOOT (10 k) and D- with D+.
+SVC = {1: "VBUS", 2: "GND", 3: "USB_DM", 4: "USB_DP", 5: "BOOT0", 6: "BUZ_OUT"}
 
 MCU_POS = (0.0, 2.5)
 MCU_ROT = 180
@@ -59,9 +61,9 @@ def design():
 
     s.frame(210, 20, 190, 110, "U6: +3V3 for MCU, microSD, I2C pull-ups (500 mA)")
     B.part(s, "U6", "ldo_main", 300, 65, nets={"IN": "LDO_IN", "EN": "LDO_IN", "OUT": "+3V3", "GND": "GND"}, nc=("NC",))
-    B.R(s, "R16", "4.7R", "+5V_SYS", "LDO_IN", 230, 45, 90, "0805")
-    B.R(s, "R17", "4.7R", "+5V_SYS", "LDO_IN", 230, 62, 90, "0805")
-    B.C(s, "C5", "1u", "LDO_IN", "GND", 245, 90, 0)
+    B.R(s, "R16", "4.7R", "+5V_SYS", "LDO_IN", 230, 45, 90, "1206")
+    B.R(s, "R17", "4.7R", "+5V_SYS", "LDO_IN", 230, 62, 90, "1206")
+    B.C(s, "C5", "10u", "LDO_IN", "GND", 245, 90, 0, "0603")
     s.flag("LDO_IN", 262, 60)
     s.text(215, 122, "R16 || R17 = 2.35 ohm share the heat with U6: at 250 mA they drop 0.6 V (0.15 W),\nU6 dissipates 0.28 W instead of 0.43 W.", 1.4)
     B.C(s, "C6", "1u", "+3V3", "GND", 345, 90, 0)
@@ -121,9 +123,9 @@ def design():
                     "(divider 10k/10k = 2.5 V).  Hold the button while plugging USB to enter DFU.", 1.5)
 
     s.frame(205, 115, 195, 125, "Status LEDs (active low) and I2C pull-ups")
-    B.R(s, "R2", "470R", "+3V3", "LEDB_A", 235, 150, 90)
+    B.R(s, "R2", "100R", "+3V3", "LEDB_A", 235, 150, 90)
     B.part(s, "D1", "led_blue", 235, 175, 0, nets={"A": "LEDB_A", "K": "LED_BLUE"})
-    B.R(s, "R3", "470R", "+3V3", "LEDG_A", 235, 200, 90)
+    B.R(s, "R3", "100R", "+3V3", "LEDG_A", 235, 200, 90)
     B.part(s, "D2", "led_green", 235, 225, 0, nets={"A": "LEDG_A", "K": "LED_GREEN"})
     B.R(s, "R4", "2.2k", "+3V3", "SCL", 320, 150, 90)
     B.R(s, "R5", "2.2k", "+3V3", "SDA", 320, 170, 90)
@@ -135,9 +137,9 @@ def design():
     s = d.sheet("sensors", "IMU and barometer")
     s.frame(15, 20, 190, 220, "U2: ICM-45686 6-axis IMU on SPI1 (ICM-42688-P fits the same footprint)")
     B.part(s, "U2", "imu", 110, 90, nets={"SCLK": "IMU_SCK", "SDI": "IMU_MOSI", "SDO": "IMU_MISO", "CS": "IMU_CS",
-                                         "INT1": "IMU_INT", "INT2/FSYNC": "GND", "VDD": "+3V3_SENS",
+                                         "INT1": "IMU_INT", "VDD": "+3V3_SENS",
                                          "VDDIO": "+3V3_SENS", "RESV7": "GND", "GND": "GND"},
-           nc=("RESV2", "RESV3", "RESV10", "RESV11"))
+           nc=("RESV2", "RESV3", "RESV10", "RESV11", "INT2/FSYNC"))   # unused pin 9: leave open (TDK DS-000489)
     B.C(s, "C30", "100n", "+3V3_SENS", "GND", 60, 170, 0)
     B.C(s, "C31", "2.2u", "+3V3_SENS", "GND", 80, 170, 0)
     B.C(s, "C32", "100n", "+3V3_SENS", "GND", 100, 170, 0)
@@ -243,7 +245,7 @@ BOT = [
     ("U5", 6.5, -10.6, 0), ("C1", 5.8, -5.2, 0), ("C2", 9.0, -10.2, 90), ("C3", 9.6, -12.5, 0), ("C4", 0.0, -13.0, 0),
     ("C5", -1.0, -10.4, 90), ("C6", 2.4, -9.6, 0), ("C7", 2.3, -11.2, 0), ("C8", 3.6, -8.3, 0), ("C9", 6.6, -8.4, 0),
     ("Q1", 9.0, -2.0, 0), ("Q2", 13.3, -6.2, 0), ("R18", 14.2, -10.5, 90), ("D3", 5.8, -13.1, 0),
-    ("R16", -2.4, -7.5, 0), ("R17", -4.2, -10.2, 90), ("R12", 8.6, -5.2, 0), ("R13", 10.6, -6.2, 90),
+    ("R16", -2.4, -7.5, 0), ("R17", -4.2, -11.1, 90), ("R12", 8.6, -5.2, 0), ("R13", 10.6, -6.2, 90),
     ("R14", 5.6, 6.2, 0), ("C50", 5.6, 7.3, 0), ("R15", 3.4, 6.2, 0), ("C51", 3.4, 7.3, 0),
     ("C23", 7.8, 5.0, 0), ("R1", 3.0, -6.4, 0), ("C15", -4.0, 6.5, 0),
     ("R4", -3.5, -5.7, 0), ("R5", -1.4, -5.7, 0), ("R6", -8.6, 5.8, 0), ("R7", -8.6, 4.7, 0),
@@ -300,7 +302,7 @@ def layout(bd):
         for i, (lab, _) in enumerate(J1_ROWS[row]):
             for layer in ("F.SilkS", "B.SilkS"):
                 bd.text(lab, -13.97 + i * 2.54 - 1.2, HDR_ROW_A_Y + r * 2.54, layer, size=0.62, thick=0.11, rot=90)
-    bd.text("J5: 1 VBUS 2 D- 3 D+ 4 G 5 BUZ 6 BOOT", 0, -7.0, "B.SilkS", size=0.7, thick=0.12)
+    bd.text("J5: 1 VBUS 2 G 3 D- 4 D+ 5 BOOT 6 BUZ", 0, -7.0, "B.SilkS", size=0.7, thick=0.12)
     bd.text("StackF765 UPPER rev B", 0, -3.6, "B.SilkS", size=0.9)
 
 
@@ -317,4 +319,4 @@ ROUTER = "sequential"
 # long nets from the far side of the MCU to the header are routed first
 # supply tracks the router necked down are widened again afterwards, as far as neighbouring copper allows
 WIDEN = {"+5V": 0.5, "+5V_SYS": 0.4}
-ROUTE_ORDER = ["+5V", "TX8", "RX8", "TX2", "RX2", "TX4", "RX4", "SCL", "SDA"]
+ROUTE_ORDER = ["OSC_IN", "OSC_OUT", "OSD_X1", "OSD_X2", "+5V", "TX8", "RX8", "TX2", "RX2", "TX4", "RX4", "SCL", "SDA"]

@@ -2139,18 +2139,18 @@
 		(dnp no)
 		(uuid "3327e1db-9d84-524c-80d1-2f382f8274e8")
 		(property "Reference" "R2" (at 165.1 103.41 0) (effects (font (size 1 1))))
-		(property "Value" "470R" (at 165.1 107.71 0) (effects (font (size 1 1))))
+		(property "Value" "100R" (at 165.1 107.71 0) (effects (font (size 1 1))))
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 165.1 105.41 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Datasheet" "" (at 165.1 105.41 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "470 ohm 1%"
+		(property "Description" "100 ohm 1%"
 			(at 165.1 105.41 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C25117" (at 165.1 105.41 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "0402WGF4700TCE" (at 165.1 105.41 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C25076" (at 165.1 105.41 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "0402WGF1000TCE" (at 165.1 105.41 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Manufacturer" "UNI-ROYAL"
 			(at 165.1 105.41 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
@@ -2279,18 +2279,18 @@
 		(dnp no)
 		(uuid "10d5d351-7547-5d7c-a977-4a9f1312e43d")
 		(property "Reference" "R3" (at 165.1 137.7 0) (effects (font (size 1 1))))
-		(property "Value" "470R" (at 165.1 142 0) (effects (font (size 1 1))))
+		(property "Value" "100R" (at 165.1 142 0) (effects (font (size 1 1))))
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 165.1 139.7 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Datasheet" "" (at 165.1 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "470 ohm 1%"
+		(property "Description" "100 ohm 1%"
 			(at 165.1 139.7 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C25117" (at 165.1 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "0402WGF4700TCE" (at 165.1 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C25076" (at 165.1 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "0402WGF1000TCE" (at 165.1 139.7 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Manufacturer" "UNI-ROYAL"
 			(at 165.1 139.7 0)
 			(effects (font (size 1.27 1.27)) (hide yes))

@@ -68,7 +68,17 @@ def compare_netlist(design, netfile):
     return errs
 
 
-def fab(proj_dir, name, out_dir, layers, hand=()):
+# JLCPCB's library footprints are not all drawn in the same zero orientation as KiCad's.  Degrees to add
+# to the KiCad rotation, by LCSC part number (fitted pad by pad against JLCPCB's/EasyEDA's footprint for
+# that exact part, 2026-11-19; see docs/ordering-jlcpcb.md).  A substitute part needs its own entry.
+JLC_ROT = {"C710319": 270, "C82351": 270, "C779278": 90, "C404027": 180, "C2862740": 180, "C585350": 180,
+           "C3235556": 270, "C8545": 180, "C15127": 180, "C3200405": 180, "C105240": 180, "C7519": 270}
+# JLCPCB footprint origin differs from KiCad's: shift of the placement point in the footprint's own frame (mm)
+JLC_SHIFT = {"C165948": (0.0, 1.57)}
+
+
+def fab(proj_dir, name, out_dir, layers, hand=(), lcsc=None):
+    lcsc = lcsc or {}
     pcb = os.path.join(proj_dir, f"{name}.kicad_pcb")
     g = os.path.join(out_dir, "gerbers")
     os.makedirs(g, exist_ok=True)
@@ -91,7 +101,17 @@ def fab(proj_dir, name, out_dir, layers, hand=()):
         for r in rows:
             if r["Ref"] in hand:
                 continue
-            w.writerow([r["Ref"], r["PosX"], r["PosY"], "Top" if r["Side"] == "top" else "Bottom", r["Rot"]])
+            part = lcsc.get(r["Ref"], "")
+            rot, x, y = float(r["Rot"]), float(r["PosX"]), float(r["PosY"])
+            if part in JLC_SHIFT:
+                import math
+                sx, sy = JLC_SHIFT[part]
+                c, s = math.cos(math.radians(rot)), math.sin(math.radians(rot))
+                x, y = x + sx * c - sy * s, y + sx * s + sy * c
+            if r["Side"] != "top":
+                rot = (180 - rot) % 360          # JLCPCB views bottom-side parts mirrored
+            rot = (rot + JLC_ROT.get(part, 0)) % 360
+            w.writerow([r["Ref"], f"{x:.4f}", f"{y:.4f}", "Top" if r["Side"] == "top" else "Bottom", f"{rot:g}"])
     zipf = os.path.join(out_dir, f"{name}-gerbers.zip")
     if os.path.exists(zipf):
         os.remove(zipf)

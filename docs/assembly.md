@@ -49,11 +49,11 @@ screws. Do not use longer screws.
 
 Plug the 6-wire cable between `J5` on the right-hand edge of the upper board and `J2` on the
 service board. **The cable must be wired pin 1 to pin 1** — check with a meter; some ready-made
-cables are reversed. Mount the service board where the USB socket and button are reachable.
+cables are reversed. A reversed cable does no damage, but USB will not connect. Mount the service board where the USB socket and button are reachable.
 
 | Pin | 1 | 2 | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|---|---|
-| Signal | VBUS | D− | D+ | GND | BUZ | BOOT |
+| Signal | VBUS | GND | D− | D+ | BOOT | BUZ |
 
 ## 6. Wire the rest
 

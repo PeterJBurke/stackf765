@@ -1,7 +1,7 @@
 Designators,Qty,Value,Description,Footprint,Manufacturer,MPN,LCSC,Unit price USD,Fit
-BZ1,1,MLT-8530,"Passive magnetic buzzer 8.5x8.5 mm, 2.7 kHz, 16 ohm",MagneticBuzzer_CUI_CMT-8504-100-SMT,Keliking / Huaneng,KLJ-8530-3627 / MLT-8530,C189206,0.57,yes
+BZ1,1,MLT-8530,"Passive magnetic buzzer 8.5x8.5 mm, 2.7 kHz, 16 ohm",MagneticBuzzer_CUI_CMT-8504-100-SMT,Huaneng,MLT-8530,C94599,0.2,yes
 C1,1,1u,1 uF 25 V X5R,C_0402_1005Metric,Samsung,CL05A105KA5NQNC,C52923,0.004,yes
-D1,1,B5819WS,Schottky diode 40 V 1 A SOD-323,D_SOD-323,various,B5819WS,C916992,0.013,yes
+D1,1,1N5819WS,Schottky diode 40 V 1 A SOD-323,D_SOD-323,Hottech,1N5819WS,C191023,0.013,yes
 J1,1,USB-C,"USB Type-C 2.0 receptacle, 16-pin",USB_C_Receptacle_HRO_TYPE-C-31-M-12,Korean Hroparts,TYPE-C-31-M-12,C165948,0.19,yes
 J2,1,JST-SH 6P,"JST SH 6-pin side-entry header, 1.0 mm",JST_SH_SM06B-SRSS-TB_1x06-1MP_P1.00mm_Horizontal,JST,SM06B-SRSS-TB(LF)(SN),C160405,0.3,yes
 R1 R2,2,5.1k,5.1 k 1%,R_0402_1005Metric,UNI-ROYAL,0402WGF5101TCE,C25905,0.001,yes

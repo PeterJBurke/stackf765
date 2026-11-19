@@ -50,6 +50,31 @@ The routed boards were reviewed against the points a layout engineer would check
 | Sensitive nets | Video, ADC, crystal and reset tracks have no long parallel runs beside clocks or motor signals. No change. |
 | Crystals | The 8 MHz crystal is 5 mm from the processor and its tracks (7 and 9 mm) each use two vias. Acceptable at 8 MHz; a candidate for tidying in a later revision. |
 
+## Independent audit
+
+A separate reviewer re-fetched the datasheets and checked every IC, connector and polarised part pin by pin
+against the schematic, the board's pads and the land patterns, and worked the analogue circuits through by
+calculation (2026-11-19, `research/audit-2026-11-19.md`). A second reviewer checked the fabrication files
+against JLCPCB's requirements (`docs/ordering-jlcpcb.md`). Neither found a wiring, footprint or polarity error.
+What they did find, and what was done:
+
+| Finding | Action |
+|---|---|
+| Placement files carried KiCad rotations; about 12 parts would be placed turned at JLCPCB | Generator now applies JLCPCB's rotation per part |
+| A reversed service cable would put USB 5 V on the boot pin | Cable pin order changed so a reversed cable does no harm |
+| Regulator input capacitors too small at battery voltage (about 3.5 µF effective) | Now 2 × 22 µF 1206 per regulator (about 11 µF effective at 12.6 V) |
+| 3.3 V heat-sharing resistors at their power limit | Now 0.5 W parts; capacitor behind them raised to 10 µF |
+| Status LEDs dim | Series resistors 470 Ω → 100 Ω |
+| Unused IMU pin 9 tied to ground | Left open, as TDK specifies |
+| USB-C socket 0.4 mm too far from the edge | Moved |
+| Buzzer and diode part numbers ambiguous or costly | Single, well-stocked parts |
+| Regulator output capacitors near the minimum (about 21 µF effective) | Not changed: larger parts do not fit between the grommets. Above TI's 10 µF minimum. |
+| VBUS clamp D3 conducts above the supply selector's 6 V limit | Not changed; do not use chargers that overshoot |
+| Silkscreen text below JLCPCB's 1.0 mm recommendation | Not changed; small labels may be faint. The pinout is in `docs/pinout.md`. |
+
+Items the audit could not confirm from a primary source are listed at the end of its report
+(mainly the land patterns of stock KiCad footprints and the JST connector).
+
 ## Known limitations and open items
 
 | Item | Detail |
@@ -58,7 +83,7 @@ The routed boards were reviewed against the points a layout engineer would check
 | Autorouted layout | Tracks were routed by the script in `gen/kigen/router.py`. It respects clearances but does not length-match or impedance-control. USB runs at full speed (12 Mbit/s) over an unshielded cable and the SD bus is short, so neither needs it, and the layout has had a scripted review (above) but not one by a human layout engineer. |
 | Thermal | 50 A continuous rating is by calculation (about 1.7 W near the shunt). Measure it (bring-up section E). |
 | IMU orientation | Set from the footprint drawing; confirm on the bench (bring-up C9). |
-| Buzzer polarity | "+" on the part goes to pad 1; the land pattern was checked against the MLT-8530 drawing, the KLJ part's drawing is less explicit. |
+| Buzzer polarity | "+" on the part goes to pad 1; confirmed against the maker's drawing in the audit. Check it in the assembler's preview. |
 | Standoff footprint | Hole 3.75 mm, pad 6.2 mm, from the PEM SMTSO family data; Sinhoo's drawing gives the part dimensions (8.00 mm tall) but no land pattern. |
 | Grommet size | The 4 mm hole and 7 mm keep-out follow Matek's "M4 to M3" grommets; measure yours. |
 | Header pin clearance | The top-row pins of the lower header reach 6.6 mm above the lower board; the upper header's solder tails hang about 1.4 mm below the upper board as supplied, which leaves no vertical clearance in the 8.0 mm gap. Trim the tails to 1.0 mm or less (about 0.4 mm clearance); the two headers are also offset by half a pitch, so the tails sit between the lower pins with about 0.6 mm either side. |

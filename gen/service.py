@@ -9,12 +9,13 @@ W, H = 18.0, 32.0
 
 
 def design():
-    d = Design("service", "StackF765 service board (USB / buzzer / boot)", rev="A", date="2026-11-16",
+    d = Design("service", "StackF765 service board (USB / buzzer / boot)", rev="B", date="2026-11-16",
                rails=("VBUS",))
     B = Blocks(d)
     d.root_notes = [
         "SERVICE BOARD: mount it where the USB socket is easy to reach.  Connects to J5 on the upper board",
         "with a 6-wire JST-SH (1.0 mm) cable wired 1:1 (pin 1 to pin 1).  Pin names are printed at both ends.",
+        "A cable wired 6-to-1 does no harm (USB simply does not connect): swap it for a 1:1 cable.",
         "The buzzer is driven with 5 V pulses from the flight controller (BUZ wire, current-limited there by 10 ohm).",
         "BOOT button: hold while plugging in USB to start the STM32 DFU bootloader.",
     ]
@@ -31,7 +32,7 @@ def design():
     j = B.part(s, "J2", "jst6", 320, 80, nets={"MP": "GND"})
     for pin, net in SVC.items():
         j[str(pin)] = net
-    s.text(245, 140, "1 VBUS   2 D-   3 D+   4 GND   5 BUZ   6 BOOT", 1.6)
+    s.text(245, 140, "1 VBUS   2 GND   3 D-   4 D+   5 BOOT   6 BUZ", 1.6)
     s.frame(15, 160, 215, 85, "Buzzer (passive, 2.7 kHz, 16 ohm).  D1 catches the coil's turn-off spike")
     B.part(s, "BZ1", "buzzer", 110, 205, nets={"+": "BUZ_OUT", "-": "GND"})
     B.part(s, "D1", "schottky", 160, 205, 90, nets={"K": "BUZ_OUT", "A": "GND"})
@@ -59,7 +60,7 @@ def layout(bd):
     bd.outline_roundrect(W, H, 1.5)
     for x, y in HOLES:
         bd.hole(x, y, 2.2)
-    bd.place("J1", 0, 12.4, 180)          # USB-C at the top edge, opening upward
+    bd.place("J1", 0, 12.81, 180)          # USB-C at the top edge, opening upward
     bd.place("U1", 0, 5.0, 0)
     bd.place("R1", -4.0, 6.0, 90)
     bd.place("R2", 4.0, 6.0, 90)
@@ -73,11 +74,11 @@ def layout(bd):
     bd.zone("GND", ["F.Cu", "B.Cu"], full, priority=0, name="GND pour")
     bd.text("1", -1.3, -10.4, size=0.8, thick=0.14)
     bd.text("BOOT", 5.2, 0.6, size=0.9, thick=0.15)
-    bd.text("StackF765 SERVICE rev A", 0, 9.5, "B.SilkS", size=0.9, thick=0.15)
+    bd.text("StackF765 SERVICE rev B", 0, 9.5, "B.SilkS", size=0.9, thick=0.15)
     bd.text("USB / BUZZER / BOOT", 0, 7.5, "B.SilkS", size=0.9, thick=0.15)
     bd.text("JST-SH 6, cable wired 1:1", 0, -3.0, "B.SilkS", size=0.8, thick=0.14)
-    bd.text("1 VBUS  2 D-  3 D+", 0, -5.0, "B.SilkS", size=0.9, thick=0.15)
-    bd.text("4 GND  5 BUZ  6 BOOT", 0, -7.0, "B.SilkS", size=0.9, thick=0.15)
+    bd.text("1 VBUS  2 GND  3 D-", 0, -5.0, "B.SilkS", size=0.9, thick=0.15)
+    bd.text("4 D+  5 BOOT  6 BUZ", 0, -7.0, "B.SilkS", size=0.9, thick=0.15)
 
 
 def router_config(bd):

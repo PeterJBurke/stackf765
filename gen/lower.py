@@ -38,8 +38,8 @@ def buck(d, B, sh, n, out, x, y):
     u = B.part(sh, f"U{n}", "buck", x, y, nets={"VIN": "VESC", "GND": "GND", "SW": f"SW{n}", "BST": f"BST{n}",
                                                 "FB": f"FB{n}", "SS": f"SS{n}"}, nc=("EN", "RT"))
     k = n * 10
-    B.C(sh, f"C{k}", "10u", "VESC", "GND", x - 40, y + 2, 0, "0805")
-    B.C(sh, f"C{k + 1}", "10u", "VESC", "GND", x - 32, y + 2, 0, "0805")
+    B.C(sh, f"C{k}", "22u", "VESC", "GND", x - 40, y + 2, 0, "1206")
+    B.C(sh, f"C{k + 1}", "22u", "VESC", "GND", x - 32, y + 2, 0, "1206")
     B.C(sh, f"C{k + 2}", "100n 50V", "VESC", "GND", x - 24, y + 2, 0)
     B.C(sh, f"C{k + 3}", "33n", f"SS{n}", "GND", x - 22, y + 16, 0)
     B.C(sh, f"C{k + 4}", "100n", f"BST{n}", f"SW{n}", x + 28, y - 12, 90)
@@ -154,8 +154,8 @@ def _buck_cluster(bd, n, ox, oy):
     def at(ref, x, y, rot=0):
         bd.place(ref, ox + x, oy + y, rot)
     at(f"U{n}", 0, 0)
-    at(f"C{k}", -2.3, -0.3, 270)        # input cap, VESC pad up (next to VIN)
-    at(f"C{k + 1}", -2.3, -3.9, 0)      # second input cap
+    at(f"C{k}", -2.5, -0.5, 270)        # input cap (1206: about 5 uF each at 12.6 V), VESC pad next to VIN
+    at(f"C{k + 1}", -1.8, -4.1, 0)      # second input cap
     at(f"C{k + 2}", -0.2, -2.2, 0)      # 100 nF input
     at(f"L{n}", 5.3, -2.3, 0)           # SW pad towards the IC
     at(f"C{k + 4}", 3.1, 1.2, 0)        # bootstrap
@@ -163,8 +163,8 @@ def _buck_cluster(bd, n, ox, oy):
     at(f"R{k + 2}", 0.2, 2.4, 0)        # FB - GND
     at(f"R{k + 1}", 0.2, 3.6, 0)        # 2.2k
     at(f"R{k}", 3.1, 3.6, 0)            # 51k
-    at(f"C{k + 5}", 8.3, 2.4, 90)       # output caps
-    at(f"C{k + 6}", 6.3, 2.4, 90)
+    at(f"C{k + 5}", 8.15, 2.4, 90)       # output caps (0805: no room for 1206 between the grommets)
+    at(f"C{k + 6}", 6.15, 2.4, 90)
     at(f"C{k + 7}", 4.6, 2.4, 90)
     # switch node: one small copper area from the IC pin to the inductor pad
     bd.zone(f"SW{n}", ["F.Cu"], [(ox + 0.42, oy - 3.55), (ox + 3.8, oy - 3.55), (ox + 3.8, oy - 0.58),
@@ -198,7 +198,7 @@ def layout(bd):
     bd.place("C5", -14.4, -9.0, 90)
     # --- regulators
     _buck_cluster(bd, 1, -2.6, -8.4)      # +5V  (rear), output next to J1 columns 8-9
-    _buck_cluster(bd, 2, -2.9, 9.2)       # +5V_PI (front), output next to J2 columns 9-10
+    _buck_cluster(bd, 2, -2.8, 9.2)       # +5V_PI (front), output next to J2 columns 9-10
     # --- connectors
     bd.place("J1", 0, 0, 90)
     bd.place("J2", J2_X0, HDR_ROW_A_Y, 90)   # column 1 (M1) at the left; pins point forward

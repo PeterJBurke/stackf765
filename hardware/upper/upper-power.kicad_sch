@@ -1523,19 +1523,22 @@
 		(uuid "a9a10b45-b552-5391-80e7-d2f44f8e535b")
 		(property "Reference" "R16" (at 161.29 29.75 0) (effects (font (size 1 1))))
 		(property "Value" "4.7R" (at 161.29 34.05 0) (effects (font (size 1 1))))
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 161.29 31.75 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Datasheet" "" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "4.7 ohm 1% 1/8 W"
+		(property "Description" "4.7 ohm 1% 1/2 W, 1206"
 			(at 161.29 31.75 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C2933459" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "FRC0805F4R70TS" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "FOJAN" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.005" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C414936" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "HP06W2F470KT5E" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 161.29 31.75 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Price" "0.02" (at 161.29 31.75 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "87aa06ac-1445-5d27-ba5d-71c5973b397c"))
 		(pin "2" (uuid "db80a208-f0d9-55dc-851d-d7117169026e"))
 		(instances
@@ -1590,19 +1593,22 @@
 		(uuid "6fc31f43-98a4-50e9-8653-208d7b797399")
 		(property "Reference" "R17" (at 161.29 41.18 0) (effects (font (size 1 1))))
 		(property "Value" "4.7R" (at 161.29 45.48 0) (effects (font (size 1 1))))
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 161.29 43.18 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Datasheet" "" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "4.7 ohm 1% 1/8 W"
+		(property "Description" "4.7 ohm 1% 1/2 W, 1206"
 			(at 161.29 43.18 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C2933459" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "FRC0805F4R70TS" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Manufacturer" "FOJAN" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.005" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C414936" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "HP06W2F470KT5E" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Manufacturer" "UNI-ROYAL"
+			(at 161.29 43.18 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Price" "0.02" (at 161.29 43.18 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "ca7d243a-0687-5af7-a1ee-409ea9d5409f"))
 		(pin "2" (uuid "5e7f0084-9c00-5069-a8f7-ac3bc28bc9f0"))
 		(instances
@@ -1656,20 +1662,20 @@
 		(dnp no)
 		(uuid "1288fc82-1d61-5644-a11d-498915eac098")
 		(property "Reference" "C5" (at 173.45 62.5 0) (effects (font (size 1 1)) (justify left)))
-		(property "Value" "1u" (at 173.45 64.5 0) (effects (font (size 1 1)) (justify left)))
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Value" "10u" (at 173.45 64.5 0) (effects (font (size 1 1)) (justify left)))
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 171.45 63.5 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Datasheet" "" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Description" "1 uF 25 V X5R"
+		(property "Description" "10 uF 25 V X5R"
 			(at 171.45 63.5 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "LCSC" "C52923" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "MPN" "CL05A105KA5NQNC" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "LCSC" "C96446" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "CL10A106MA8NRNC" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Manufacturer" "Samsung" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.004" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "0.012" (at 171.45 63.5 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "c8dd9a58-9c3d-5dc1-b907-6813534f5b8d"))
 		(pin "2" (uuid "3eb297cd-bed0-547f-bcad-84b0e4cef409"))
 		(instances

@@ -182,7 +182,8 @@ def main():
         fab = os.path.join(ROOT, "fab", name)
         os.makedirs(fab, exist_ok=True)
         copper = ["F.Cu"] + [f"In{i}.Cu" for i in range(1, cfg["layers"] - 1)] + ["B.Cu"]
-        outputs.fab(proj, name, fab, copper, hand=[r for r, p in d.parts.items() if p.fields.get("Assembly") == "hand"])
+        outputs.fab(proj, name, fab, copper, hand=[r for r, p in d.parts.items() if p.fields.get("Assembly") == "hand"],
+                    lcsc={r: p.fields.get("LCSC", "") for r, p in d.parts.items()})
         outputs.bom(d, fab)
         outputs.docs(proj, name, os.path.join(ROOT, "docs", "boards", name), copper)
         print(f"[{name}] fab + docs written")
