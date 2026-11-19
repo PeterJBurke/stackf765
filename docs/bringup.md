@@ -65,7 +65,7 @@ Fit the upper board. Supply **8.0 V, limit 1 A**, USB disconnected.
 | D1 | Supply current | about 150–250 mA |
 | D2 | Board boots, buzzer tune | yes |
 | D3 | Ground station battery voltage (connect USB as well, or telemetry) | within 2 % of the supply; trim `BATT_VOLT_MULT` |
-| D4 | Battery current with a known load on ESC+/ESC− (for example 5 A electronic load) | within 5 %; trim `BATT_AMP_PERVLT` (nominal 20) and `BATT_AMP_OFFSET` |
+| D4 | Battery current with a known load on ESC+/ESC− (for example 5 A electronic load) | within 5 %; trim `BATT_AMP_PERVLT` (default 20.18) and `BATT_AMP_OFFSET` |
 | D5 | Plug and unplug USB while on the supply | no reset |
 | D6 | Each UART: loop TX to RX with a jumper, run a loopback or connect a device | data on all seven ports |
 | D7 | I2C header (SDA/SCL) with an external compass | detected |

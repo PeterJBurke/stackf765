@@ -49,7 +49,7 @@ board upstream, request an official ID with a pull request against
 | Function | Setting |
 |---|---|
 | Serial ports | SERIAL0 = USB; SERIAL1–7 = UART 1, 2, 3, 4, 6, 7, 8 (header labels TXn/RXn) |
-| Battery monitor | analog voltage and current, `BATT_VOLT_MULT` 11.0, `BATT_AMP_PERVLT` 20.0 |
+| Battery monitor | analog voltage and current, `BATT_VOLT_MULT` 11.0, `BATT_AMP_PERVLT` 20.18 (20 A/V ideal, corrected for the 0.9 % gain loss in the input filter) |
 | IMU | ICM-45686 (or ICM-42688-P) on SPI1, `ROTATION_ROLL_180_YAW_90` |
 | Barometer | BMP388, I2C2, address 0x76 |
 | OSD | AT7456E on SPI2, enabled by default (`OSD_TYPE` 1) |

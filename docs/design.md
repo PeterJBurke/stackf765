@@ -36,11 +36,11 @@ shunt, so the current reading includes the flight controller itself.
 
 * Shunt voltage at 50 A: 50 A × 0.5 mΩ = 25 mV. Shunt dissipation: 50² × 0.0005 = **1.25 W** (part rated 6 W).
 * Amplifier **U3** (INA214, gain 100): 2.5 V at 50 A, i.e. **50 mV per amp**. ArduPilot's
-  `BATT_AMP_PERVLT` is therefore 20 A/V. Full scale (3.3 V) is 66 A.
+  `BATT_AMP_PERVLT` is therefore nominally 20 A/V. Full scale (3.3 V) is 66 A.
 * **NT1/NT2** are Kelvin taps: the amplifier's sense lines leave from the inner edges of the
   shunt pads, so voltage dropped in the high-current copper is not measured.
-* **R2/R3** (10 Ω) with **C3** (100 nF) filter switching noise. They make the reading about 0.9 % low;
-  calibrate `BATT_AMP_PERVLT` against a known current.
+* **R2/R3** (10 Ω) with **C3** (100 nF) filter switching noise. They make the amplifier gain about 0.9 % low,
+  so the firmware default is `BATT_AMP_PERVLT` 20.18 (20 / 0.9911); calibrate it against a known current.
 
 ### Battery voltage sensing
 
