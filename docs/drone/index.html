@@ -8,7 +8,7 @@
 <div class="page-links"><span class="brand">StackF765</span><a aria-current="page" href="./">Drone</a><a href="board.html">Board</a><button id="droneDetails" aria-controls="legend" aria-expanded="false">Details</button><a href="../index.html">Project page</a></div>
 
 <nav aria-label="Drone controls" class="viewer-controls">
-  <label>View <select id="droneView"><option value="iso">3/4</option><option value="top">Top</option><option value="side">Side</option><option value="detail">FC detail</option><option value="service">Service board</option></select></label>
+  <label>View <select id="droneView"><option value="iso">3/4</option><option value="top">Top</option><option value="side">Side</option><option value="detail">FC detail</option><option value="mount">Mounting</option><option value="service">Service board</option></select></label>
   <button id="roof">Show roof</button>
   <button id="headers" title="Hide the 0.1 inch pin headers">Hide headers</button>
   <details class="options"><summary>Options</summary><div><button id="theme">Dark / light</button><button id="labels">Labels</button></div></details>
@@ -18,7 +18,7 @@
   <label><input type="checkbox" id="t-upper" checked/>Upper board (flight controller)</label>
   <label><input type="checkbox" id="t-lower" checked/>Lower board (power)</label>
   <label><input type="checkbox" id="t-service" checked/>Service board + cable</label>
-  <label><input type="checkbox" id="t-hardware" checked/>Grommets and screws</label>
+  <label><input type="checkbox" id="t-hardware" checked/>Rubber grommets and M2 screws</label>
 </details>
 
 <aside hidden id="legend">
@@ -26,7 +26,7 @@
   <h1>StackF765<br/>in a MOD-L 4″ HD Cargo frame</h1>
   <p>The StackF765 flight controller stack, shown where it mounts in a 4-inch quadcopter frame, with its service board loose on its cable. <b>The three boards in this render are generated from the KiCad design files in the <a href="https://github.com/PeterJBurke/stackf765">stackf765 repository</a></b>: they are the same GLB models that <code>kicad-cli</code> exports for the <a href="../index.html">project page</a>, loaded here unmodified.</p>
   <div class="key"><span class="dot green"></span><b>StackF765 stack</b><br/>Two 31.5 × 48 mm boards, long axis fore-aft. Lower = power board, upper = flight controller (STM32F765). Upper top surface is 9.6 mm above the lower top surface (8.0 mm standoffs + 1.6 mm PCB). Rev B: the upper 3 × 12 and lower 3 × 9 right-angle pin headers face the nose, their bodies overhanging the front edge; the four battery / ESC solder pads are at the tail end of the lower board.</div>
-  <div class="key"><span class="dot red"></span><b>Mounting</b><br/>The lower board's four 4 mm holes take rubber grommets on the frame's 20 × 20 mm pattern, held by M2 screws. The 7 mm frame posts, grommets, washers and screws are drawn here as simple illustrative shapes; they are not part of the KiCad export.</div>
+  <div class="key"><span class="dot red"></span><b>Rubber grommet mounting</b><br/>Soft-mounted, Matek style: a silicone grommet is pressed into each of the lower board's four 4 mm holes (20 × 20 mm pattern) and an M2 screw with a washer goes through each grommet into the frame, so the lower board floats on rubber 2.5 mm above the plate. The upper board is not fastened to the frame; it sits on the lower board's three standoffs. View “Mounting” shows the grommets side-on. The orange grommets (generic “M3 to M2” type: 4 mm waist, 6.6 mm flanges, 6.6 mm tall), washers and screws are simple illustrative shapes, not part of the KiCad export; frame-side nuts are not drawn.</div>
   <div class="key"><span class="dot green"></span><b>Service board</b><br/>Service board (USB / buzzer / boot) is on a 100 mm cable and can be mounted anywhere on the airframe; shown loose. It is an 18 × 32 mm board on a 6-wire cable from the right-hand edge of the upper board, drawn lying on the ground beside the frame; the cable route is an illustration.</div>
   <div class="key"><span class="dot dark"></span><b>Frame: MOD-L 4″ HD Cargo</b><br/>4″ regular arms, Cargo top and bottom plates, cross plate, 30 mm standoffs. Frame design: MOD-L by ledroneclub, <a href="https://www.thingiverse.com/thing:4295478" rel="noopener">Thingiverse thing 4295478</a>, licensed Creative Commons Attribution (CC BY). The frame meshes were assembled and recoloured from the designer's files for the <a href="https://peterjburke.github.io/dronerenders/fc/" rel="noopener">dronerenders FC viewer</a>, which this page is modelled on.</div>
   <p id="roofNote">Roof hidden to show the flight controller.</p>
@@ -34,7 +34,8 @@
   <p><a href="../index.html#pinout">Pinout</a> · <a href="../index.html#boards">Board files</a> · <a href="https://github.com/PeterJBurke/stackf765">GitHub repository</a> · <a href="assets/CREDITS.txt">Credits and licences</a></p>
 </aside>
 
-<div class="label" id="fcLabel" style="display:none">StackF765 stack<small>Rubber grommets on the 20 × 20 mm pattern</small></div>
+<div class="label" id="fcLabel" style="display:none">StackF765 stack<small>Soft-mounted on 4 silicone grommets · 20 × 20 mm · M2</small></div>
+<div class="label" id="grommetLabel" style="display:none">Silicone grommet × 4<small>4 mm hole in the lower board · M2 screw into the frame</small></div>
 <div class="label" id="serviceLabel" style="display:none">Service board<small>100 mm cable · mount anywhere · shown loose</small></div>
 <div class="label" id="frameLabel" style="display:none">MOD-L 4″ HD Cargo<small>Frame by ledroneclub · CC BY</small></div>
 <div id="status" role="status">Loading 3D models…</div>

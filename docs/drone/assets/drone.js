@@ -10,7 +10,7 @@ const { scene, st, update } = stage;
 const groups = { frame: new THREE.Group(), roof: new THREE.Group(), fc: new THREE.Group(), service: new THREE.Group(), hardware: null };
 addFrame(groups);
 groups.roof.visible = false;
-groups.hardware = makeMountHardware();
+groups.hardware = makeMountHardware({ tip: -6.8 });      // screws end inside the frame's cross plate
 scene.add(groups.frame, groups.roof, groups.fc, groups.service, groups.hardware);
 
 // Where the service board is shown: a loose accessory, not fixed to the frame.  It lies flat on the
@@ -29,6 +29,7 @@ const presets = {
   side: [Math.PI / 2, Math.PI / 2 - 0.025, 380, [0, 0, 14]],
   detail: [0.7, 1.25, 165, [4, -8, 12]],
   service: [0.95, 1.0, 170, [58, 2, -2]],
+  mount: [-Math.PI / 2, 1.5, 84, [0, 2, 6.5]],          // side-on at board level: the grommets in profile
 };
 let view = 'iso';
 function setView(name) {
@@ -54,10 +55,13 @@ const labelDefs = [   // element, anchor (mm), pixel offset, pixel offset in top
   ['serviceLabel', [SERVICE.x, SERVICE.y, -5], [-250, 40], [-70, 45], [40, 30], () => groups.service.visible],
   ['frameLabel', [70, -52, -3], [-150, -45], [-10, 28], [40, 40], () => true]];
 st.onUpdate = () => {
+  const gl = $('grommetLabel'), [gx, gy] = stage.project([-10, -10, 1.2]);     // under the near rear grommet
+  gl.style.display = showLabels && innerWidth > 850 && view === 'mount' && groups.hardware.visible ? 'block' : 'none';
+  gl.style.left = (gx - gl.offsetWidth / 2) + 'px'; gl.style.top = (gy + 26) + 'px';
   for (const [id, p, off, offTop, offSide, on] of labelDefs) {
     const [dx, dy] = view === 'top' ? offTop : view === 'side' ? offSide : off;
     const el = $(id);
-    el.style.display = showLabels && innerWidth > 850 && view !== 'detail' && view !== 'service' && on() ? 'block' : 'none';
+    el.style.display = showLabels && innerWidth > 850 && view !== 'detail' && view !== 'service' && view !== 'mount' && on() ? 'block' : 'none';
     const [x, y] = stage.project(p);
     el.style.left = (x + dx) + 'px'; el.style.top = (y + dy) + 'px';
   }

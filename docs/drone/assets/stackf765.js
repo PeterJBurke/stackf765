@@ -19,11 +19,15 @@ export const DIM = {
   standoff: 8.0,       // board-to-board standoff
   gap: 9.6,            // lower top surface -> upper top surface (standoff + PCB)
   hole: 10,            // 20 x 20 mm mounting pattern: holes at +-10 mm
-  post: 7.0,           // frame post under each grommet (illustrative, as in the reference)
-  grommet: 6.6,        // rubber grommet height (illustrative, as in the reference)
+  grommet: 6.6,        // silicone grommet, overall height ("M3 to M2" type; nominal)
+  flange: 2.5,         // grommet flange thickness below and above the PCB
+  flangeDia: 6.6,      // grommet flange diameter (the board keeps 7 mm clear around each hole)
+  grommetHole: 4.0,    // lower board mounting hole = grommet waist
 };
-DIM.zLower = DIM.post + (DIM.grommet - DIM.pcb) / 2;   // bottom face of the lower PCB: 9.5
-DIM.zUpper = DIM.zLower + DIM.gap;                     // bottom face of the upper PCB: 19.1
+// Soft mounting: the lower board rides on the lower flanges of four grommets that stand directly on
+// the frame plate.  Nothing rigid touches the board; the upper board is carried by the lower one.
+DIM.zLower = DIM.flange;                               // bottom face of the lower PCB: 2.5
+DIM.zUpper = DIM.zLower + DIM.gap;                     // bottom face of the upper PCB: 12.1
 
 const BOARD_URL = {
   lower: new URL('../../boards/lower/lower.glb', import.meta.url).href,
@@ -86,26 +90,40 @@ function cyl(r, z0, z1, mat, seg = 28) {
   m.rotation.x = Math.PI / 2; m.position.z = (z0 + z1) / 2;
   return m;
 }
-// Four frame posts, rubber grommets through the lower board's 4 mm holes, washers and M2 screws.
-// Returned group: origin at mount centre on the frame plate; children tagged userData.part.
-export function makeMountHardware() {
-  const steel = new THREE.MeshStandardMaterial({ color: 0x8d9299, metalness: 0.85, roughness: 0.38 });
-  const black = new THREE.MeshStandardMaterial({ color: 0x25272b, metalness: 0.6, roughness: 0.45 });
-  const rubber = new THREE.MeshStandardMaterial({ color: 0x8a1a1f, metalness: 0, roughness: 0.85 });
+// Soft mounting, Matek style: a silicone grommet pressed into each of the lower board's four 4 mm
+// holes (20 x 20 mm pattern), an M2 screw with a washer through each grommet into the frame.  The
+// grommet is a revolved profile: lower flange standing on the frame plate, 4 mm waist in the PCB,
+// upper flange under the washer, M2 bore.  The upper board has no holes here; it is not fastened to
+// the frame and sits on the lower board's three standoffs.
+//   tip  Z of the screw tip: below the bottom plate on the drone page, 0 where there is no frame.
+// Returned group: origin at mount centre on the frame plate; children tagged userData.part
+// ('grommet' stays in the board, 'screw' = washer, head and shank).
+export const GROMMET_COLOUR = 0xe4472b;                                // orange-red silicone
+export function grommetProfile() {
+  const R = DIM.flangeDia / 2, w = DIM.grommetHole / 2 - 0.06, bore = 1.05, f = 0.7, clear = 0.12;
+  const z0 = DIM.zLower - DIM.flange, z1 = z0 + DIM.grommet, zb = DIM.zLower - clear, zt = DIM.zLower + DIM.pcb + clear;
+  const pts = [], arc = (cr, cz, a0, a1) => { for (let i = 0; i <= 6; i++) { const a = (a0 + (a1 - a0) * i / 6) * Math.PI / 180; pts.push(new THREE.Vector2(cr + f * Math.cos(a), cz + f * Math.sin(a))); } };
+  pts.push(new THREE.Vector2(bore, z0));
+  arc(R - f, z0 + f, -90, 0); arc(R - f, zb - f, 0, 90);              // lower flange, rounded rim
+  pts.push(new THREE.Vector2(w, zb), new THREE.Vector2(w, zt));       // waist through the PCB
+  arc(R - f, zt + f, -90, 0); arc(R - f, z1 - f, 0, 90);              // upper flange
+  pts.push(new THREE.Vector2(bore, z1));
+  return pts;
+}
+export function makeMountHardware({ tip = 0 } = {}) {
+  const steel = new THREE.MeshStandardMaterial({ color: 0xb4b9c0, metalness: 0.85, roughness: 0.34 });
+  const dark = new THREE.MeshStandardMaterial({ color: 0x1b1d20, metalness: 0.5, roughness: 0.6 });
+  const rubber = new THREE.MeshStandardMaterial({ color: GROMMET_COLOUR, metalness: 0, roughness: 0.92, envMapIntensity: 0.25 });
   const g = new THREE.Group(); g.name = 'mount-hardware';
-  const zb = DIM.zLower, zt = DIM.zLower + DIM.pcb, z0 = DIM.post, z1 = DIM.post + DIM.grommet;
-  // grommet profile (radius, z): lower flange, 4 mm neck through the PCB, upper flange
-  const prof = [[1.05, z0], [2.5, z0], [2.75, z0 + 0.3], [2.75, zb - 0.05], [2.0, zb - 0.05], [2.0, zt + 0.05],
-    [2.75, zt + 0.05], [2.75, z1 - 0.3], [2.5, z1], [1.05, z1]].map(([r, z]) => new THREE.Vector2(r, z));
+  const z1 = DIM.zLower - DIM.flange + DIM.grommet, prof = grommetProfile();
   for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
     const c = new THREE.Group(); c.position.set(sx * DIM.hole, sy * DIM.hole, 0);
-    const post = cyl(1.73, 0, z0, steel, 6); post.userData.part = 'post';
-    const gr = new THREE.Mesh(new THREE.LatheGeometry(prof, 32), rubber);
+    const gr = new THREE.Mesh(new THREE.LatheGeometry(prof, 40), rubber);
     gr.rotation.x = Math.PI / 2; gr.userData.part = 'grommet';      // lathe axis Y -> Z
-    const washer = cyl(2.25, z1, z1 + 0.3, steel); washer.userData.part = 'screw';
-    const head = cyl(1.9, z1 + 0.3, z1 + 2.3, black); head.userData.part = 'screw';
-    const shank = cyl(1.0, z0 - 3, z1 + 0.3, black, 16); shank.userData.part = 'screw';
-    c.add(post, gr, washer, head, shank);
+    const screw = [cyl(2.4, z1, z1 + 0.3, steel), cyl(1.9, z1 + 0.3, z1 + 2.3, steel),      // washer, socket-head cap,
+      cyl(0.95, z1 + 2.26, z1 + 2.32, dark, 6), cyl(1.0, tip, z1 + 0.3, steel, 16)];         // hex socket, shank
+    for (const m of screw) m.userData.part = 'screw';
+    c.add(gr, ...screw);
     g.add(c);
   }
   return g;

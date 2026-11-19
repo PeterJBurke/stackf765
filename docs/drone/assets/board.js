@@ -1,4 +1,4 @@
-// StackF765 board view: the stack on its mounting hardware, or one board at a time.
+// StackF765 board view: the stack on its silicone mounting grommets, or one board at a time.
 // Controls follow peterjburke.github.io/dronerenders/fc/board.html.
 import { THREE, DIM, createStage, loadBoards, makeMountHardware, makePenny } from './stackf765.js';
 
@@ -28,14 +28,15 @@ const LABEL = { stack: 'Stack', upper: 'Upper board (flight controller)', lower:
 function layout() {
   const stack = choice === 'stack';
   const { lower, upper, service } = boards;
-  if (lower) { lower.visible = stack || choice === 'lower'; lower.position.set(0, 0, stack ? DIM.zLower : 2); }
+  if (lower) { lower.visible = stack || choice === 'lower'; lower.position.set(0, 0, DIM.zLower); }   // always on its grommets
   if (upper) { upper.visible = stack || choice === 'upper'; upper.position.set(0, 0, stack ? DIM.zUpper + (exploded ? 18 : 0) : 6); }
   if (service) { service.visible = stack || choice === 'service'; service.position.set(stack ? -36 : 0, stack ? 4 : 0, stack ? 0.1 : 2); }
-  hardware.visible = stack;
-  hardware.traverse((o) => { if (o.userData.part === 'screw') o.position.z = o.userData.z0 + (exploded ? 7 : 0); });
+  hardware.visible = stack || choice === 'lower';        // the grommets stay pressed into the lower board
+  hardware.traverse((o) => { if (o.userData.part === 'screw') { o.visible = stack; o.position.z = o.userData.z0 + (exploded ? 10 : 0); } });
   for (const b of Object.values(boards)) for (const h of b.userData.headers) h.visible = headersVisible;
   const w = choice === 'service' ? 9 : 15.75;
-  penny.position.set((stack ? 40 : w + 16), 0, 0);
+  if (viewName === 'side') penny.position.set(0, -(stack || choice !== 'service' ? 40 : 32), 0);   // beside the board, not in front of the grommets
+  else penny.position.set((stack ? 40 : w + 16), 0, 0);
   ruler.position.set(0, stack ? 42 : choice === 'service' ? 24 : 40, 0.3);
   $('viewLabel').textContent = LABEL[choice] + (exploded && stack ? ' · exploded' : '');
   $('explode').textContent = exploded ? 'Assemble stack' : 'Explode stack';
@@ -45,9 +46,11 @@ hardware.traverse((o) => { if (o.userData.part === 'screw') o.userData.z0 = o.po
 
 function setView(name) {
   viewName = name;
+  layout();
   const stack = choice === 'stack';
-  st.theta = name === 'side' ? Math.PI / 2 : name === 'top' || name === 'bottom' ? Math.PI : 0.4;
-  st.phi = name === 'top' ? 0.001 : name === 'bottom' ? Math.PI - 0.051 : name === 'side' ? Math.PI / 2 - 0.02 : 0.9;
+  // 3/4 view of the stack: low and from the side, so the grommets show between and under the boards
+  st.theta = name === 'side' ? Math.PI / 2 : name === 'top' || name === 'bottom' ? Math.PI : stack ? 0.75 : 0.4;
+  st.phi = name === 'top' ? 0.001 : name === 'bottom' ? Math.PI - 0.051 : name === 'side' ? Math.PI / 2 - 0.02 : stack ? 1.2 : 0.9;
   st.radius = (stack ? 190 : 150) * Math.max(1, 1.25 / stage.camera.aspect);
   st.target.set(stack ? 0 : 6, stack ? 6 : 3, stack ? (exploded ? 20 : 13) : 4);
   penny.children[0].material[1].map.rotation = name === 'top' ? Math.PI / 2 : -Math.PI / 2;   // keep the coin upright for the viewer
