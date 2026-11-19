@@ -17,6 +17,10 @@ Frame model: assets/frame-mod-l-hd-cargo.js
   Licence: Creative Commons Attribution (CC BY), as stated with the designer's files.
   The packed mesh file is copied unchanged from dronerenders fc/assets/native-frame.js, where the
   designer's part geometry was assembled and recoloured for that viewer (parts not stretched).
+  Change made here: the frame's two middle standoffs (of six; the pair beside the tail end of the
+  flight controller) are not drawn. They are skipped when the page loads the meshes
+  (OMITTED_FRAME_MESHES in assets/stackf765.js); the mesh file is not edited. The plates keep
+  their holes for those standoffs.
 
 Scale coin: assets/penny.js (copied unchanged from dronerenders fc/assets/penny.js)
   The original credit file is kept beside it as PENNY-CREDITS.txt:

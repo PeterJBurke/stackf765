@@ -232,10 +232,15 @@ export function createStage({ floorZ = 0, gridSize = 300, minRadius = 60, maxRad
 export function makePenny(onLoad) { return window.PennyModel.make({ obvRot: Math.PI / 2, onLoad }); }
 
 // ---- frame: MOD-L 4" HD Cargo meshes, as packed by the reference (assets/frame-mod-l-hd-cargo.js) ----
+// The frame's two middle standoffs (x = +-16.7, y = -28 mm) stand right behind the tail corners of the
+// flight controller, over its battery / ESC solder pads. They are not needed and are left out; the four
+// standoffs at the nose and tail ends stay. The packed mesh file itself is unchanged.
+export const OMITTED_FRAME_MESHES = ['Frame/Standoff-3', 'Frame/Standoff-4'];
 export function addFrame(groups) {
   const decode = (s, T) => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new T(u.buffer); };
   const linear = (x) => (x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4));
   for (const d of window.CURRENT_FRAME_MESHES) {
+    if (OMITTED_FRAME_MESHES.includes(d.name)) continue;
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(decode(d.p, Float32Array), 3));
     g.setAttribute('normal', new THREE.BufferAttribute(decode(d.n, Float32Array), 3));
