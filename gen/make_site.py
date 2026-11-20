@@ -74,7 +74,7 @@ def pinouts():
         "Lower board solder pads - seen from above",
         "Battery + passes through the current shunt to ESC +.  2S-3S LiPo, 50 A continuous.", cell=80)
     svgs["service-cable"] = grid_svg(
-        [["VBUS", "D-", "D+", "G", "BUZ", "BOOT"]], ["pin 1 - 6"],
+        [["VBUS", "G", "D-", "D+", "BOOT", "BUZ"]], ["pin 1 - 6"],
         "Service cable (JST-SH 6 pin, wired 1:1)",
         "Same order on the flight controller (J5) and on the service board (J2).", cell=64)
     os.makedirs(os.path.join(DOCS, "img"), exist_ok=True)
@@ -121,7 +121,7 @@ def pinout_md():
          "(two columns: signal and middle pins are PI5V, bottom pin is ground).", "",
          "## Lower board, power pads", "", "Rear edge, seen from above: `BAT+  ESC+  ESC-  BAT-`. 2S-3S LiPo, 50 A continuous.", "",
          "## Service cable (J5 on the upper board, J2 on the service board)", "",
-         "| Pin | 1 | 2 | 3 | 4 | 5 | 6 |", "|---|---|---|---|---|---|---|", "| Signal | VBUS | D- | D+ | GND | BUZ | BOOT |", "",
+         "| Pin | 1 | 2 | 3 | 4 | 5 | 6 |", "|---|---|---|---|---|---|---|", "| Signal | VBUS | GND | D- | D+ | BOOT | BUZ |", "",
          "JST-SH 1.0 mm, wired pin 1 to pin 1.", "",
          "## Microcontroller pins", "", "| MCU pin | ArduPilot function | Net | Goes to |", "|---|---|---|---|"]
     dest = {"USB_DM": "service cable pin 2", "USB_DP": "service cable pin 3", "SWDIO": "test pad TP4", "SWCLK": "test pad TP5",

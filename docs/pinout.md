@@ -55,7 +55,7 @@ Rear edge, seen from above: `BAT+  ESC+  ESC-  BAT-`. 2S-3S LiPo, 50 A continuou
 
 | Pin | 1 | 2 | 3 | 4 | 5 | 6 |
 |---|---|---|---|---|---|---|
-| Signal | VBUS | D- | D+ | GND | BUZ | BOOT |
+| Signal | VBUS | GND | D- | D+ | BOOT | BUZ |
 
 JST-SH 1.0 mm, wired pin 1 to pin 1.
 
