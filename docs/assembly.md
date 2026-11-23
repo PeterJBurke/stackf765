@@ -2,7 +2,8 @@
 
 You need: the three assembled boards, the two right-angle headers, the two Samtec board-to-board
 connectors if they were not factory-fitted, three M2 × 4 mm screws,
-four grommets with M2 hardware, a 6-wire JST-SH cable (wired 1:1), battery and ESC wires.
+four silicone grommets ("M4 to M3") with brass "M3 to M2" inserts and M2 screws, a 6-wire JST-SH cable wired 1:1
+(JST A06SR06SR30K102A), battery and ESC wires.
 
 Do the electrical checks in [bringup.md](bringup.md) on each board **before** stacking them.
 
@@ -41,8 +42,8 @@ capacitor at the ESC as usual.
 
 ## 3. Mount the lower board
 
-Press a grommet into each of the four 4 mm holes (20 × 20 mm pattern) and fasten to the frame
-with M2 screws. The area around each grommet is kept free of parts.
+Press a grommet into each of the four 4 mm holes (20 × 20 mm pattern), push a brass insert into each
+grommet, and fasten to the frame with M2 screws. The area around each grommet is kept free of parts.
 
 ## 4. Fit the upper board
 

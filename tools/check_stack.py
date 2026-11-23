@@ -20,6 +20,7 @@ import pcbnew
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 GAP = 8.0            # mm between the boards (standoff height)
+TAIL = 0.5           # mm: upper header solder tails below the upper board after cutting flush (docs/assembly.md)
 NUT_ZONE_R = 3.5     # mm radius reserved around each grommet centre
 NUT_HEIGHT = 4.0     # mm: grommet flange + M2 nut + screw end above the lower board (estimate)
 GROMMETS = [(-10, 10), (10, 10), (-10, -10), (10, -10)]
@@ -130,11 +131,11 @@ for fp in named(lower):
     else:
         ltop.append((fp, shape(fp), height(fp)))
 ubot = [(fp, shape(fp), height(fp)) for fp in named(upper) if fp.IsFlipped()]
-# solder tails of the upper board's 3x12 header: one per pin, trimmed to 1.0 mm below the upper board
+# solder tails of the upper board's 3x12 header: one per pin, cut flush to TAIL below the upper board
 tails = []
 for pad in U["J1"].Pads():
     x, y = mm(pad.GetPosition())
-    tails.append((None, (x - 0.4, y - 0.4, x + 0.4, y + 0.4), 1.0))
+    tails.append((None, (x - 0.4, y - 0.4, x + 0.4, y + 0.4), TAIL))
 tight = (GAP, "")
 for fa, ba, ha in ltop:
     if ha is None:

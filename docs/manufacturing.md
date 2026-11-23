@@ -7,7 +7,7 @@ Everything a board house needs is in `fab/<board>/`:
 | `<board>-gerbers.zip` | Gerber and drill files (upload this) |
 | `<board>-bom-jlc.csv` | Bill of materials in JLCPCB format (LCSC part numbers) |
 | `<board>-cpl-jlc.csv` | Component placement in JLCPCB format |
-| `<board>-bom.csv` | Full bill of materials with manufacturer part numbers and prices |
+| `<board>-bom.csv` | Full bill of materials with manufacturer part numbers and prices. The `Fit` column reads `yes` (machine-placed), `hand` (you solder it) or `DNP`. |
 | `<board>-pos.csv` | Placement file in KiCad's native format |
 | `<board>.d356` | IPC-D-356 netlist for bare-board electrical test |
 
@@ -67,7 +67,7 @@ manager. All parts not listed below had more than 2,500 in stock.
 | TPS62933DRLR (lower U1, U2) | **36 at JLCPCB**, 817 at LCSC; two per lower board. Pre-order if short. TPS62933FDRLR fits but runs in forced-PWM mode and can push current back into the battery rail if an ESC's BEC also feeds the 5 V pins. |
 | Buzzer BZ1 | MLT-8530. The "+" mark on the part goes to pad 1 (marked "+" on the board). |
 | 27 MHz crystal Y2 | 905 in stock. |
-| Samtec SFMC-110-02-L-D / FTSH-110-04-L-DV | LCSC holds 30 and 5 of close variants only; buy from DigiKey, Mouser or Samtec. Board-to-board pair. Use lead style **-04** on the FTSH (3.81 mm posts); other styles do not mate correctly at 8.0 mm. Do not order the FTSH with the -K option. |
+| Samtec SFMC-110-02-L-D / FTSH-110-04-L-DV | LCSC holds 30 and 5 of close variants only, and the LCSC numbers and prices in the BOM are those variants (C3323057 is SFMC-110-02-L-D-K-TR, C7279869 is FTSH-110-04-F-DV-TR). Buy the exact part numbers from DigiKey, Mouser or Samtec. Board-to-board pair. Use lead style **-04** on the FTSH (3.81 mm posts); other styles do not mate correctly at 8.0 mm. Do not order the FTSH with the -K option. |
 
 Approximate component cost at single-unit prices is shown per board on the
 [project page](https://peterjburke.github.io/stackf765/#boards). PCB fabrication,
@@ -78,6 +78,7 @@ assembly fees and shipping are extra and depend on quantity.
 | Item | Qty | Note |
 |---|---|---|
 | M2 × 4 mm screws | 3 | upper board into the standoffs |
-| Silicone grommets for a 4 mm hole, with M2 inserts ("M3 to M2") | 4 | lower board to frame, 20 × 20 mm |
+| Silicone grommets for a 4 mm board hole with a 3 mm bore ("M4 to M3", Matek style) | 4 | lower board to frame, 20 × 20 mm. Dimensions vary between makers; measure yours. |
+| Brass "M3 to M2" inserts for the grommets | 4 | only if the frame uses M2 screws |
 | M2 screws and nuts to suit the frame | 4 | |
-| JST-SH 6-pin cable, 100 mm, wired 1:1 | 1 | flight controller to service board |
+| JST-SH 6-pin cable, 100 mm, wired 1:1 (JST A06SR06SR30K102A) | 1 | flight controller to service board. JST's drawing for this part states pin 1 to pin 1; DigiKey's listing calls it "Reversed". Check with a meter. |

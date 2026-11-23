@@ -142,8 +142,6 @@ If the form shows a warning about **holes in pads** on the four big battery pads
 | Edge rails / fiducials | Added by JLCPCB |
 | Confirm parts placement | Yes |
 
-Cheaper route: choose **Economic**, and on the parts list mark H1–H3 "Do not place". Then solder the standoffs yourself with hot air or a hot plate, or use loose M2 × 8 mm standoffs. Whether Economic accepts 2 oz copper could not be confirmed; the form will tell you.
-
 ### After upload
 
 - 17 BOM lines, 41 parts, all on top.
@@ -253,10 +251,10 @@ Quantities are per set of three boards.
 | Samtec **FTSH-110-04-L-DV** header | 1 | DigiKey, Mouser, Samtec | Upper board `J3`, bottom side. Lead style **-04** only. No "-K". |
 | 3 × 3 right-angle pin header, 2.54 mm (HCTL PZ254-3-03-W-2.5-G0, LCSC C7429379) | 7 | LCSC | Four for upper `J1` (3 × 12), three for lower `J2` (3 × 9). Or one Samtec TSW-112-08-G-T-RA for the upper. |
 | M2 × 4 mm screws | 3 | any | Upper board into the standoffs. Not longer. |
-| Silicone grommets for a 4 mm hole with M2 insert ("M3 to M2") | 4 | drone shops | Lower board to frame |
+| Silicone grommets for a 4 mm board hole with a 3 mm bore ("M4 to M3", Matek style) | 4 | drone shops | Lower board to frame. Measure yours. |
+| Brass "M3 to M2" inserts for the grommets | 4 | drone shops | Only if the frame uses M2 screws |
 | M2 screws and nuts for the frame | 4 | any | |
-| JST-SH 6-pin cable, 100 mm, **wired 1:1** | 1 | any | Check pin 1 to pin 1 with a meter. A reversed cable does no damage; USB just will not connect. |
-| M2 × 8 mm standoffs | 3 | only if you chose "Do not place" for H1–H3 | |
+| JST-SH 6-pin cable, 100 mm, **wired 1:1** (JST A06SR06SR30K102A) | 1 | DigiKey | DigiKey's listing calls this cable "Reversed", but JST's drawing states pin 1 to pin 1. Check pin 1 to pin 1 with a meter. A reversed cable does no damage; USB just will not connect. |
 
 Soldering order and tips are in [assembly.md](assembly.md).
 Do the electrical checks in [bringup.md](bringup.md) before stacking the boards.

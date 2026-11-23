@@ -145,7 +145,9 @@ def bom(design, out_dir, side_of=None):
                     "Unit price USD", "Fit"])
         for r in rows:
             w.writerow([" ".join(r["refs"]), r["qty"], r["value"], r["descr"], r["footprint"], r["mfr"], r["mpn"],
-                        r["lcsc"], r["price"], "DNP" if r["dnp"] else "yes"])
+                        r["lcsc"], r["price"],
+                        "DNP" if r["dnp"] else
+                        "hand" if design.parts[r["refs"][0]].fields.get("Assembly") == "hand" else "yes"])
     with open(os.path.join(out_dir, f"{design.name}-bom-jlc.csv"), "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["Comment", "Designator", "Footprint", "LCSC Part #"])
