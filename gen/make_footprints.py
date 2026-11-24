@@ -59,7 +59,8 @@ def header_3xN(n):
     b += rect(-1.3, y0 - 0.25, tip + 0.25, y1 + 0.25, "F.CrtYd", 0.05)
     fp(f"PinHeader_3x{n:02d}_P2.54mm_Horizontal",
        f"3x{n} right-angle pin header, 2.54 mm pitch, three rows (HCTL PZ254-3-xx-W-2.5, Samtec TSW-1xx-08-x-T-RA)",
-       b, model=f"PinHeader_3x{n:02d}_P2.54mm_Horizontal.step")
+       b, attr="through_hole exclude_from_bom" if n == 9 else "through_hole",    # 3x9 (lower J2) is left unpopulated
+       model=None if n == 9 else f"PinHeader_3x{n:02d}_P2.54mm_Horizontal.step")
 
 
 # ---------------------------------------------------------------------------

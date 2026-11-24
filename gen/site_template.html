@@ -57,7 +57,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <body>
 <header class="top">
   <h1>StackF765</h1>
-  <p class="lead">An open-hardware ArduPilot flight controller: STM32F765, two stacked 31.5&nbsp;&times;&nbsp;48&nbsp;mm boards on a 20&nbsp;&times;&nbsp;20&nbsp;mm mount, plus a small USB / buzzer / boot board on a cable. Every pin is on a labelled 0.1&nbsp;inch right-angle header.</p>
+  <p class="lead">An open-hardware ArduPilot flight controller: STM32F765, two stacked 31.5&nbsp;&times;&nbsp;48&nbsp;mm boards on a 20&nbsp;&times;&nbsp;20&nbsp;mm mount, plus a small USB / buzzer / boot board on a cable. Flight-controller pins are on a labelled 0.1&nbsp;inch right-angle header; motor outputs are labelled solder holes on the power board.</p>
   <nav>
     <a href="drone/">Drone viewer</a><a href="#view">3D view</a><a href="#facts">At a glance</a><a href="#pinout">Pinout</a><a href="#boards">Boards &amp; files</a>
     <a href="#verify">Verification</a><a href="#build">Build one</a><a href="{{REPO}}">GitHub repository</a>
@@ -113,7 +113,7 @@ footer{max-width:1100px;margin:0 auto;padding:20px 16px 50px;color:var(--mut);fo
 <h2 id="build">Build one</h2>
 <ol class="steps">
   <li>Order the three PCBs with assembly using the files in <a href="{{REPO}}/tree/main/fab">fab/</a>. Settings and stack-ups: <a href="{{REPO}}/blob/main/docs/manufacturing.md">docs/manufacturing.md</a>.</li>
-  <li>Solder the two right-angle headers and the battery / ESC wires, then stack the boards: <a href="{{REPO}}/blob/main/docs/assembly.md">docs/assembly.md</a>.</li>
+  <li>Solder the upper header, the ESC signal wires and the battery / ESC power wires, then stack the boards: <a href="{{REPO}}/blob/main/docs/assembly.md">docs/assembly.md</a>.</li>
   <li>Power up on a current-limited supply and work through the checks in <a href="{{REPO}}/blob/main/docs/bringup.md">docs/bringup.md</a>.</li>
   <li>Flash the bootloader and ArduPilot: <a href="{{REPO}}/blob/main/docs/firmware.md">docs/firmware.md</a>.</li>
 </ol>

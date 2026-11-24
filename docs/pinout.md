@@ -35,17 +35,17 @@ Suggested use (any UART can be given any role with `SERIALn_PROTOCOL`):
 | A7-A9, A10-A12 | Camera (G 5V CAM) and video transmitter (G 5V VTX) |
 | other G 5V TX RX groups | Telemetry radio, ESC telemetry, VTX control, companion computer |
 
-## Lower board, 3 x 9 header (J2)
+## Lower board, 3 x 9 solder holes (J2)
 
-Seen from above with the header pointing away from you. Each column takes a standard 3-pin servo / ESC plug.
+Seen from above with the front edge away from you. No header is fitted: solder wires into the holes. Each column is one servo / ESC lead (signal, 5 V, ground). Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
 
 | Row | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 |---|---|---|---|---|---|---|---|---|---|
-| C: nearest the board edge, lowest pins | G | G | G | G | G | G | G | G | G |
+| C: nearest the board edge | G | G | G | G | G | G | G | G | G |
 | B: middle | 5V | 5V | 5V | 5V | 5V | 5V | 5V | PI5V | PI5V |
-| A: inner row, highest pins (signal) | M1 | M2 | M3 | M4 | M5 | M6 | LED | PI5V | PI5V |
+| A: inner row (signal) | M1 | M2 | M3 | M4 | M5 | M6 | LED | PI5V | PI5V |
 
-M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). 5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer (two columns: signal and middle pins are PI5V, bottom pin is ground).
+M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). 5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer (two columns: inner and middle holes are PI5V, edge hole is ground).
 
 ## Lower board, power pads
 
@@ -63,22 +63,22 @@ JST-SH 1.0 mm, wired pin 1 to pin 1.
 
 | MCU pin | ArduPilot function | Net | Goes to |
 |---|---|---|---|
-| PA0 | TIM2_CH1 | M1 | lower header pin M1 |
-| PA1 | TIM2_CH2 | M2 | lower header pin M2 |
-| PA2 | TIM5_CH3 | M3 | lower header pin M3 |
-| PA3 | TIM5_CH4 | M4 | lower header pin M4 |
+| PA0 | TIM2_CH1 | M1 | lower board solder hole M1 |
+| PA1 | TIM2_CH2 | M2 | lower board solder hole M2 |
+| PA2 | TIM5_CH3 | M3 | lower board solder hole M3 |
+| PA3 | TIM5_CH4 | M4 | lower board solder hole M4 |
 | PA5 | SPI1_SCK | IMU_SCK | IMU (U2) |
 | PA6 | SPI1_MISO | IMU_MISO | IMU (U2) |
 | PA7 | SPI1_MOSI | IMU_MOSI | IMU (U2) |
-| PA8 | TIM1_CH1 | LED_STRIP | lower header, LED pin |
+| PA8 | TIM1_CH1 | LED_STRIP | lower board, LED solder hole |
 | PA9 | USART1_TX | TX1 | upper header pin TX1 |
 | PA10 | USART1_RX | RX1 | upper header pin RX1 |
 | PA11 | OTG_FS_DM | USB_DM | service cable pin 2 |
 | PA12 | OTG_FS_DP | USB_DP | service cable pin 3 |
 | PA13 | JTMS-SWDIO | SWDIO | test pad TP4 |
 | PA14 | JTCK-SWCLK | SWCLK | test pad TP5 |
-| PB0 | TIM8_CH2N | M5 | lower header pin M5 |
-| PB1 | TIM8_CH3N | M6 | lower header pin M6 |
+| PB0 | TIM8_CH2N | M5 | lower board solder hole M5 |
+| PB1 | TIM8_CH3N | M6 | lower board solder hole M6 |
 | PB6 | I2C1_SCL | SCL | upper header pin SCL |
 | PB7 | I2C1_SDA | SDA | upper header pin SDA |
 | PB9 | TIM11_CH1 | BUZZER | buzzer switch Q1 |

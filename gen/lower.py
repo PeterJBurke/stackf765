@@ -14,7 +14,7 @@ for _c, (_t, _b) in enumerate(B2B_COLS):
     B2B[2 * _c + 1] = _t
     B2B[2 * _c + 2] = _b
 
-# 3 x 9 right-angle header.  Each column takes a standard 1x3 servo/ESC plug:
+# 3 x 9 solder holes on the 2.54 mm grid (no header fitted; wires are soldered in).  Each column is one servo/ESC lead:
 # row A (highest pin) = signal, row B = 5 V, row C (nearest the board) = ground.
 J2_LABELS = ["M1", "M2", "M3", "M4", "M5", "M6", "LED", "PI5V", "PI5V"]
 J2_ROWS = {
@@ -102,7 +102,7 @@ def design():
     s = d.sheet("regulators", "5 V regulators")
     s.frame(15, 20, 390, 110, "U1: +5V for the flight controller, GPS, receiver, camera (3 A)")
     buck(d, B, s, 1, "+5V", 110, 65)
-    s.frame(15, 145, 390, 110, "U2: +5V_PI for a companion computer on header J2 (3 A)")
+    s.frame(15, 145, 390, 110, "U2: +5V_PI for a companion computer on J2 (3 A)")
     buck(d, B, s, 2, "+5V_PI", 110, 190)
     s.flag("+5V", 370, 60)
     s.flag("+5V_PI", 370, 185)
@@ -113,7 +113,7 @@ def design():
     j = B.part(s, "J1", "b2b_socket", 100, 80)
     for pin, net in B2B.items():
         j[str(pin)] = net
-    s.frame(205, 20, 195, 130, "J2: motor / LED / companion-power header (3x9 right-angle): column = SIG / 5V / G")
+    s.frame(205, 20, 195, 130, "J2: motor / LED / companion-power solder holes (3x9, no header fitted): column = SIG / 5V / G")
     from kigen.design import box
     sym = box("HDR_3x9", left=[(f"A{i + 1}", f"A{i + 1} {J2_ROWS['A'][i][0]}") for i in range(9)] + [None] +
               [(f"C{i + 1}", f"C{i + 1} {J2_ROWS['C'][i][0]}") for i in range(9)],

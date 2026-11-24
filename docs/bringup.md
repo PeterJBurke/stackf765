@@ -14,7 +14,7 @@ Mission Planner or QGroundControl, optionally an oscilloscope and a thermal came
 | A1 | Lower board: resistance BAT+ to BAT− | > 1 kΩ (about 11 kΩ divider in parallel with regulator inputs) |
 | A2 | Lower board: resistance BAT+ to ESC+ | < 0.1 Ω (the shunt) |
 | A3 | Lower board: resistance ESC− to BAT− | < 0.1 Ω |
-| A4 | Lower board J2: middle-row `5V` pins and the `PI5V` pins to ground | not shorted (> 100 Ω) |
+| A4 | Lower board J2: middle-row `5V` holes and the `PI5V` holes to ground | not shorted (> 100 Ω) |
 | A5 | Upper board: TP1 (+3V3) to TP2 (GND) | not shorted (> 100 Ω) |
 | A6 | Upper board: TP3 (+5V_SYS) to TP2 (GND) | not shorted |
 | A7 | Service cable: pin 1 to pin 1 … pin 6 to pin 6 | continuity; no continuity pin 1 to pin 6 |
@@ -26,8 +26,8 @@ Supply on BAT+ / BAT−, **8.0 V, current limit 0.2 A**, nothing connected to th
 | # | Check | Expected |
 |---|---|---|
 | B1 | Supply current | under 20 mA |
-| B2 | J2 middle-row `5V` pin (any of columns 1–7) | 5.06 V ± 0.15 V |
-| B3 | J2 `PI5V` pins (columns 8–9, top and middle) | 5.06 V ± 0.15 V |
+| B2 | J2 middle-row `5V` hole (any of columns 1–7) | 5.06 V ± 0.15 V |
+| B3 | J2 `PI5V` holes (columns 8–9, inner and middle) | 5.06 V ± 0.15 V |
 | B4 | Green LED D2 | on |
 | B5 | J1 socket pin `VBAT_SENSE` (column 6, row nearest the header) | supply voltage ÷ 11 (0.73 V at 8.0 V) |
 | B6 | Raise the supply to 12.6 V | outputs unchanged, current still small |

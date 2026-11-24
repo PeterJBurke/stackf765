@@ -906,54 +906,6 @@
 				)
 			)
 		)
-		(property "MPN" "PZ254-3-03-W-2.5-G0 (x3)"
-			(at 0 0 90)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "56082ad7-f696-439e-90ea-ed2e41ecf976")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Manufacturer" "HCTL"
-			(at 0 0 90)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "08bdd4d3-acd0-4e90-9835-964855c7576a")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "LCSC" "C7429379"
-			(at 0 0 90)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "b3b6c27d-5111-49b0-b3fe-eb2ac0a4839c")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Price" "0.72"
-			(at 0 0 90)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "8a806f30-3d76-4d67-9553-de4751ef77bb")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
 		(property "Assembly" "hand"
 			(at 0 0 90)
 			(layer "F.SilkS")
@@ -967,7 +919,7 @@
 			)
 		)
 		(path "/84d2f048-927e-5939-bf05-b7a00d79277a/d21a5836-5c48-54c8-a057-600c1edfef81")
-		(attr through_hole)
+		(attr through_hole exclude_from_bom)
 		(fp_rect
 			(start 6.98 -1.33)
 			(end 9.6 21.65)
@@ -1344,17 +1296,6 @@
 			(uuid "c5c33e59-0ce0-4bda-bd1f-c025db141dd1")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/../lib/3d/PinHeader_3x09_P2.54mm_Horizontal.step"
-			(offset
-				(xyz 0 0 0)
-			)
-			(scale
-				(xyz 1 1 1)
-			)
-			(rotate
-				(xyz 0 0 0)
-			)
-		)
 	)
 	(footprint "fc:WirePad_5x4mm"
 		(layer "F.Cu")

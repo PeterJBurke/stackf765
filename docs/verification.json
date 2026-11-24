@@ -1,5 +1,5 @@
 {
- "date": "2026-11-23",
+ "date": "2026-11-24",
  "checks": [
   {
    "name": "upper: electrical rules check (KiCad ERC)",
@@ -59,7 +59,7 @@
   {
    "name": "lower: every BOM line has a manufacturer part number and an LCSC number",
    "ok": true,
-   "detail": "19 lines"
+   "detail": "18 lines"
   },
   {
    "name": "service: electrical rules check (KiCad ERC)",

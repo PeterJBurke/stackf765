@@ -1,29 +1,29 @@
 # Assembling the stack
 
-You need: the three assembled boards, the two right-angle headers, the two Samtec board-to-board
+You need: the three assembled boards, the right-angle header for the upper board, the two Samtec board-to-board
 connectors if they were not factory-fitted, three M2 × 4 mm screws,
 four silicone grommets ("M4 to M3") with brass "M3 to M2" inserts and M2 screws, a 6-wire JST-SH cable wired 1:1
 (JST A06SR06SR30K102A), battery and ESC wires.
 
 Do the electrical checks in [bringup.md](bringup.md) on each board **before** stacking them.
 
-## 1. Solder the headers and board-to-board connectors
+## 1. Solder the header and board-to-board connectors
 
 **Board-to-board connectors (if not factory-fitted).** Socket SFMC-110-02-L-D on the top of the lower
 board (J1), header FTSH-110-04-L-DV on the bottom of the upper board (J3). They are 1.27 mm-pitch
 surface-mount parts: tack one corner pin, check alignment, then solder the rest with flux and a fine tip.
 
-**Lower board, J2 (3 × 9 right-angle, three 3 × 3 pieces).** Top side, front edge, pins pointing off the
-board; the plastic body hangs just beyond the board edge. Columns left to right: `M1 M2 M3 M4 M5 M6 LED PI5V PI5V`.
-In each column the top pin is signal, the middle pin 5 V, the bottom pin ground.
+**Lower board, J2 (3 × 9 solder holes). Fit no header.** Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
+Solder the ESC signal leads, the LED lead and the companion-computer power wires straight into the holes from
+the top, and keep each joint and wire within 3 mm of the board for the first 8 mm behind the front edge.
+Columns left to right, seen from above with the front edge away from you: `M1 M2 M3 M4 M5 M6 LED PI5V PI5V`.
+In each column the inner hole is signal, the middle hole 5 V, the hole nearest the edge ground.
 
 **Upper board, J1 (3 × 12 right-angle).** Top side, front edge, pins pointing off the board.
 You can use one Samtec TSW-112-08-G-T-RA or four generic 3 × 3 pieces side by side.
-The plastic body hangs just beyond the board edge. **Cut the pin tails under the upper board flush: 0.5 mm
-or less.** As supplied (about 1.4 mm) their tips end level with the tops of the lower header's pins, and only
-the half-pitch sideways offset between the two headers (0.63 mm) keeps them apart. Cut flush, they clear by
-about 0.9 mm. Use the generic 7.5 mm-body header on the lower board, seated flat; a taller header there
-removes the clearance.
+The plastic body hangs just beyond the board edge. The pin tails hang about 1.4 mm below the upper board,
+over the lower board's solder holes; with no header on the lower board they have about 6.6 mm of clear space
+and need no trimming.
 
 Before first power with the stack assembled, check with a meter that `PI5V` is not shorted to ground and
 that the upper board's `5V` pins are not connected to `M1`–`M6` or `LED`.

@@ -135,9 +135,9 @@ PARTS = {
                     Description="2x10 right-angle pin header, 2.54 mm (hand-soldered)", Assembly="hand",
                     Datasheet="https://www.lcsc.com/datasheet/C492438.pdf"),
     "hdr3x9": dict(symbol=None, footprint="fc:PinHeader_3x09_P2.54mm_Horizontal", value="3x9 RA 2.54mm",
-                   MPN="PZ254-3-03-W-2.5-G0 (x3)", Manufacturer="HCTL", LCSC="C7429379", Price=0.72,
-                   Description="3x9 right-angle pin header, 2.54 mm: three 3x3 pieces (hand-soldered)",
-                   Assembly="hand", Datasheet="https://www.lcsc.com/datasheet/C7429379.pdf"),
+                   BOM="no", Assembly="hand",
+                   Description="3x9 solder holes, 2.54 mm grid. No header is fitted: solder wires into the holes. "
+                               "A header here would sit under the pins of the upper board's header."),
     "b2b_socket": dict(symbol="Connector_Generic:Conn_02x10_Odd_Even", footprint="fc:Samtec_SFMC-110-02-x-D",
                        value="SFMC-110-02-L-D", MPN="SFMC-110-02-L-D", Manufacturer="Samtec", LCSC="C3323057",
                        Price=5.50, Assembly="hand",

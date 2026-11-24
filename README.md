@@ -2,7 +2,7 @@
 
 An open-hardware **ArduPilot flight controller** built around the STM32F765:
 two stacked 31.5 × 48 mm boards on a 20 × 20 mm mount, plus a small USB / buzzer / boot
-board on a cable. Every connection is a labelled 0.1 inch right-angle header pin.
+board on a cable. Flight-controller connections are labelled 0.1 inch right-angle header pins; motor outputs are labelled solder holes on the lower board.
 
 **[3D project page](https://peterjburke.github.io/stackf765/)** ·
 **[Drone viewer](https://peterjburke.github.io/stackf765/drone/)** ·
@@ -42,7 +42,7 @@ Upper board header, seen from above with the header pointing away from you:
 | middle | G | 4V5 | TX2 | RX2 | G | 5V | TX3 | RX3 | G | 5V | TX4 | RX4 |
 | inner | G | 4V5 | TX1 | RX1 | SDA | SCL | G | 5V | CAM | G | 5V | VTX |
 
-Lower board header, columns left to right: `M1 M2 M3 M4 M5 M6 LED PI5V PI5V`; each column is signal / 5 V / ground, top to bottom, for a standard 3-pin plug.
+Lower board solder holes (no header fitted), columns left to right: `M1 M2 M3 M4 M5 M6 LED PI5V PI5V`; each column is signal / 5 V / ground from the inner row to the board edge.
 Power pads at the rear: `BAT+ ESC+ ESC− BAT−`. Full details: [docs/pinout.md](docs/pinout.md).
 
 ## What is in this repository

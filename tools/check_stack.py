@@ -20,7 +20,8 @@ import pcbnew
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 GAP = 8.0            # mm between the boards (standoff height)
-TAIL = 0.5           # mm: upper header solder tails below the upper board after cutting flush (docs/assembly.md)
+TAIL = 1.8           # mm: upper header solder tails below the upper board, untrimmed, worst case (research/header-clearance.md)
+WIRE_H = 3.0         # mm allowed for a wire and solder joint above each lower-board J2 hole
 NUT_ZONE_R = 3.5     # mm radius reserved around each grommet centre
 NUT_HEIGHT = 4.0     # mm: grommet flange + M2 nut + screw end above the lower board (estimate)
 GROMMETS = [(-10, 10), (10, 10), (-10, -10), (10, -10)]
@@ -122,16 +123,17 @@ for fp in named(lower):
         continue
     n = str(fp.GetFPID().GetLibItemName())
     if "PinHeader_3x" in n:
-        # The plastic body hangs off the front edge (not under the upper board).  Under the upper board
-        # there are only the bent pins: one 0.64 mm wide strip per column, top row 6.6 mm above the board.
+        # Lower J2 is left unpopulated (Matek style): wires are soldered into the holes.  Allow WIRE_H
+        # for a wire and its solder joint above each hole; the upper header's tails hang over them.
+        if fp.Models().size():
+            errors.append(f"lower {fp.GetReference()} carries a header model: it must stay unpopulated")
         for pad in fp.Pads():
-            if pad.GetNumber().startswith("A"):
-                x, y = mm(pad.GetPosition())
-                ltop.append((fp, (x - 0.4, y - 0.4, x + 0.4, 24.0), 6.61))
+            x, y = mm(pad.GetPosition())
+            ltop.append((fp, (x - 1.0, y - 1.0, x + 1.0, y + 1.0), WIRE_H))
     else:
         ltop.append((fp, shape(fp), height(fp)))
 ubot = [(fp, shape(fp), height(fp)) for fp in named(upper) if fp.IsFlipped()]
-# solder tails of the upper board's 3x12 header: one per pin, cut flush to TAIL below the upper board
+# solder tails of the upper board's 3x12 header: one per pin, TAIL below the upper board
 tails = []
 for pad in U["J1"].Pads():
     x, y = mm(pad.GetPosition())
@@ -157,13 +159,7 @@ for fa, ba, ha in ltop:
 if unknown:
     errors.append(f"no height data for footprints: {sorted(unknown)}")
 notes.append(f"height budget in the {GAP} mm gap OK; tightest: {tight[1]} -> {tight[0]:.2f} mm spare")
-# the two right-angle headers must be offset sideways by half a pitch so pins and tails interleave
-lx = sorted({mm(p.GetPosition())[0] for p in L["J2"].Pads()})
-ux = sorted({mm(p.GetPosition())[0] for p in U["J1"].Pads()})
-near = min(abs(a - b) for a in lx for b in ux)
-if near < 1.0:
-    errors.append(f"lower header columns are only {near:.2f} mm from upper header columns (need half-pitch offset)")
-notes.append(f"header columns interleave: nearest lower/upper column offset {near:.2f} mm")
+notes.append(f"lower J2 holes unpopulated; {GAP - WIRE_H - TAIL:.1f} mm between a {WIRE_H} mm wire joint and untrimmed upper tails")
 
 # 5. grommet nut zones
 for gx, gy in GROMMETS:

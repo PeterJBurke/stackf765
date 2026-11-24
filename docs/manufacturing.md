@@ -38,11 +38,12 @@ The boards carry no reserved spot for the fab's order number, so choose the opti
 
 ## Assembly notes
 
-* **Hand-soldered parts (not in the JLCPCB files):** the two right-angle headers,
-  `J1` on the upper board (3 × 12) and `J2` on the lower board (3 × 9), and the two Samtec
+* **Hand-soldered parts (not in the JLCPCB files):** the right-angle header
+  `J1` on the upper board (3 × 12) and the two Samtec
   board-to-board connectors (`J1` lower: SFMC-110-02-L-D, `J3` upper: FTSH-110-04-L-DV). LCSC had only a
   handful of the Samtec parts when checked, so buy them from DigiKey, Mouser or Samtec and either
   hand-solder them or send them to the assembler as consigned parts. See [assembly.md](assembly.md).
+* **Lower board `J2` (3 × 9 holes) is left empty.** Wires are soldered into the holes. Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
 * **Standoffs H1–H3** on the lower board are reflow-soldered M2 standoffs, 8.0 mm (Sinhoo SMTSO2080CTJ). At JLCPCB they are a "Standard PCBA only" part.
   If your assembler will not place them, solder them by hand or use loose M2 × 8 mm standoffs
   with screws from below.

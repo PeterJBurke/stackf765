@@ -679,7 +679,7 @@
 		(effects (font (size 1.9 1.9) (bold yes)) (justify left bottom))
 		(uuid "a66db4d5-3453-543d-9dbb-6597af49c402")
 	)
-	(text "J2: motor / LED / companion-power header (3x9 right-angle): column = SIG / 5V / G"
+	(text "J2: motor / LED / companion-power solder holes (3x9, no header fitted): column = SIG / 5V / G"
 		(exclude_from_sim no)
 		(at 145 17.6 0)
 		(effects (font (size 1.9 1.9) (bold yes)) (justify left bottom))
@@ -1076,7 +1076,7 @@
 		(at 209.55 59.69 0)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(uuid "d21a5836-5c48-54c8-a057-600c1edfef81")
@@ -1089,21 +1089,12 @@
 			(at 209.55 59.69 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C7429379.pdf"
+		(property "Datasheet" "" (at 209.55 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Description" "3x9 solder holes, 2.54 mm grid. No header is fitted: solder wires into the holes. A header here would sit under the pins of the upper board's header."
 			(at 209.55 59.69 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "3x9 right-angle pin header, 2.54 mm: three 3x3 pieces (hand-soldered)"
-			(at 209.55 59.69 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "MPN" "PZ254-3-03-W-2.5-G0 (x3)"
-			(at 209.55 59.69 0)
-			(effects (font (size 1.27 1.27)) (hide yes))
-		)
-		(property "Manufacturer" "HCTL" (at 209.55 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "LCSC" "C7429379" (at 209.55 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "0.72" (at 209.55 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "BOM" "no" (at 209.55 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Assembly" "hand" (at 209.55 59.69 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "A1" (uuid "9a145048-1280-5252-af3d-94fbb67d5d19"))
 		(pin "A2" (uuid "8fc1fb57-93b3-5fc7-af83-6ac47e843f81"))

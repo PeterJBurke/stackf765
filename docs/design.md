@@ -8,14 +8,15 @@ Reference designators match the schematics (`docs/boards/*/*-schematic.pdf`).
 | Board | Job | Layers | Size |
 |---|---|---|---|
 | **Upper** | Flight controller: MCU, sensors, OSD, microSD, 3 × 12 header | 6 | 31.5 × 48 mm |
-| **Lower** | Power: battery/ESC pads, current and voltage sensing, two 5 V regulators, 3 × 9 motor header | 4 (2 oz outer) | 31.5 × 48 mm |
+| **Lower** | Power: battery/ESC pads, current and voltage sensing, two 5 V regulators, 3 × 9 motor solder holes | 4 (2 oz outer) | 31.5 × 48 mm |
 | **Service** | USB-C socket, buzzer, BOOT button, on a 6-wire cable | 2 | 18 × 32 mm |
 
 The lower board mounts to the frame on four rubber grommets (20 × 20 mm pattern).
 The upper board plugs into it through a 20-pin 1.27 mm connector (Samtec SFMC socket below,
-FTSH header above) and is held by three soldered M2 standoffs, 8.0 mm tall. The 8 mm gap is what
-lets the three-row motor header on the lower board fit under the upper board. Both right-angle
-headers have their solder holes at the front edge, so the plastic bodies hang off the board. The two boards therefore move as one
+FTSH header above) and is held by three soldered M2 standoffs, 8.0 mm tall. The upper board's
+right-angle header has its solder holes at the front edge, so the plastic body hangs off the board. The lower
+board has a matching 3 × 9 hole pattern at its front edge, but no header is fitted there (as on Matek's stacked boards):
+wires are soldered into the holes, so nothing tall sits under the upper header's pin tails. The two boards therefore move as one
 rigid block on the grommets.
 
 Signals that cross between the boards (connector J1 lower / J3 upper):
@@ -59,7 +60,7 @@ the regulators. Check polarity before the first connection.
 ### 5 V regulators
 
 **U1** makes `+5V` for the flight controller and its peripherals. **U2** makes `+5V_PI`
-for a companion computer on header J2. They are identical TPS62933 buck converters, so a
+for a companion computer on the J2 solder holes. They are identical TPS62933 buck converters, so a
 brown-out or noise on the companion's rail cannot reset the flight controller.
 
 * Output voltage: 0.8 V × (1 + (51 k + 2.2 k) / 10 k) = **5.06 V**.
@@ -70,11 +71,13 @@ brown-out or noise on the companion's rail cannot reset the flight controller.
 * Dropout: the converter reaches 98 % duty cycle, so it holds 5 V down to about 5.6 V in at full load.
 * **Rating: 3 A per rail.** The header pins themselves limit each 5 V pin to about 3 A.
 
-### Motor header
+### Motor solder holes
 
-J2 is a 3 × 9 right-angle header. Each column takes a standard 3-pin plug: signal on the top pin,
-5 V in the middle, ground nearest the board. Columns 1–6 are motors M1–M6, column 7 is the LED
-output, and columns 8–9 carry the companion-computer rail (PI5V on the top and middle pins).
+J2 is a 3 × 9 pattern of solder holes on the 2.54 mm grid; no header is fitted. Each column takes one
+3-wire lead: signal on the inner hole, 5 V in the middle, ground nearest the board edge. Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
+A right-angle header there would reach 6.6 mm, level with the tips of the upper header's solder tails.
+Columns 1–6 are motors M1–M6, column 7 is the LED
+output, and columns 8–9 carry the companion-computer rail (PI5V on the inner and middle holes).
 
 ### Copper for 50 A
 

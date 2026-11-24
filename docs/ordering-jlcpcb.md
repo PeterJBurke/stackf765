@@ -24,7 +24,7 @@ Read this list first. Each item can cost you a board run.
 | 6 | The lower board must use **Standard PCBA** if JLCPCB fits the standoffs (SMTSO2080CTJ is "Standard Only"). | Follow section 4. |
 | 7 | **HASL is not offered on 6-layer boards. ENIG is no longer free.** | Upper: choose ENIG and accept the fee. |
 | 8 | None of the boards has fiducials, rails or tooling holes. All are smaller than 70 × 70 mm. | Let JLCPCB add them (options below). Expect small break-off nubs on two edges; file them flat. |
-| 9 | Four parts are **not** in the JLCPCB files: both pin headers and both Samtec connectors. | Buy them (section 7) and solder them yourself. |
+| 9 | Three parts are **not** in the JLCPCB files: the upper pin header and both Samtec connectors. The lower board's 3 × 9 holes (`J2`) stay empty. | Buy them (section 7) and solder them yourself. |
 
 Minimum quantities: 5 bare boards per design; 2 assembled. Order 5 and assemble all 5.
 
@@ -145,7 +145,7 @@ If the form shows a warning about **holes in pads** on the four big battery pads
 ### After upload
 
 - 17 BOM lines, 41 parts, all on top.
-- Not fitted by JLCPCB: `J1` (Samtec SFMC socket), `J2` (3 × 9 right-angle header), and the four wire pads.
+- Not fitted by JLCPCB: `J1` (Samtec SFMC socket), `J2` (3 × 9 solder holes; nothing is ever fitted there), and the four wire pads.
 
 ## 5. Service board (2 layers)
 
@@ -249,7 +249,7 @@ Quantities are per set of three boards.
 |---|---|---|---|
 | Samtec **SFMC-110-02-L-D** socket | 1 | DigiKey, Mouser, Samtec | Lower board `J1`, top side |
 | Samtec **FTSH-110-04-L-DV** header | 1 | DigiKey, Mouser, Samtec | Upper board `J3`, bottom side. Lead style **-04** only. No "-K". |
-| 3 × 3 right-angle pin header, 2.54 mm (HCTL PZ254-3-03-W-2.5-G0, LCSC C7429379) | 7 | LCSC | Four for upper `J1` (3 × 12), three for lower `J2` (3 × 9). Or one Samtec TSW-112-08-G-T-RA for the upper. |
+| 3 × 3 right-angle pin header, 2.54 mm (HCTL PZ254-3-03-W-2.5-G0, LCSC C7429379) | 4 | LCSC | For upper `J1` (3 × 12). Or one Samtec TSW-112-08-G-T-RA. None for the lower board. |
 | M2 × 4 mm screws | 3 | any | Upper board into the standoffs. Not longer. |
 | Silicone grommets for a 4 mm board hole with a 3 mm bore ("M4 to M3", Matek style) | 4 | drone shops | Lower board to frame. Measure yours. |
 | Brass "M3 to M2" inserts for the grommets | 4 | drone shops | Only if the frame uses M2 screws |

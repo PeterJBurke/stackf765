@@ -65,9 +65,9 @@ def pinouts():
         "This is how the labels are printed on the board.  Inner row = highest pins.")
     LA, LB, LC = ([l for l, _ in lower.J2_ROWS[r]] for r in "ABC")
     svgs["lower-header-front"] = grid_svg(
-        [LA[::-1], LB[::-1], LC[::-1]], ["top row: signal", "middle: 5 V", "bottom: ground"],
-        "Lower board 3 x 9 header - looking INTO the pins from the front",
-        "Each column takes a standard 3-pin plug (signal on top, ground nearest the board).  PI5V = separate 5 V / 3 A.",
+        [LC, LB, LA], ["edge row: ground", "middle: 5 V", "inner row: signal"],
+        "Lower board 3 x 9 solder holes - seen from ABOVE (front edge away from you)",
+        "No header is fitted: solder the ESC, LED and companion-computer wires into the holes.  PI5V = separate 5 V / 3 A.",
         cell=52)
     svgs["power-pads"] = grid_svg(
         [["BAT+", "ESC+", "ESC-", "BAT-"]], ["rear edge"],
@@ -110,15 +110,16 @@ def pinout_md():
          "| B1-B4: G 4V5 TX2 RX2 | Radio receiver (CRSF / ELRS) |",
          "| A7-A9, A10-A12 | Camera (G 5V CAM) and video transmitter (G 5V VTX) |",
          "| other G 5V TX RX groups | Telemetry radio, ESC telemetry, VTX control, companion computer |", "",
-         "## Lower board, 3 x 9 header (J2)", "",
-         "Seen from above with the header pointing away from you. Each column takes a standard 3-pin servo / ESC plug.", "",
+         "## Lower board, 3 x 9 solder holes (J2)", "",
+         "Seen from above with the front edge away from you. No header is fitted: solder wires into the holes. "
+         "Each column is one servo / ESC lead (signal, 5 V, ground). " + "Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.", "",
          "| Row | " + " | ".join(str(i) for i in range(1, 10)) + " |", "|---|" + "---|" * 9,
-         "| C: nearest the board edge, lowest pins | " + " | ".join(l for l, _ in lower.J2_ROWS["C"]) + " |",
+         "| C: nearest the board edge | " + " | ".join(l for l, _ in lower.J2_ROWS["C"]) + " |",
          "| B: middle | " + " | ".join(l for l, _ in lower.J2_ROWS["B"]) + " |",
-         "| A: inner row, highest pins (signal) | " + " | ".join(l for l, _ in lower.J2_ROWS["A"]) + " |", "",
+         "| A: inner row (signal) | " + " | ".join(l for l, _ in lower.J2_ROWS["A"]) + " |", "",
          "M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). "
          "5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer "
-         "(two columns: signal and middle pins are PI5V, bottom pin is ground).", "",
+         "(two columns: inner and middle holes are PI5V, edge hole is ground).", "",
          "## Lower board, power pads", "", "Rear edge, seen from above: `BAT+  ESC+  ESC-  BAT-`. 2S-3S LiPo, 50 A continuous.", "",
          "## Service cable (J5 on the upper board, J2 on the service board)", "",
          "| Pin | 1 | 2 | 3 | 4 | 5 | 6 |", "|---|---|---|---|---|---|---|", "| Signal | VBUS | GND | D- | D+ | BOOT | BUZ |", "",
@@ -126,7 +127,7 @@ def pinout_md():
          "## Microcontroller pins", "", "| MCU pin | ArduPilot function | Net | Goes to |", "|---|---|---|---|"]
     dest = {"USB_DM": "service cable pin 2", "USB_DP": "service cable pin 3", "SWDIO": "test pad TP4", "SWCLK": "test pad TP5",
             "BUZZER": "buzzer switch Q1", "LED_BLUE": "blue LED", "LED_GREEN": "green LED", "VBAT_ADC": "battery voltage divider (lower board)",
-            "CURR_ADC": "current-sense amplifier (lower board)", "LED_STRIP": "lower header, LED pin"}
+            "CURR_ADC": "current-sense amplifier (lower board)", "LED_STRIP": "lower board, LED solder hole"}
     for pin in sorted(PINMAP, key=lambda p: (p[1], int(p[2:]))):
         net, fn = PINMAP[pin]
         d = dest.get(net)
@@ -134,7 +135,7 @@ def pinout_md():
             if net.startswith(("TX", "RX")) or net in ("SDA", "SCL"):
                 d = "upper header pin " + net
             elif net.startswith("M") and net[1:].isdigit():
-                d = "lower header pin " + net
+                d = "lower board solder hole " + net
             elif net.startswith("IMU"):
                 d = "IMU (U2)"
             elif net.startswith("OSD"):
