@@ -281,7 +281,7 @@ On the parts list you change a part with the magnifier / "Change" button on that
 - [ ] Service: 2 layers, Economic PCBA, top side.
 - [ ] Each board: PCB quantity and PCBA quantity are what you want.
 - [ ] Each board: every BOM line matched, no shortfall. STM32, TPS62933, ICM-45686 confirmed in stock.
-- [ ] Each board: number of placed parts is 70 / 41 / 10.
+- [ ] Each board: number of placed parts is 71 / 42 / 10.
 - [ ] Each board: every row of section 6 checked in the preview.
 - [ ] "Confirm parts placement" is on for all three.
 - [ ] Remark about the MEMS sensors is on the upper board.
@@ -311,8 +311,8 @@ On the parts list you change a part with the magnifier / "Change" button on that
 
 What the assembly fees contain:
 
-- Upper: setup 51.12, stencil 16.42, feeder loading 31 lines × 1.53, X-ray 1.64 per board, fixtures 16.42, solder joints 321 per board × 0.0016, placement check 0.45.
-- Lower: setup 25.56, stencil 8.21, feeder loading 17 × 1.53, joints, placement check.
+- Upper: setup 51.12, stencil 16.42, feeder loading 32 lines × 1.53, X-ray 1.64 per board, fixtures 16.42, solder joints 321 per board × 0.0016, placement check 0.45.
+- Lower: setup 25.56, stencil 8.21, feeder loading 18 × 1.53, joints, placement check.
 - Service: setup 8.18, stencil 1.53, 5 extended parts × 3.07, joints, placement check.
 
 Not included because they could not be confirmed: a possible Standard-PCBA handling fee (about 15 per order), rail removal, and minimum-quantity or wastage charges on very cheap parts (usually under 5 in total).
