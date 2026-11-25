@@ -94,13 +94,13 @@ def gerbers(pcb, g, layers):
 
 def gerbers_differ(pcb, g, layers):
     """Re-export the Gerber and drill files to a temporary directory and compare them with those in g,
-    ignoring date stamps.  Returns the names of files that differ (empty list = g is current)."""
+    ignoring date stamps and the KiCad build label.  Returns the names of files that differ (empty list = g is current)."""
     import tempfile
 
     def body(path):
         return [l for l in open(path, errors="replace").read().splitlines()
                 if "CreationDate" not in l and "Created by KiCad" not in l and not l.startswith("; DRILL file")
-                and not l.startswith("; #@! TF.CreationDate")]
+                and not l.startswith("; #@! TF.CreationDate") and "GenerationSoftware" not in l]
     bad = []
     with tempfile.TemporaryDirectory() as t:
         gerbers(pcb, t, layers)
