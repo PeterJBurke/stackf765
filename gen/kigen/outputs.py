@@ -82,6 +82,37 @@ JLC_ROT = {"C710319": 270, "C82351": 270, "C779278": 90, "C404027": 180, "C28627
 JLC_SHIFT = {"C165948": (0.0, 1.57)}
 
 
+def gerbers(pcb, g, layers):
+    """Gerber and drill files into directory g."""
+    lay = ",".join(layers + ["F.Paste", "B.Paste", "F.SilkS", "B.SilkS", "F.Mask", "B.Mask", "Edge.Cuts"])
+    run(["kicad-cli", "pcb", "export", "gerbers", pcb, "-o", g + "/", "--layers", lay,
+         "--subtract-soldermask", "--use-drill-file-origin"], check=True)
+    run(["kicad-cli", "pcb", "export", "drill", pcb, "-o", g + "/", "--format", "excellon",
+         "--drill-origin", "plot", "--excellon-separate-th", "--generate-map", "--map-format", "pdf",
+         "--excellon-units", "mm"], check=True)
+
+
+def gerbers_differ(pcb, g, layers):
+    """Re-export the Gerber and drill files to a temporary directory and compare them with those in g,
+    ignoring date stamps.  Returns the names of files that differ (empty list = g is current)."""
+    import tempfile
+
+    def body(path):
+        return [l for l in open(path, errors="replace").read().splitlines()
+                if "CreationDate" not in l and "Created by KiCad" not in l and not l.startswith("; DRILL file")
+                and not l.startswith("; #@! TF.CreationDate")]
+    bad = []
+    with tempfile.TemporaryDirectory() as t:
+        gerbers(pcb, t, layers)
+        for f in sorted(os.listdir(t)):
+            if f.endswith((".pdf", ".gbrjob")):
+                continue
+            old = os.path.join(g, f)
+            if not os.path.exists(old) or body(old) != body(os.path.join(t, f)):
+                bad.append(f)
+    return bad
+
+
 def fab(proj_dir, name, out_dir, layers, hand=(), lcsc=None):
     lcsc = lcsc or {}
     pcb = os.path.join(proj_dir, f"{name}.kicad_pcb")
@@ -89,12 +120,7 @@ def fab(proj_dir, name, out_dir, layers, hand=(), lcsc=None):
     os.makedirs(g, exist_ok=True)
     for f in os.listdir(g):
         os.remove(os.path.join(g, f))
-    lay = ",".join(layers + ["F.Paste", "B.Paste", "F.SilkS", "B.SilkS", "F.Mask", "B.Mask", "Edge.Cuts"])
-    run(["kicad-cli", "pcb", "export", "gerbers", pcb, "-o", g + "/", "--layers", lay,
-         "--subtract-soldermask", "--no-protel-ext" if False else "--use-drill-file-origin"], check=True)
-    run(["kicad-cli", "pcb", "export", "drill", pcb, "-o", g + "/", "--format", "excellon",
-         "--drill-origin", "plot", "--excellon-separate-th", "--generate-map", "--map-format", "pdf",
-         "--excellon-units", "mm"], check=True)
+    gerbers(pcb, g, layers)
     cpl(proj_dir, name, out_dir, hand, lcsc)
     zipf = os.path.join(out_dir, f"{name}-gerbers.zip")
     if os.path.exists(zipf):

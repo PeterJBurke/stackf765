@@ -15,6 +15,9 @@ import subprocess
 import sys
 import tempfile
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "gen"))
+from kigen import outputs  # noqa: E402
+
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 BOARDS = ["upper", "lower", "service"]
 checks = []
@@ -52,10 +55,14 @@ for b in BOARDS:
     fab = os.path.join(ROOT, "fab", b)
     need = [f"{b}-gerbers.zip", f"{b}-bom.csv", f"{b}-bom-jlc.csv", f"{b}-cpl-jlc.csv"]
     missing = [f for f in need if not os.path.exists(os.path.join(fab, f))]
-    newer = os.path.getmtime(os.path.join(proj, b + ".kicad_pcb")) > os.path.getmtime(os.path.join(fab, need[0])) + 120 \
-        if not missing else False
+    # current = re-exporting the Gerber and drill files from the board gives the same files (dates ignored)
+    nlay = {"upper": 6, "lower": 4, "service": 2}[b]
+    copper = ["F.Cu"] + [f"In{i}.Cu" for i in range(1, nlay - 1)] + ["B.Cu"]
+    newer = outputs.gerbers_differ(os.path.join(proj, b + ".kicad_pcb"), os.path.join(fab, "gerbers"), copper) \
+        if not missing else []
     add(f"{b}: fabrication files present and current", not missing and not newer,
-        "gerbers, drill, BOM, placement" if not missing and not newer else f"missing {missing} stale={newer}")
+        "gerbers and drill match the board; BOM and placement present" if not missing and not newer
+        else f"missing {missing} differ from board: {newer}")
     # --- BOM completeness
     if not missing:
         rows = list(csv.DictReader(open(os.path.join(fab, f"{b}-bom.csv"))))
