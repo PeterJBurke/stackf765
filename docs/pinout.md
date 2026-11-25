@@ -1,10 +1,10 @@
 # Pinout
 
-Diagrams: [project page](https://peterjburke.github.io/stackf765/#pinout). This file is generated from `gen/upper.py`, `gen/lower.py` and `gen/pinmap.py`.
+Diagrams: [project page](https://peterjburke.github.io/stackf765/#pinout). This file is generated from `gen/upper.py` and `gen/pinmap.py`.
 
 TX and RX are named from the flight controller's side: connect a device's TX to an RX pin.
 
-## Upper board, 3 x 12 header (J1)
+## Upper board, front Dupont header, 3 x 12 (J1)
 
 Seen from above with the header pointing away from you. Column 1 is on the left.
 
@@ -35,17 +35,17 @@ Suggested use (any UART can be given any role with `SERIALn_PROTOCOL`):
 | A7-A9, A10-A12 | Camera (G 5V CAM) and video transmitter (G 5V VTX) |
 | other G 5V TX RX groups | Telemetry radio, ESC telemetry, VTX control, companion computer |
 
-## Lower board, 3 x 9 solder holes (J2)
+## Upper board, rear Dupont header, 3 x 9 (J2)
 
-Seen from above with the front edge away from you. No header is fitted: solder wires into the holes. Each column is one servo / ESC lead (signal, 5 V, ground). Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
+Looking into the pins from behind the board. Each column takes one 3-pin servo plug: signal on top, 5 V in the middle, ground at the bottom (nearest the board). Seen from above with the rear edge towards you the columns are in the same order.
 
 | Row | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 |---|---|---|---|---|---|---|---|---|---|
-| C: nearest the board edge | G | G | G | G | G | G | G | G | G |
-| B: middle | 5V | 5V | 5V | 5V | 5V | 5V | 5V | PI5V | PI5V |
-| A: inner row (signal) | M1 | M2 | M3 | M4 | M5 | M6 | LED | PI5V | PI5V |
+| A: top (signal) | PI5V | PI5V | M1 | M2 | M3 | M4 | M5 | M6 | LED |
+| B: middle | PI5V | PI5V | 5V | 5V | 5V | 5V | 5V | 5V | 5V |
+| C: bottom, nearest the board | G | G | G | G | G | G | G | G | G |
 
-M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). 5V: flight-controller 5 V rail. PI5V: separate 5 V / 3 A regulator for a companion computer (two columns: inner and middle holes are PI5V, edge hole is ground).
+M1-M6: motor or servo outputs (PWM, OneShot, DShot). LED: addressable LED data (ArduPilot output 7). 5V: flight-controller 5 V rail, 2 A in total across these seven pins. PI5V: separate 5 V / 3 A regulator for a companion computer (two columns: top and middle pins are PI5V, bottom pin is ground). The lower board has no pin header.
 
 ## Lower board, power pads
 
@@ -63,24 +63,24 @@ JST-SH 1.0 mm, wired pin 1 to pin 1.
 
 | MCU pin | ArduPilot function | Net | Goes to |
 |---|---|---|---|
-| PA0 | TIM2_CH1 | M1 | lower board solder hole M1 |
-| PA1 | TIM2_CH2 | M2 | lower board solder hole M2 |
-| PA2 | TIM5_CH3 | M3 | lower board solder hole M3 |
-| PA3 | TIM5_CH4 | M4 | lower board solder hole M4 |
+| PA0 | TIM2_CH1 | M1 | rear header pin M1 |
+| PA1 | TIM2_CH2 | M2 | rear header pin M2 |
+| PA2 | TIM5_CH3 | M3 | rear header pin M3 |
+| PA3 | TIM5_CH4 | M4 | rear header pin M4 |
 | PA5 | SPI1_SCK | IMU_SCK | IMU (U2) |
 | PA6 | SPI1_MISO | IMU_MISO | IMU (U2) |
 | PA7 | SPI1_MOSI | IMU_MOSI | IMU (U2) |
-| PA8 | TIM1_CH1 | LED_STRIP | lower board, LED solder hole |
-| PA9 | USART1_TX | TX1 | upper header pin TX1 |
-| PA10 | USART1_RX | RX1 | upper header pin RX1 |
-| PA11 | OTG_FS_DM | USB_DM | service cable pin 2 |
-| PA12 | OTG_FS_DP | USB_DP | service cable pin 3 |
+| PA8 | TIM1_CH1 | LED_STRIP | rear header pin LED |
+| PA9 | USART1_TX | TX1 | front header pin TX1 |
+| PA10 | USART1_RX | RX1 | front header pin RX1 |
+| PA11 | OTG_FS_DM | USB_DM | service cable pin 3 |
+| PA12 | OTG_FS_DP | USB_DP | service cable pin 4 |
 | PA13 | JTMS-SWDIO | SWDIO | test pad TP4 |
 | PA14 | JTCK-SWCLK | SWCLK | test pad TP5 |
-| PB0 | TIM8_CH2N | M5 | lower board solder hole M5 |
-| PB1 | TIM8_CH3N | M6 | lower board solder hole M6 |
-| PB6 | I2C1_SCL | SCL | upper header pin SCL |
-| PB7 | I2C1_SDA | SDA | upper header pin SDA |
+| PB0 | TIM8_CH2N | M5 | rear header pin M5 |
+| PB1 | TIM8_CH3N | M6 | rear header pin M6 |
+| PB6 | I2C1_SCL | SCL | front header pin SCL |
+| PB7 | I2C1_SDA | SDA | front header pin SDA |
 | PB9 | TIM11_CH1 | BUZZER | buzzer switch Q1 |
 | PB10 | I2C2_SCL | BARO_SCL | barometer (U3) |
 | PB11 | I2C2_SDA | BARO_SDA | barometer (U3) |
@@ -92,23 +92,23 @@ JST-SH 1.0 mm, wired pin 1 to pin 1.
 | PC3 | BATT_CURRENT_SENS | CURR_ADC | current-sense amplifier (lower board) |
 | PC4 | IMU1_CS | IMU_CS | IMU (U2) |
 | PC5 | IMU1_INT | IMU_INT | IMU (U2) |
-| PC6 | USART6_TX | TX6 | upper header pin TX6 |
-| PC7 | USART6_RX | RX6 | upper header pin RX6 |
+| PC6 | USART6_TX | TX6 | front header pin TX6 |
+| PC7 | USART6_RX | RX6 | front header pin RX6 |
 | PC8 | SDMMC_D0 | SD_D0 | microSD socket (J4) |
 | PC9 | SDMMC_D1 | SD_D1 | microSD socket (J4) |
 | PC10 | SDMMC_D2 | SD_D2 | microSD socket (J4) |
 | PC11 | SDMMC_D3 | SD_D3 | microSD socket (J4) |
 | PC12 | SDMMC_CK | SD_CK | microSD socket (J4) |
-| PD0 | UART4_RX | RX4 | upper header pin RX4 |
-| PD1 | UART4_TX | TX4 | upper header pin TX4 |
+| PD0 | UART4_RX | RX4 | front header pin RX4 |
+| PD1 | UART4_TX | TX4 | front header pin TX4 |
 | PD2 | SDMMC_CMD | SD_CMD | microSD socket (J4) |
-| PD5 | USART2_TX | TX2 | upper header pin TX2 |
-| PD6 | USART2_RX | RX2 | upper header pin RX2 |
-| PD8 | USART3_TX | TX3 | upper header pin TX3 |
-| PD9 | USART3_RX | RX3 | upper header pin RX3 |
+| PD5 | USART2_TX | TX2 | front header pin TX2 |
+| PD6 | USART2_RX | RX2 | front header pin RX2 |
+| PD8 | USART3_TX | TX3 | front header pin TX3 |
+| PD9 | USART3_RX | RX3 | front header pin RX3 |
 | PD10 | LED0 | LED_BLUE | blue LED |
 | PD11 | LED1 | LED_GREEN | green LED |
-| PE0 | UART8_RX | RX8 | upper header pin RX8 |
-| PE1 | UART8_TX | TX8 | upper header pin TX8 |
-| PE7 | UART7_RX | RX7 | upper header pin RX7 |
-| PE8 | UART7_TX | TX7 | upper header pin TX7 |
+| PE0 | UART8_RX | RX8 | front header pin RX8 |
+| PE1 | UART8_TX | TX8 | front header pin TX8 |
+| PE7 | UART7_RX | RX7 | front header pin RX7 |
+| PE8 | UART7_TX | TX7 | front header pin TX7 |

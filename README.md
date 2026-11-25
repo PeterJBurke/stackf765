@@ -2,7 +2,7 @@
 
 An open-hardware **ArduPilot flight controller** built around the STM32F765:
 two stacked 31.5 × 48 mm boards on a 20 × 20 mm mount, plus a small USB / buzzer / boot
-board on a cable. Flight-controller connections are labelled 0.1 inch right-angle header pins; motor outputs are labelled solder holes on the lower board.
+board on a cable. Every connection except the battery and ESC power wires is a labelled 0.1 inch (Dupont) right-angle pin on the upper board: a 3 × 12 header at the front, and a 3 × 9 header at the back for motors, LED and companion-computer power.
 
 **[3D project page](https://peterjburke.github.io/stackf765/)** ·
 **[Drone viewer](https://peterjburke.github.io/stackf765/drone/)** ·
@@ -28,13 +28,13 @@ board on a cable. Flight-controller connections are labelled 0.1 inch right-angl
 | Serial | 7 UARTs + USB |
 | Outputs | 6 motor/servo outputs on standard 3-pin columns (signal / 5 V / ground), addressable LED |
 | Video | Analog OSD (AT7456E), camera in / VTX out |
-| Logging | microSD |
+| Logging | microSD (socket under the upper board, card inserted from the left edge) |
 | 5 V rails | 3 A for the flight controller and peripherals, a separate 3 A for a companion computer |
 | Size | 31.5 × 48 × about 19 mm, 20 × 20 mm grommet mount |
 
 ## Pinout in brief
 
-Upper board header, seen from above with the header pointing away from you:
+Front header (upper board), seen from above with the header pointing away from you:
 
 | Row | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -42,7 +42,7 @@ Upper board header, seen from above with the header pointing away from you:
 | middle | G | 4V5 | TX2 | RX2 | G | 5V | TX3 | RX3 | G | 5V | TX4 | RX4 |
 | inner | G | 4V5 | TX1 | RX1 | SDA | SCL | G | 5V | CAM | G | 5V | VTX |
 
-Lower board solder holes (no header fitted), columns left to right: `M1 M2 M3 M4 M5 M6 LED PI5V PI5V`; each column is signal / 5 V / ground from the inner row to the board edge.
+Rear header (upper board), looking into the pins from behind, columns left to right: `PI5V PI5V M1 M2 M3 M4 M5 M6 LED`; each column is signal / 5 V / ground from top to bottom, so a 3-pin servo plug fits directly. The lower board has no pin header.
 Power pads at the rear: `BAT+ ESC+ ESC− BAT−`. Full details: [docs/pinout.md](docs/pinout.md).
 
 ## What is in this repository

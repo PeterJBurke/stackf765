@@ -24,7 +24,7 @@ Read this list first. Each item can cost you a board run.
 | 6 | The lower board must use **Standard PCBA** if JLCPCB fits the standoffs (SMTSO2080CTJ is "Standard Only"). | Follow section 4. |
 | 7 | **HASL is not offered on 6-layer boards. ENIG is no longer free.** | Upper: choose ENIG and accept the fee. |
 | 8 | None of the boards has fiducials, rails or tooling holes. All are smaller than 70 × 70 mm. | Let JLCPCB add them (options below). Expect small break-off nubs on two edges; file them flat. |
-| 9 | One part is **not** in the JLCPCB files: the upper board's 3 × 12 pin header. The lower board's 3 × 9 holes (`J2`) stay empty. | Buy the header (section 7) and solder it yourself. |
+| 9 | Two parts are **not** in the JLCPCB files: the upper board's two pin headers (3 × 12 front, 3 × 9 rear). The lower board has none. | Buy the headers (section 7) and solder them yourself. |
 | 10 | The Samtec header `J3` (C7279869) had **only 5 in stock** on 2026-11-24, enough for 5 boards with none spare. | If it is short, replace it on the parts page with FTSH-110-05-F-DV (C6558973, 20 in stock): same footprint, in Samtec's mating table for an 8.0 mm gap. |
 
 Minimum quantities: 5 bare boards per design; 2 assembled. Order 5 and assemble all 5.
@@ -106,9 +106,9 @@ Do not upload `*-bom.csv`, `*-pos.csv` or `*.d356`. They are for reference.
 
 ### After upload
 
-- 32 BOM lines, 71 parts: 36 top, 35 bottom.
+- 32 BOM lines, 71 parts: 37 top, 34 bottom.
 - JLCPCB will apply X-ray inspection for the LGA parts. That is normal.
-- Not fitted by JLCPCB: `J1` (3 × 12 right-angle header, top).
+- Not fitted by JLCPCB: `J1` (3 × 12 right-angle header, front) and `J2` (3 × 9 right-angle header, rear), both top side.
 - `J3` (Samtec FTSH, bottom) is fitted by JLCPCB since 2026-11-25. If JLCPCB reports it out of stock, see item 10 in the table at the top.
 
 ## 4. Lower board (4 layers, 2 oz copper)
@@ -148,7 +148,7 @@ If the form shows a warning about **holes in pads** on the four big battery pads
 
 - 18 BOM lines, 42 parts, all on top.
 - `J1` (Samtec SFMC socket) is fitted by JLCPCB since 2026-11-25. It arrives with a clear film on top for the placement machine: peel it off before stacking the boards.
-- Not fitted by JLCPCB: `J2` (3 × 9 solder holes; nothing is ever fitted there), and the four wire pads.
+- Not fitted by JLCPCB: the four wire pads. The lower board has no pin header.
 
 ## 5. Service board (2 layers)
 
@@ -203,17 +203,17 @@ How the "needs" column was worked out: the pad layout of JLCPCB's own library fo
 | Ref | Part | Package | Side | CPL now | JLCPCB needs | Confidence |
 |---|---|---|---|---|---|---|
 | U1 | STM32F765VIT6 | LQFP-100 | Top | 180 | **90** | High |
-| U4 | AT7456E | HTSSOP-28 | Top | 0 | **270** | High |
+| U4 | AT7456E | HTSSOP-28 | Top | 270 | **180** | High |
 | U3 | BMP388 | LGA-10 | Top | 0 | **90** | Medium |
 | U6 | TLV75533 | SOT-23-5 | Top | 0 | **180** | Medium (the community list says 270; a 90° error is obvious in the preview) |
 | U7 | TPS7A2033 | SOT-23-5 | Top | 0 | **180** | Medium (same remark) |
-| J4 | microSD socket | Molex 104031 | Top | 180 | **0** | Medium. Card slot must open toward the nearest board edge. |
+| J4 | microSD socket | Molex 104031 | **Bottom** | 270 | **90** | Medium. New position in revision C: check in the preview that the card slot opens toward the left-hand board edge. |
 | U5 | LM66200 | SOT-583 | Bottom | 0 | **90** | Medium |
 | Q1 | 2N7002 | SOT-23 | Bottom | 0 | 0 | Medium. The three pads only fit one way; check they line up. |
 | Q2 | AO3401A | SOT-23 | Bottom | 0 | 0 | Medium, same remark |
 | U2 | ICM-45686 | LGA-14 | Top | 0 | 0 | Medium |
 | Y1 | 8 MHz crystal | 3225 | Top | 0 | 0 | High (180° is equivalent) |
-| Y2 | 27 MHz crystal | 3225 | Bottom | 90 | 90 | High (180° is equivalent) |
+| Y2 | 27 MHz crystal | 3225 | Top | 90 | 90 | High (180° is equivalent) |
 | D1, D2 | LEDs | 0603 | Top | 90 | 90 | Medium. Cathode mark toward the board's cathode mark. |
 | J5 | JST-SH 6-pin | SM06B-SRSS | Top | 90 | 90 | Medium. Opening must face the right-hand board edge. |
 | D3 | SMF5.0CA | SOD-123F | Bottom | 0 | any | Two-way part, no polarity |
@@ -252,7 +252,7 @@ Quantities are per set of three boards.
 
 | Item | Qty | Where | Note |
 |---|---|---|---|
-| 3 × 3 right-angle pin header, 2.54 mm (HCTL PZ254-3-03-W-2.5-G0, LCSC C7429379) | 4 | LCSC | For upper `J1` (3 × 12). Or one Samtec TSW-112-08-G-T-RA. None for the lower board. |
+| 3 × 3 right-angle pin header, 2.54 mm (HCTL PZ254-3-03-W-2.5-G0, LCSC C7429379) | 7 | LCSC | Four for the upper front header `J1` (3 × 12), three for the upper rear header `J2` (3 × 9). None for the lower board. |
 | M2 × 4 mm screws | 3 | any | Upper board into the standoffs. Not longer. |
 | Silicone grommets for a 4 mm board hole with a 3 mm bore ("M4 to M3", Matek style) | 4 | drone shops | Lower board to frame. Measure yours. |
 | Brass "M3 to M2" inserts for the grommets | 4 | drone shops | Only if the frame uses M2 screws |
@@ -307,7 +307,7 @@ On the parts list you change a part with the magnifier / "Change" button on that
 | **Total at JLCPCB** | **about 540–620 USD** | **about 770–850 USD** |
 | Per set | about 110–125 | about 77–85 |
 | Samtec connector pair, now fitted by JLCPCB (parts and two more feeder lines; not in the rows above) | about 53 | about 103 |
-| Parts bought elsewhere (upper header, hardware, cable) | about 5 per set | about 5 per set |
+| Parts bought elsewhere (upper headers, hardware, cable) | about 5 per set | about 5 per set |
 
 What the assembly fees contain:
 

@@ -1,11 +1,12 @@
-"""UPPER (logic) board: STM32F765, IMU, barometer, analog OSD, microSD,
-3x12 right-angle header, board-to-board header, service connector.
+"""UPPER (logic) board: STM32F765, IMU, barometer, analog OSD, microSD (underside),
+3x12 right-angle header at the front, 3x9 right-angle header at the rear (motors, LED,
+companion power), board-to-board header, service connector.
 """
 import math
 from kigen.design import Design, box
 from blocks import Blocks
 from pinmap import PINMAP
-from lower import B2B, STANDOFFS, HDR_ROW_A_Y
+from lower import B2B, B2B_Y, STANDOFFS, HDR_ROW_A_Y
 
 W, H = 31.5, 48.0
 
@@ -19,13 +20,34 @@ J1_ROWS = {
     "C": [("G", "GND"), ("5V", "+5V"), ("TX6", "TX6"), ("RX6", "RX6"), ("G", "GND"), ("5V", "+5V"),
           ("TX7", "TX7"), ("RX7", "RX7"), ("G", "GND"), ("5V", "+5V"), ("TX8", "TX8"), ("RX8", "RX8")],
 }
+# 3 x 9 rear header (J2): motors, LED strip and companion-computer power.  Listed in physical order, left to
+# right seen from above with the front edge away from you.  Looking at the pins from behind the board the order
+# reads the other way: PI5V PI5V M1 M2 M3 M4 M5 M6 LED.  Row A = signal (holes furthest from the rear edge,
+# highest pins), row B = 5 V, row C = ground (nearest the edge).
+J2_ROWS = {
+    "A": [("LED", "LED_STRIP"), ("M6", "M6"), ("M5", "M5"), ("M4", "M4"), ("M3", "M3"), ("M2", "M2"), ("M1", "M1"),
+          ("PI5V", "+5V_PI"), ("PI5V", "+5V_PI")],
+    "B": [("5V", "+5V")] * 7 + [("PI5V", "+5V_PI")] * 2,
+    "C": [("G", "GND")] * 9,
+}
+J2_LABELS = [l for l, _ in J2_ROWS["A"]]
+J2_X0 = -13.97             # left-hand column (LED); same 2.54 mm grid as the front header
+J2_XN = J2_X0 + 8 * 2.54   # right-hand column (PI5V) = footprint column 1 (the footprint is turned 180 degrees)
+
+
+def j2_pin(row, k):
+    """Footprint pin name of physical column k (0 = left, seen from above)."""
+    return f"{row}{9 - k}"
+
+
 # service cable (JST-SH 6): pin -> net
 # Service cable.  The order is chosen so that a cable wired 6-to-1 instead of 1-to-1 does no harm: it swaps
 # VBUS with BUZ (5 V reaches the board through the 10 ohm buzzer resistor), GND with BOOT (10 k) and D- with D+.
 SVC = {1: "VBUS", 2: "GND", 3: "USB_DM", 4: "USB_DP", 5: "BOOT0", 6: "BUZ_OUT"}
 
-MCU_POS = (0.0, 2.5)
+MCU_POS = (0.0, 3.5)
 MCU_ROT = 180
+SD_ROT = 270
 
 
 def _hdr_symbol():
@@ -35,15 +57,24 @@ def _hdr_symbol():
     return box("HDR_3x12", left=left, right=right, ref="J", width=30.48)
 
 
+def _hdr9_symbol():
+    lab = lambda row, f: f"{row}{f} {J2_ROWS[row][9 - f][0]}"
+    left = [(f"A{f}", lab("A", f)) for f in range(1, 10)] + [None] + [(f"C{f}", lab("C", f)) for f in range(1, 10)]
+    right = [(f"B{f}", lab("B", f)) for f in range(1, 10)]
+    return box("HDR_3x9", left=left, right=right, ref="J", width=30.48)
+
+
 def design():
-    d = Design("upper", "StackF765 upper board (flight controller)", rev="B", date="2026-11-16",
-               rails=("+5V", "+5V_SYS", "+3V3", "+3V3_SENS", "VBUS"))
+    d = Design("upper", "StackF765 upper board (flight controller)", rev="C", date="2026-11-25",
+               rails=("+5V", "+5V_PI", "+5V_SYS", "+3V3", "+3V3_SENS", "VBUS"))
     B = Blocks(d)
     d.root_notes = [
         "UPPER BOARD = flight controller.  STM32F765VIT6 running ArduPilot (board name StackF765).",
         "Power: +5V arrives from the lower board; VBUS arrives from the USB service board.  An ideal-diode OR",
         "makes +5V_SYS (silk '4V5'), which feeds the 3.3 V regulators and the OSD, so the board runs from USB alone.",
         "Header pins marked 5V are powered only from the battery; pins marked 4V5 are also powered from USB.",
+        "Every pin header is on this board: J1 (3x12) at the front edge, J2 (3x9: motors, LED, companion power) at the rear edge.",
+        "+5V_PI (3 A for a companion computer) only passes through: board-to-board pins 14/16/18/20 to the PI5V pins of J2.",
         "Net names match the silkscreen labels and the ArduPilot hwdef (see firmware/hwdef/StackF765/hwdef.dat).",
     ]
 
@@ -181,13 +212,26 @@ def design():
 
     # ------------------------------------------------------------------ sheet: connectors
     s = d.sheet("connectors", "Connectors, buzzer driver, analog filters")
-    s.frame(15, 20, 150, 220, "J1: 3 x 12 right-angle header (labels = silkscreen)")
+    s.frame(15, 20, 150, 220, "J1: 3 x 12 right-angle header, front edge (labels = silkscreen)")
     j = d.part("J1", _hdr_symbol(), "fc:PinHeader_3x12_P2.54mm_Horizontal", "3x12 RA 2.54mm",
                **{k: v for k, v in __import__("parts").PARTS["hdr3x12"].items() if k not in ("symbol", "footprint", "value")})
     for row, cols in J1_ROWS.items():
         for i, (_, net) in enumerate(cols):
             j[f"{row}{i + 1}"] = net
     s.place(j, 90, 120)
+    j = d.part("J2", _hdr9_symbol(), "fc:PinHeader_3x09_P2.54mm_Horizontal", "3x9 RA 2.54mm",
+               **{k: v for k, v in __import__("parts").PARTS["hdr3x9"].items() if k not in ("symbol", "footprint", "value")})
+    for row, cols in J2_ROWS.items():
+        for k, (_, net) in enumerate(cols):
+            j[j2_pin(row, k)] = net
+    sj = d.sheet("rear_header", "Rear header: motors, LED strip, companion power")
+    sj.frame(15, 20, 200, 220, "J2: 3 x 9 right-angle header, rear edge: column = signal / 5 V / ground")
+    sj.place(j, 110, 120)
+    sj.text(230, 40, "Seen from behind the board (pins towards you), left to right:\n"
+                     "PI5V PI5V M1 M2 M3 M4 M5 M6 LED  (footprint columns 1 .. 9).\n\n"
+                     "PI5V columns: signal and middle pins are both +5V_PI (3 A in total from the lower board).\n"
+                     "5 V pins of the motor and LED columns share the +5V rail: 2 A in total.", 1.6)
+    sj.flag("+5V_PI", 260, 150)
     s.frame(175, 20, 110, 105, "J3: board-to-board header (to lower board)")
     j = B.part(s, "J3", "b2b_header", 230, 70)
     for pin, net in B2B.items():
@@ -231,29 +275,52 @@ DECAP = {"C10": (11, -1.6), "C16": (6, -1.05), "C20": (21, 0.0),          # righ
 
 TOP = [  # ref, x, y, rot
     ("U2", 13.4, 11.3, 0), ("C30", 13.4, 8.9, 0), ("C31", 10.6, 12.5, 0), ("C32", 10.6, 10.9, 0),      # IMU
-    ("U3", -13.4, 11.3, 0), ("C33", -11.2, 11.9, 90), ("C34", -13.4, 9.0, 0),                         # barometer
-        ("FB1", 13.2, 6.4, 0), ("C19", 13.2, 7.8, 0),                                                      # VDDA filter
-    ("Y1", 12.9, -0.9, 0),                                                                             # 8 MHz
+    ("U3", -13.4, 11.3, 0), ("C33", -11.2, 11.9, 90), ("C34", -13.4, 9.2, 0),                         # barometer
+    ("U7", -13.0, 6.85, 0),                                                   # sensor regulator, beside the barometer
+    ("FB1", 13.2, 6.4, 0), ("C19", 13.2, 7.8, 0),                                                      # VDDA filter
+    ("Y1", 12.9, -0.9, 0), ("C23", 9.52, 4.2, 90),                                                     # 8 MHz, reset cap
     ("D1", -14.3, -1.6, 90), ("R2", -12.9, -1.6, 90), ("D2", -14.3, -4.8, 90), ("R3", -12.9, -4.8, 90),  # LEDs
-    ("TP4", -14.2, -8.1, 0), ("TP5", -12.0, -8.1, 0),                                                  # SWD pads
-    ("U6", 0.9, -10.4, 0), ("U7", 5.2, -10.4, 0),                                                      # regulators
-    ("U4", 5.5, -18.6, 0),                                                    # OSD
-    ("C40", 0.2, -15.7, 90), ("C41", 10.5, -19.2, 0), ("C42", 12.6, -19.2, 0), ("C44", 10.5, -20.5, 0),
-    ("R10", 12.6, -20.5, 0), ("R11", 10.5, -21.8, 0), ("C43", 13.0, -22.1, 0),
+    ("TP4", -11.4, -7.25, 0), ("TP5", -9.3, -7.25, 0),                                                 # SWD pads
+    # regulators and their parts, rear left (the microSD socket is underneath, so nothing can go on the bottom here)
+    ("U6", -7.6, -10.5, 0),
+    ("R16", -13.4, -10.9, 90), ("R17", -10.9, -10.9, 90), ("C5", -13.1, -14.6, 0),
+    ("C4", -6.5, -7.25, 0),
+    ("C6", -6.6, -13.3, 0), ("C7", -8.6, -14.6, 0),
+    ("C45", -14.6, -7.3, 90),                                                 # microSD supply, above its VDD pad
+    ("U4", 0.0, -12.2, 270),                                                  # OSD: SPI side towards the MCU
+    ("Y2", 7.05, -11.0, 90),                                                  # 27 MHz, beside the OSD
 ]
 BOT = [
-    ("U5", 6.5, -10.6, 0), ("C1", 5.8, -5.2, 0), ("C2", 9.0, -10.2, 90), ("C3", 9.6, -12.5, 0), ("C4", 0.0, -13.0, 0),
-    ("C5", -1.0, -10.4, 90), ("C6", 2.4, -9.6, 0), ("C7", 2.3, -11.2, 0), ("C8", 3.6, -8.3, 0), ("C9", 6.6, -8.4, 0),
-    ("Q1", 9.0, -2.0, 0), ("Q2", 13.3, -6.2, 0), ("R18", 14.2, -10.5, 90), ("D3", 5.8, -13.1, 0),
-    ("R16", -2.4, -7.5, 0), ("R17", -4.2, -11.1, 90), ("R12", 8.6, -5.2, 0), ("R13", 10.6, -6.2, 90),
-    ("R14", 5.6, 6.2, 0), ("C50", 5.6, 7.3, 0), ("R15", 3.4, 6.2, 0), ("C51", 3.4, 7.3, 0),
-    ("C23", 7.8, 5.0, 0), ("R1", 3.0, -6.4, 0), ("C15", -4.0, 6.5, 0),
-    ("R4", -3.5, -5.7, 0), ("R5", -1.4, -5.7, 0), ("R6", -8.6, 5.8, 0), ("R7", -8.6, 4.7, 0),
+    # 5 V OR-ing, in a row behind the front header (clear of the MCU pin rows, inside the +5V plane band)
+    ("C3", 1.6, 14.9, 0), ("C1", 4.7, 14.9, 0), ("U5", 8.0, 14.7, 0), ("C2", 10.1, 14.9, 90), ("D3", 13.2, 14.6, 0),
+    ("R4", -0.45, -3.7, 0), ("R5", -0.45, -4.8, 0), ("R1", 10.5, -2.5, 90),
+    # OSD passives, directly under the chip
+    ("C40", 3.0, -9.6, 0), ("TP3", -0.3, -7.0, 0),
+    ("R10", -0.4, -13.0, 0), ("C44", 1.8, -13.0, 0), ("R11", 4.2, -13.0, 0),
+    ("C41", -0.4, -15.4, 0), ("C42", 1.8, -15.4, 0), ("C43", 4.6, -15.4, 0),
+    # buzzer switch, right-hand column
+    ("Q2", 13.3, -4.6, 0), ("R13", 10.5, -4.6, 90), ("Q1", 11.7, -8.4, 0), ("R12", 14.6, -7.4, 90), ("R18", 12.4, -11.6, 0),
     ("C21", 11.6, -1.0, 90), ("C22", 14.2, -1.0, 90),
-    ("Y2", 0.9, -17.3, 90),
-    ("C45", -8.5, -20.3, 0), ("C46", -5.4, -20.3, 0),
-    ("TP6", -14.0, -3.0, 0), ("TP1", -14.0, -5.4, 0), ("TP2", -11.6, -5.4, 0), ("TP3", -11.6, -3.0, 0),
+    # under the MCU, in front of the board-to-board header
+    ("R14", 8.3, 5.2, 0), ("C50", 8.3, 6.3, 0), ("R15", 8.3, 7.4, 0), ("C51", 8.3, 8.5, 0),      # ADC filters under PC2/PC3
+    ("C15", -3.0, 10.0, 0),
+    ("TP1", -5.6, 10.6, 0), ("TP2", -7.8, 10.6, 0), ("TP6", 5.0, 12.4, 0),
+    ("R6", -8.6, 5.8, 0), ("R7", -8.6, 4.7, 0),
+    ("C8", -13.2, 7.0, 0), ("C9", -13.2, 8.2, 0),                             # sensor regulator in / out
+    ("C46", -6.3, -0.75, 0),                                                  # microSD supply, bulk
 ]
+SD_POS = (-8.0, -8.6)      # microSD socket on the underside; the card goes in from the left-hand edge
+# +5V_PI copper on the bottom layer: from the rear-row pads of J3 (pins 14/16/18/20) to the PI5V pins of J2
+PI_Y = B2B_Y - 2.03 - 1.11                 # outer end of the rear-row pads of J3
+PI_LANE = [(1.4, PI_Y + 0.55), (9.2, PI_Y + 0.55), (9.2, -21.2), (3.0, -21.2), (3.0, -16.5), (7.1, -16.5),
+           (7.1, PI_Y - 1.25), (1.4, PI_Y - 1.25)]
+# In4 is the power layer.  +3V3 has the middle (MCU, regulators, microSD).  +5V has the rest: a band under each
+# header, a strip down the right-hand edge joining them, and a finger in to the board-to-board pins and U5.
+V5_AREA = [(-15.75, 14.4), (10.6, 14.4), (10.6, 8.3), (1.2, 8.3), (1.2, 5.2), (10.6, 5.2), (10.6, -16.6),
+           (-15.75, -16.6), (-15.75, -24.0), (15.75, -24.0), (15.75, 24.0), (-15.75, 24.0)]
+V5_VIAS = [(-15.3, 14.7, 15.3, 23.5), (10.9, -23.5, 15.3, 14.7), (-15.3, -23.5, 15.3, -16.9), (1.5, 5.5, 10.9, 8.0)]
+V33_VIAS = [(-15.3, -16.3, 10.3, 4.9), (-15.3, 8.6, 10.3, 14.1), (-15.3, 4.9, 0.9, 8.6)]
+PI_RECTS = [(1.4, PI_Y - 1.25, 9.2, PI_Y + 0.55), (7.1, -16.5, 9.2, PI_Y - 1.25), (3.0, -21.2, 9.2, -16.5)]
 
 
 def _outside_mcu(bd, pin, dist, shift=0.0):
@@ -275,9 +342,10 @@ def layout(bd):
         bd.circle("User.Comments", x, y, 2.1)
     # --- connectors
     bd.place("J1", -13.97, HDR_ROW_A_Y, 90)           # A1 at the left; holes at the edge, body overhangs
-    bd.place("J3", 0, 0, 270, side="bottom")           # mates with J1 on the lower board
+    bd.place("J2", J2_XN, -HDR_ROW_A_Y, 270)          # rear header, pins point rearward; footprint column 1 at the right
+    bd.place("J3", 0, B2B_Y, 270, side="bottom")       # mates with J1 on the lower board
     bd.place("J5", 12.3, -8.0, 90)                    # service connector on the right edge
-    bd.place("J4", -8.3, -16.3, 180)                  # microSD, card inserts from the rear edge
+    bd.place("J4", SD_POS[0], SD_POS[1], SD_ROT, side="bottom")
     # --- MCU and its capacitors
     bd.place("U1", MCU_POS[0], MCU_POS[1], MCU_ROT)
     for ref, (pin, shift) in DECAP.items():
@@ -292,31 +360,47 @@ def layout(bd):
         raise SystemExit(f"unplaced parts: {missing}")
     # --- planes
     full = bd.rect(-W / 2, -H / 2, W / 2, H / 2)
-    # 6-layer stack: F signal / In1 GND / In2 signal / In3 signal / In4 +3V3 / B signal
+    # 6-layer stack: F signal / In1 GND / In2 signal / In3 signal / In4 power (+3V3 centre, +5V around it) / B signal
     bd.zone("GND", ["In1.Cu"], full, priority=1, name="GND plane")
     bd.zone("+3V3", ["In4.Cu"], full, priority=1, name="+3V3 plane")
+    bd.zone("+5V", ["In4.Cu"], V5_AREA, priority=2, name="+5V plane")
     bd.zone("GND", ["F.Cu", "B.Cu", "In2.Cu", "In3.Cu"], full, priority=0, name="GND pour")
+    # +5V_PI: one solid bottom-layer area joins the J3 pads to the J2 pins; nothing else may use that strip
+    bd.zone("+5V_PI", ["B.Cu"], PI_LANE, priority=6, solid=True, clearance=0.2, name="+5V_PI to J2")
+    # OSD chip-select: pin 8 of U4 gets boxed in by its neighbours' escapes, so give it a fixed one first
+    bd.track("OSD_CS", "F.Cu", [(-0.325, -9.325), (-0.325, -8.0)], 0.15)
+    bd.via("OSD_CS", -0.325, -8.0, drill=0.3, dia=0.5)
+    for x0, y0, x1, y1 in PI_RECTS:
+        bd.keepout(["B.Cu"], bd.rect(x0, y0, x1, y1), tracks=True, vias=True, copper=False, name="+5V_PI strip")
     # --- silkscreen: one label per header pin, printed sideways just to the LEFT of its hole,
     #     in the gap between pin columns so the bent pins do not cover it
     for r, row in enumerate("ABC"):
         for i, (lab, _) in enumerate(J1_ROWS[row]):
             for layer in ("F.SilkS", "B.SilkS"):
                 bd.text(lab, -13.97 + i * 2.54 - 1.2, HDR_ROW_A_Y + r * 2.54, layer, size=0.62, thick=0.11, rot=90)
-    bd.text("J5: 1 VBUS 2 G 3 D- 4 D+ 5 BOOT 6 BUZ", 0, -7.0, "B.SilkS", size=0.7, thick=0.12)
-    bd.text("StackF765 UPPER rev B", 0, -3.6, "B.SilkS", size=0.9)
+    # rear header: one label per column, sideways just left of the column, and a row legend at the right-hand end
+    for k, lab in enumerate(J2_LABELS):
+        for layer in ("F.SilkS", "B.SilkS"):
+            bd.text(lab, J2_X0 + k * 2.54 - 1.25, -HDR_ROW_A_Y - 2.54, layer, size=0.62, thick=0.11, rot=90)
+    for r, lab in enumerate(("S", "5V", "G")):
+        for layer in ("F.SilkS", "B.SilkS"):
+            bd.text(lab, J2_XN + 1.9, -HDR_ROW_A_Y - r * 2.54, layer, size=0.7, thick=0.12)
+    bd.text("J5: 1 VBUS 2 G 3 D- 4 D+ 5 BOOT 6 BUZ", -2.0, 12.6, "B.SilkS", size=0.7, thick=0.12)
+    bd.text("StackF765 UPPER rev C", -7.5, 14.8, "B.SilkS", size=0.9)
 
 
 def router_config(bd):
-    full = [(-W / 2, -H / 2, W / 2, H / 2)]
     return dict(layers=["F.Cu", "In2.Cu", "In3.Cu", "B.Cu"], grid=0.05, track=0.15, clear=0.127, via_dia=0.5, via_drill=0.3,
-                plane_nets=("GND", "+3V3"),
-                widths={"+5V": 0.5, "+5V_SYS": 0.4, "VBUS": 0.4, "LDO_IN": 0.4, "+3V3_SENS": 0.3, "BUZ_OUT": 0.3, "BUZ_SW": 0.3},
-                layer_cost=[10, 13, 13, 11])
+                plane_nets=("GND", "+3V3", "+5V"),
+                plane_region={"+5V": V5_VIAS, "+3V3": V33_VIAS},
+                no_route=("+5V_PI",),          # joined by the bottom-layer copper area, not by tracks
+                widths={"+5V": 0.3, "+5V_SYS": 0.3, "VBUS": 0.3, "LDO_IN": 0.4, "+3V3_SENS": 0.3, "BUZ_OUT": 0.3,
+                        "BUZ_SW": 0.3},
+                layer_cost=[10, 13, 13, 11], local_span=4.0, max_victims=6)
 
 
 ROUTER = "sequential"
 
-# long nets from the far side of the MCU to the header are routed first
-# supply tracks the router necked down are widened again afterwards, as far as neighbouring copper allows
-WIDEN = {"+5V": 0.5, "+5V_SYS": 0.4}
-ROUTE_ORDER = ["OSC_IN", "OSC_OUT", "OSD_X1", "OSD_X2", "+5V", "TX8", "RX8", "TX2", "RX2", "TX4", "RX4", "SCL", "SDA"]
+# long nets are routed first
+ROUTE_ORDER = ["OSC_IN", "OSC_OUT", "+3V3_SENS", "IMU_SCK", "IMU_MOSI", "IMU_MISO", "IMU_CS", "IMU_INT", "BARO_SDA", "BARO_SCL", "+5V_SYS", "OSD_X1", "OSD_X2", "VBAT_ADC", "CURR_ADC", "VBUS", "TX3", "RX3"]
+ROUTE_RETRIES = 0          # the router is order-sensitive: on failure, retry with the failed nets moved up the queue

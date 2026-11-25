@@ -1,5 +1,6 @@
-"""LOWER (power) board: battery/ESC pads, current sensor, two 5 V regulators,
-motor header and the board-to-board socket.  All parts on the top side.
+"""LOWER (power) board: battery/ESC pads, current sensor, two 5 V regulators
+and the board-to-board socket.  All parts on the top side.  It carries no pin header:
+every Dupont header is on the upper board.
 """
 from kigen.design import Design
 from blocks import Blocks
@@ -7,24 +8,18 @@ import parts
 
 # Board-to-board connector: socket pin -> net (same numbers on the upper board header)
 # Columns 1..10 run left to right (top view); each column is (odd pin = top row, even pin = bottom row).
-B2B_COLS = [("GND", "GND"), ("M1", "M2"), ("M3", "M4"), ("M5", "M6"), ("LED_STRIP", "GND"),
-            ("VBAT_SENSE", "CURR_SENSE"), ("+3V3", "GND"), ("+5V", "+5V"), ("+5V", "+5V"), ("GND", "GND")]
+# Odd pins are the row nearer the front edge.  Four pins each carry +5V_PI (3 A, 0.75 A per pin) and +5V.
+B2B_COLS = [("GND", "GND"), ("GND", "GND"), ("+3V3", "GND"), ("VBAT_SENSE", "CURR_SENSE"), ("GND", "GND"),
+            ("GND", "GND"), ("+5V", "+5V_PI"), ("+5V", "+5V_PI"), ("+5V", "+5V_PI"), ("+5V", "+5V_PI")]
+B2B_Y = 4.5                # connector centre, forward of the board centre: leaves room for the microSD socket
+                           # on the underside of the upper board
 B2B = {}
 for _c, (_t, _b) in enumerate(B2B_COLS):
     B2B[2 * _c + 1] = _t
     B2B[2 * _c + 2] = _b
 
-# 3 x 9 solder holes on the 2.54 mm grid (no header fitted; wires are soldered in).  Each column is one servo/ESC lead:
-# row A (highest pin) = signal, row B = 5 V, row C (nearest the board) = ground.
-J2_LABELS = ["M1", "M2", "M3", "M4", "M5", "M6", "LED", "PI5V", "PI5V"]
-J2_ROWS = {
-    "A": [("M1", "M1"), ("M2", "M2"), ("M3", "M3"), ("M4", "M4"), ("M5", "M5"), ("M6", "M6"), ("LED", "LED_STRIP"),
-          ("PI5V", "+5V_PI"), ("PI5V", "+5V_PI")],
-    "B": [("5V", "+5V")] * 7 + [("PI5V", "+5V_PI")] * 2,
-    "C": [("G", "GND")] * 9,
-}
-HDR_ROW_A_Y = 17.72        # header hole rows at 17.72 / 20.26 / 22.80: the plastic body hangs off the front edge
-J2_X0 = -10.16             # 9 columns centred; half a pitch off the upper header's columns so pins interleave
+HDR_ROW_A_Y = 17.72        # upper-board header hole rows at 17.72 / 20.26 / 22.80 from the centre: the plastic
+                           # body hangs off the board edge
 
 W, H = 31.5, 48.0
 PAD_Y = -21.75
@@ -56,13 +51,14 @@ def buck(d, B, sh, n, out, x, y):
 
 
 def design():
-    d = Design("lower", "StackF765 lower board (power)", rev="B", date="2026-11-16",
+    d = Design("lower", "StackF765 lower board (power)", rev="C", date="2026-11-25",
                rails=("VBAT", "VESC", "+5V", "+5V_PI", "+3V3"))
     B = Blocks(d)
     d.root_notes = [
         "LOWER BOARD = power.  Battery and ESC wires solder to four pads at the rear edge.",
         "Battery + -> 0.5 mohm shunt -> ESC +  (all current, including the flight controller's own, is measured).",
         "Two identical 5 V / 3 A regulators: +5V feeds the flight controller, +5V_PI feeds a companion computer.",
+        "Both rails go up to the upper board through J1; the motor, LED and companion-power pins are on the upper board.",
         "Input range 6-13 V (2S-3S LiPo); D1 clamps spikes below 25 V so every part stays inside its ratings.  No reverse-polarity protection: check wiring before connecting a battery.",
         "All components are on the top side; the bottom side carries copper only.",
     ]
@@ -100,9 +96,9 @@ def design():
 
     # ------------------------------------------------------------------ sheet 2: regulators
     s = d.sheet("regulators", "5 V regulators")
-    s.frame(15, 20, 390, 110, "U1: +5V for the flight controller, GPS, receiver, camera (3 A)")
+    s.frame(15, 20, 390, 110, "U1: +5V for the flight controller, GPS, receiver, camera, servos (3 A)")
     buck(d, B, s, 1, "+5V", 110, 65)
-    s.frame(15, 145, 390, 110, "U2: +5V_PI for a companion computer on J2 (3 A)")
+    s.frame(15, 145, 390, 110, "U2: +5V_PI for a companion computer, to the PI5V pins of the upper board's rear header (3 A)")
     buck(d, B, s, 2, "+5V_PI", 110, 190)
     s.flag("+5V", 370, 60)
     s.flag("+5V_PI", 370, 185)
@@ -113,17 +109,6 @@ def design():
     j = B.part(s, "J1", "b2b_socket", 100, 80)
     for pin, net in B2B.items():
         j[str(pin)] = net
-    s.frame(205, 20, 195, 130, "J2: motor / LED / companion-power solder holes (3x9, no header fitted): column = SIG / 5V / G")
-    from kigen.design import box
-    sym = box("HDR_3x9", left=[(f"A{i + 1}", f"A{i + 1} {J2_ROWS['A'][i][0]}") for i in range(9)] + [None] +
-              [(f"C{i + 1}", f"C{i + 1} {J2_ROWS['C'][i][0]}") for i in range(9)],
-              right=[(f"B{i + 1}", f"B{i + 1} {J2_ROWS['B'][i][0]}") for i in range(9)], ref="J", width=30.48)
-    j = d.part("J2", sym, "fc:PinHeader_3x09_P2.54mm_Horizontal", "3x9 RA 2.54mm",
-               **{k: v for k, v in parts.PARTS["hdr3x9"].items() if k not in ("symbol", "footprint", "value")})
-    for row, cols in J2_ROWS.items():
-        for i, (_, net) in enumerate(cols):
-            j[f"{row}{i + 1}"] = net
-    s.place(j, 300, 85)
     s.frame(15, 160, 180, 80, "Power indicator and standoffs (M2 x 8 mm, soldered, grounded)")
     B.R(s, "R6", "2.2k", "+5V", "LED_A", 40, 195, 0)
     B.part(s, "D2", "led_green", 40, 215, 90, nets={"A": "LED_A", "K": "GND"})
@@ -197,11 +182,10 @@ def layout(bd):
     bd.place("R5", -14.4, -11.2, 90)
     bd.place("C5", -14.4, -9.0, 90)
     # --- regulators
-    _buck_cluster(bd, 1, -2.6, -8.4)      # +5V  (rear), output next to J1 columns 8-9
-    _buck_cluster(bd, 2, -2.8, 9.2)       # +5V_PI (front), output next to J2 columns 9-10
+    _buck_cluster(bd, 1, -2.5, 17.0)      # +5V (front): inductor output faces the front row of J1
+    _buck_cluster(bd, 2, -2.6, -8.4)      # +5V_PI (rear): reaches the rear row of J1 on the bottom layer
     # --- connectors
-    bd.place("J1", 0, 0, 90)
-    bd.place("J2", J2_X0, HDR_ROW_A_Y, 90)   # column 1 (M1) at the left; pins point forward
+    bd.place("J1", 0, B2B_Y, 90)
     bd.place("R6", -14.6, 10.6, 90)
     bd.place("D2", -14.6, 7.6, 90)
 
@@ -213,6 +197,26 @@ def layout(bd):
                           (-6.35, -14.75)], priority=5, solid=True, clearance=0.25, name="VESC high current")
     bd.zone("GND", ALL, [(1.1, -23.8), (15.5, -23.8), (15.5, -19.55), (1.1, -19.55)], priority=5, solid=True,
             clearance=0.25, name="GND high current")
+    # +5V: solid top-layer copper from the front regulator's inductor to J1 pins 13/15/17/19 (front row)
+    y1 = B2B_Y + 1.36 + 1.11                      # outer end of the front-row pads
+    bd.zone("+5V", ["F.Cu"], [(4.2, 13.6), (6.4, 13.6), (6.4, y1 - 0.5), (1.4, y1 - 0.5), (1.4, y1 + 1.2), (4.2, y1 + 1.2)],
+            priority=6, solid=True, clearance=0.2, name="+5V to J1")
+    # +5V_PI (3 A): output copper of the rear regulator, three vias down, a bottom-layer strip forward to J1,
+    # four vias up, and a small top-layer area onto J1 pins 14/16/18/20 (rear row)
+    y0 = B2B_Y - 1.36 - 1.11                      # outer end of the rear-row pads
+    bd.zone("+5V_PI", ["F.Cu"], [(4.1, -12.0), (6.3, -12.0), (6.3, -6.25), (3.0, -6.25), (3.0, -7.7), (4.1, -7.7)],
+            priority=6, solid=True, clearance=0.2, name="+5V_PI output")
+    for x in (4.15, 5.05, 5.95):
+        bd.via("+5V_PI", x, -8.55, drill=0.4, dia=0.7)
+    bd.zone("+5V_PI", ["B.Cu"], [(3.5, -9.3), (6.5, -9.3), (6.5, y0 + 0.9), (1.3, y0 + 0.9), (1.3, y0 - 1.2), (3.5, y0 - 1.2)],
+            priority=6, solid=True, clearance=0.2, name="+5V_PI to J1")
+    for x in (1.91, 3.17, 4.44, 5.72):
+        bd.via("+5V_PI", x, y0 - 0.6, drill=0.4, dia=0.7)
+    bd.zone("+5V_PI", ["F.Cu"], [(1.45, y0 - 1.05), (6.15, y0 - 1.05), (6.15, y0 + 0.5), (1.45, y0 + 0.5)],
+            priority=6, solid=True, clearance=0.2, name="+5V_PI at J1")
+    # keep other nets' tracks out of the +5V_PI strip (their vias may pass through it)
+    bd.keepout(["B.Cu"], bd.rect(3.5, -9.3, 6.5, y0 + 0.9), tracks=True, vias=False, copper=False, name="+5V_PI strip")
+    bd.keepout(["B.Cu"], bd.rect(1.3, y0 - 1.2, 3.5, y0 + 0.9), tracks=True, vias=False, copper=False, name="+5V_PI strip")
     full = bd.rect(-W / 2, -H / 2, W / 2, H / 2)
     bd.zone("GND", ["In1.Cu"], full, priority=1, name="GND plane")
     bd.zone("VESC", ["In2.Cu"], full, priority=1, name="VESC plane")
@@ -222,14 +226,8 @@ def layout(bd):
     for name, x in (("BAT+", -11.25), ("ESC+", -4.7), ("ESC-", 3.75), ("BAT-", 11.25)):
         bd.text(name, x, -19.1, size=0.8, thick=0.14)
         bd.text(name, PAD_X[name], -19.0, "B.SilkS", size=1.0, thick=0.16)
-    for col, lab in enumerate(J2_LABELS):          # sideways, just left of each column
-        for layer in ("F.SilkS", "B.SilkS"):
-            bd.text(lab, J2_X0 + col * 2.54 - 1.25, HDR_ROW_A_Y + 2.54, layer, size=0.62, thick=0.11, rot=90)
-    for r, lab in enumerate(("S", "5V", "G")):     # row legend at the right-hand end
-        for layer in ("F.SilkS", "B.SilkS"):
-            bd.text(lab, J2_X0 + 8 * 2.54 + 1.9, HDR_ROW_A_Y + r * 2.54, layer, size=0.7, thick=0.12)
-    bd.text("StackF765 LOWER rev B", 0, 3.5, "B.SilkS", size=1.0, thick=0.16)
-    bd.text("2S-3S LiPo  50 A   J2 columns: S / 5V / G", 0, -15.0, "B.SilkS", size=0.8, thick=0.14)
+    bd.text("StackF765 LOWER rev C", 0, 3.5, "B.SilkS", size=1.0, thick=0.16)
+    bd.text("2S-3S LiPo  50 A", 0, -15.0, "B.SilkS", size=0.8, thick=0.14)
 
 
 def router_config(bd):

@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "StackF765 lower board (power) - Battery input, current and voltage sensing")
-		(date "2026-11-16")
-		(rev "B")
+		(date "2026-11-25")
+		(rev "C")
 		(company "StackF765 lower board (power)")
 		(comment 1 "Sheet 2: Battery input, current and voltage sensing")
 	)

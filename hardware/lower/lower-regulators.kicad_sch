@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "StackF765 lower board (power) - 5 V regulators")
-		(date "2026-11-16")
-		(rev "B")
+		(date "2026-11-25")
+		(rev "C")
 		(company "StackF765 lower board (power)")
 		(comment 1 "Sheet 3: 5 V regulators")
 	)
@@ -384,7 +384,7 @@
 		(fill (type none))
 		(uuid "79cfd13e-7680-5760-b86a-4db2c2dd2521")
 	)
-	(text "U1: +5V for the flight controller, GPS, receiver, camera (3 A)"
+	(text "U1: +5V for the flight controller, GPS, receiver, camera, servos (3 A)"
 		(exclude_from_sim no)
 		(at 12 17.6 0)
 		(effects (font (size 1.9 1.9) (bold yes)) (justify left bottom))
@@ -396,7 +396,7 @@
 		(effects (font (size 1.275 1.275)) (justify left bottom))
 		(uuid "86ac6005-d84b-502b-aeee-2e74ab6bd52e")
 	)
-	(text "U2: +5V_PI for a companion computer on J2 (3 A)"
+	(text "U2: +5V_PI for a companion computer, to the PI5V pins of the upper board's rear header (3 A)"
 		(exclude_from_sim no)
 		(at 12 105.1 0)
 		(effects (font (size 1.9 1.9) (bold yes)) (justify left bottom))

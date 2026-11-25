@@ -243,7 +243,7 @@ class Board:
             ls.AddLayer(self.layer(l))
         z.SetLayerSet(ls)
         z.SetDoNotAllowTracks(tracks); z.SetDoNotAllowVias(vias)
-        z.SetDoNotAllowZoneFills(copper); z.SetDoNotAllowPads(False)
+        z.SetDoNotAllowCopperPour(copper); z.SetDoNotAllowPads(False)
         z.SetDoNotAllowFootprints(footprints)
         ol = z.Outline()
         ol.NewOutline()

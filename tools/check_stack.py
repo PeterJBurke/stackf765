@@ -6,7 +6,9 @@
   2. Standoffs on the lower board line up with screw holes on the upper board.
   3. Both main boards have the same outline.
   4. Height budget in the 8.0 mm gap: (lower-board top part height) + (upper-board
-     bottom part height) must fit wherever two parts overlap in plan view.
+     bottom part height) must fit wherever two parts overlap in plan view.  The solder
+     tails of both upper-board pin headers count as parts, and so do the power-wire joints
+     on the lower board.  The lower board must carry no pin header.
   5. Grommet nut zones (lower board 20 x 20 mm mounting) are free of lower-board parts,
      and only low parts of the upper board hang above them.
   6. Service cable: the 6 pins carry the same nets at both ends (1:1 cable).
@@ -21,7 +23,7 @@ import pcbnew
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 GAP = 8.0            # mm between the boards (standoff height)
 TAIL = 1.8           # mm: upper header solder tails below the upper board, untrimmed, worst case (research/header-clearance.md)
-WIRE_H = 3.0         # mm allowed for a wire and solder joint above each lower-board J2 hole
+WIRE_H = 5.0         # mm allowed for a 12 AWG wire and its solder joint above each battery / ESC pad
 NUT_ZONE_R = 3.5     # mm radius reserved around each grommet centre
 NUT_HEIGHT = 4.0     # mm: grommet flange + M2 nut + screw end above the lower board (estimate)
 GROMMETS = [(-10, 10), (10, 10), (-10, -10), (10, -10)]
@@ -29,7 +31,7 @@ GROMMETS = [(-10, 10), (10, 10), (-10, -10), (10, -10)]
 # part heights above their board surface, by footprint name fragment (mm)
 HEIGHTS = [("Samtec_SFMC", 4.7), ("Samtec_FTSH", 2.92), ("Standoff", 8.0), ("L_SXN", 3.0), ("D_SMB", 2.4), ("R_Shunt", 0.6), ("SOT-583", 0.6), ("SC-70", 1.1),
            ("SOT-23", 1.2), ("LED_0603", 0.7), ("C_0805", 1.35), ("C_1206", 1.8), ("R_0805", 0.6), ("R_1206", 0.65), ("D_SOD-123F", 1.1), ("C_0603", 0.9), ("L_0603", 0.9), ("C_0402", 0.6),
-           ("R_0402", 0.4), ("Crystal_SMD_3225", 0.8), ("TestPoint", 0.05), ("WirePad", 4.0), ("NetTie", 0.0),
+           ("R_0402", 0.4), ("Crystal_SMD_3225", 0.8), ("TestPoint", 0.05), ("WirePad", WIRE_H), ("NetTie", 0.0), ("microSD", 1.5),
            ("Hole", 0.0)]
 
 errors, notes = [], []
@@ -73,12 +75,15 @@ for n in sorted(lp, key=int):
     a, b = mm(lp[n].GetPosition()), mm(up[n].GetPosition())
     d = math.hypot(a[0] - b[0], a[1] - b[1])
     worst = max(worst, d)
-    if abs(a[0] - b[0]) > 0.05 or abs(a[1] - b[1]) > 0.8 or (a[1] > 0) != (b[1] > 0):   # same column, same row side (row spacing differs by design)
+    cy = mm(L["J1"].GetPosition())[1]
+    if abs(a[0] - b[0]) > 0.05 or abs(a[1] - b[1]) > 0.8 or (a[1] > cy) != (b[1] > cy):   # same column, same row side (row spacing differs by design)
         errors.append(f"B2B pin {n}: lower pad at {a}, upper pad at {b}")
     if lp[n].GetNetname() != up[n].GetNetname():
         errors.append(f"B2B pin {n}: lower net {lp[n].GetNetname()} != upper net {up[n].GetNetname()}")
     if not U["J3"].IsFlipped() or L["J1"].IsFlipped():
         errors.append("B2B: socket must be on lower top, header on upper bottom")
+if mm(L["J1"].GetPosition()) != mm(U["J3"].GetPosition()):
+    errors.append(f"B2B: connector centres differ: lower {mm(L['J1'].GetPosition())}, upper {mm(U['J3'].GetPosition())}")
 notes.append(f"board-to-board: 20 pins aligned (worst offset {worst:.3f} mm) and nets identical")
 
 # 2. standoffs vs screw holes
@@ -121,23 +126,19 @@ ltop, ubot = [], []
 for fp in named(lower):
     if fp.IsFlipped():
         continue
-    n = str(fp.GetFPID().GetLibItemName())
-    if "PinHeader_3x" in n:
-        # Lower J2 is left unpopulated (Matek style): wires are soldered into the holes.  Allow WIRE_H
-        # for a wire and its solder joint above each hole; the upper header's tails hang over them.
-        if fp.Models().size():
-            errors.append(f"lower {fp.GetReference()} carries a header model: it must stay unpopulated")
-        for pad in fp.Pads():
-            x, y = mm(pad.GetPosition())
-            ltop.append((fp, (x - 1.0, y - 1.0, x + 1.0, y + 1.0), WIRE_H))
-    else:
-        ltop.append((fp, shape(fp), height(fp)))
+    if "PinHeader_3x" in str(fp.GetFPID().GetLibItemName()):
+        errors.append(f"lower {fp.GetReference()}: the lower board must carry no pin header (it would sit under the upper headers)")
+    ltop.append((fp, shape(fp), height(fp)))
 ubot = [(fp, shape(fp), height(fp)) for fp in named(upper) if fp.IsFlipped()]
-# solder tails of the upper board's 3x12 header: one per pin, TAIL below the upper board
+# solder tails of the upper board's two pin headers: one per pin, TAIL below the upper board
 tails = []
-for pad in U["J1"].Pads():
-    x, y = mm(pad.GetPosition())
-    tails.append((None, (x - 0.4, y - 0.4, x + 0.4, y + 0.4), TAIL))
+for ref in ("J1", "J2"):
+    if ref not in U or not U[ref].Models().size() or U[ref].IsFlipped():
+        errors.append(f"upper {ref}: pin header missing, without a 3D model, or on the wrong side")
+        continue
+    for pad in U[ref].Pads():
+        x, y = mm(pad.GetPosition())
+        tails.append((ref, (x - 0.4, y - 0.4, x + 0.4, y + 0.4), TAIL))
 tight = (GAP, "")
 for fa, ba, ha in ltop:
     if ha is None:
@@ -147,11 +148,11 @@ for fa, ba, ha in ltop:
         if hb is None:
             unknown.add(str(fb.GetFPID().GetLibItemName()))
             continue
-        if fb is not None and {fa.GetReference(), fb.GetReference()} == {"J1", "J3"}:
+        if not isinstance(fb, str) and {fa.GetReference(), fb.GetReference()} == {"J1", "J3"}:
             continue        # the mating connector pair
         if ba[0] < bb_[2] and bb_[0] < ba[2] and ba[1] < bb_[3] and bb_[1] < ba[3]:
             margin = GAP - ha - hb
-            name = f"{fa.GetReference()} (lower, {ha} mm) under {fb.GetReference() if fb else 'J1 pin tails'} (upper, {hb} mm)"
+            name = f"{fa.GetReference()} (lower, {ha} mm) under {fb + ' pin tails' if isinstance(fb, str) else fb.GetReference()} (upper, {hb} mm)"
             if margin < tight[0]:
                 tight = (margin, name)
             if margin < 0.3:
@@ -159,7 +160,8 @@ for fa, ba, ha in ltop:
 if unknown:
     errors.append(f"no height data for footprints: {sorted(unknown)}")
 notes.append(f"height budget in the {GAP} mm gap OK; tightest: {tight[1]} -> {tight[0]:.2f} mm spare")
-notes.append(f"lower J2 holes unpopulated; {GAP - WIRE_H - TAIL:.1f} mm between a {WIRE_H} mm wire joint and untrimmed upper tails")
+notes.append(f"no pin header on the lower board; {GAP - WIRE_H - TAIL:.1f} mm between a {WIRE_H} mm power-wire joint and "
+             f"untrimmed rear-header tails")
 
 # 5. grommet nut zones
 for gx, gy in GROMMETS:

@@ -14,7 +14,7 @@ Mission Planner or QGroundControl, optionally an oscilloscope and a thermal came
 | A1 | Lower board: resistance BAT+ to BAT− | > 1 kΩ (about 11 kΩ divider in parallel with regulator inputs) |
 | A2 | Lower board: resistance BAT+ to ESC+ | < 0.1 Ω (the shunt) |
 | A3 | Lower board: resistance ESC− to BAT− | < 0.1 Ω |
-| A4 | Lower board J2: middle-row `5V` holes and the `PI5V` holes to ground | not shorted (> 100 Ω) |
+| A4 | Lower board J1 socket: `+5V` pins (13, 15, 17, 19) and `+5V_PI` pins (14, 16, 18, 20) to ground | not shorted (> 100 Ω) |
 | A5 | Upper board: TP1 (+3V3) to TP2 (GND) | not shorted (> 100 Ω) |
 | A6 | Upper board: TP3 (+5V_SYS) to TP2 (GND) | not shorted |
 | A7 | Service cable: pin 1 to pin 1 … pin 6 to pin 6 | continuity; no continuity pin 1 to pin 6 |
@@ -26,13 +26,13 @@ Supply on BAT+ / BAT−, **8.0 V, current limit 0.2 A**, nothing connected to th
 | # | Check | Expected |
 |---|---|---|
 | B1 | Supply current | under 20 mA |
-| B2 | J2 middle-row `5V` hole (any of columns 1–7) | 5.06 V ± 0.15 V |
-| B3 | J2 `PI5V` holes (columns 8–9, inner and middle) | 5.06 V ± 0.15 V |
+| B2 | J1 socket `+5V` pins (front row, the four at the right-hand end) | 5.06 V ± 0.15 V |
+| B3 | J1 socket `+5V_PI` pins (rear row, the four at the right-hand end) | 5.06 V ± 0.15 V |
 | B4 | Green LED D2 | on |
-| B5 | J1 socket pin `VBAT_SENSE` (column 6, row nearest the header) | supply voltage ÷ 11 (0.73 V at 8.0 V) |
+| B5 | J1 socket pin `VBAT_SENSE` (pin 7: column 4 from the left, front row) | supply voltage ÷ 11 (0.73 V at 8.0 V) |
 | B6 | Raise the supply to 12.6 V | outputs unchanged, current still small |
 | B7 | Lower the supply slowly | both outputs hold 5 V down to about 5.6 V |
-| B8 | Load each 5 V output with 2.5 Ω (2 A) for 5 minutes at 8 V in (raise the current limit to 3 A) | output stays above 4.9 V; regulator and inductor comfortably below 85 °C |
+| B8 | Load each 5 V output with 2.5 Ω (2 A) for 5 minutes at 8 V in (raise the current limit to 3 A). Use the output capacitors as test points: `C15`/`C16` for `+5V`, `C25`/`C26` for `+5V_PI` | output stays above 4.9 V; regulator and inductor comfortably below 85 °C |
 
 The current-sense amplifier cannot be checked without the upper board because it is powered from `+3V3`.
 
@@ -52,7 +52,7 @@ Connect the service board with the cable and plug USB into a computer. Do **not*
 | C8 | Status: accelerometer | about (0, 0, −9.8) m/s² flat on the table |
 | C9 | **IMU orientation**: tilt the nose (header end) down, then roll right | pitch reads negative, then roll reads positive. If not, change `IMU … ROTATION_…` in the hwdef (or `AHRS_ORIENTATION`) and report it. |
 | C10 | Barometer | plausible pressure / altitude; moves when you lift the board 1 m |
-| C11 | microSD card inserted, reboot | a log file is created (`LOG_BACKEND_TYPE` = 1) |
+| C11 | microSD card inserted (underside of the upper board, from the left edge), reboot | a log file is created (`LOG_BACKEND_TYPE` = 1) |
 | C12 | Buzzer | start-up tune plays; no sound when idle |
 | C13 | A GPS or receiver on a `4V5` pin group | powered and detected on USB power alone |
 
@@ -69,10 +69,11 @@ Fit the upper board. Supply **8.0 V, limit 1 A**, USB disconnected.
 | D5 | Plug and unplug USB while on the supply | no reset |
 | D6 | Each UART: loop TX to RX with a jumper, run a loopback or connect a device | data on all seven ports |
 | D7 | I2C header (SDA/SCL) with an external compass | detected |
-| D8 | Motor outputs M1–M6 with the motor test (props off) | each ESC responds in order; then enable DShot and check again |
-| D9 | LED pin with an addressable LED strip (`SERVO7_FUNCTION` = 120) | LEDs respond |
+| D7a | Rear header, before connecting anything: `5V` middle pins of the M1–M6 and LED columns; top and middle pins of the two `PI5V` columns | 5.06 V ± 0.15 V on each |
+| D8 | Motor outputs M1–M6 on the rear header with the motor test (props off) | each ESC responds in order; then enable DShot and check again |
+| D9 | LED column of the rear header with an addressable LED strip (`SERVO7_FUNCTION` = 120) | LEDs respond |
 | D10 | OSD: camera on CAM, monitor or VTX on VTX | picture with overlay; picture still passes with the OSD disabled |
-| D11 | Companion computer on `PI5V`, running at load | rail stays above 4.9 V; flight controller unaffected |
+| D11 | Companion computer on the rear header's `PI5V` pins, running at load (up to 3 A) | rail stays above 4.9 V at the pins; flight controller unaffected; the board-to-board connector stays below 60 °C |
 
 ## E. High current
 

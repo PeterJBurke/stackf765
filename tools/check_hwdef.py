@@ -93,8 +93,6 @@ EXPECT = {   # net -> set of "REF.pin-function" that must be on it
     "SD_D0": {"J4.DAT0"}, "SD_D1": {"J4.DAT1"}, "SD_D2": {"J4.DAT2"}, "SD_D3": {"J4.DAT3/CD"},
     "SD_CK": {"J4.CLK"}, "SD_CMD": {"J4.CMD"},
     "USB_DM": {"J5.Pin_3"}, "USB_DP": {"J5.Pin_4"},
-    "M1": {"J3.Pin_3"}, "M2": {"J3.Pin_4"}, "M3": {"J3.Pin_5"}, "M4": {"J3.Pin_6"}, "M5": {"J3.Pin_7"},
-    "M6": {"J3.Pin_8"}, "LED_STRIP": {"J3.Pin_9"},
     "VBAT_ADC": {"R14.2"}, "CURR_ADC": {"R15.2"}, "BUZZER": {"Q1.G"},
     "OSC_IN": {"Y1.1"}, "OSC_OUT": {"Y1.3"},
 }
@@ -112,6 +110,14 @@ for netname, nodes in net_nodes.items():
         hdr = [f for r, p, f in nodes if r == "J1"]
         if len(hdr) != 1 or not hdr[0].replace("_", " ").endswith(" " + netname):
             err(f"net {netname}: header pin label mismatch {hdr}")
+
+# motor and LED outputs must reach the signal pin (row A) of the rear-header column with the same label
+for netname, label in [(f"M{i}", f"M{i}") for i in range(1, 7)] + [("LED_STRIP", "LED")]:
+    hdr = [f for r, p, f in net_nodes.get(netname, []) if r == "J2"]
+    if len(hdr) != 1 or not hdr[0].startswith("A") or not hdr[0].replace("_", " ").endswith(" " + label):
+        err(f"net {netname}: rear header pin mismatch {hdr}")
+    if any(r == "J3" for r, p, f in net_nodes.get(netname, [])):
+        err(f"net {netname}: must not go to the board-to-board connector")
 
 # I2C address / device strapping
 def on(ref, func):

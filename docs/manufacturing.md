@@ -38,12 +38,13 @@ The boards carry no reserved spot for the fab's order number, so choose the opti
 
 ## Assembly notes
 
-* **Hand-soldered part (not in the JLCPCB files):** only the right-angle header
-  `J1` on the upper board (3 × 12). See [assembly.md](assembly.md).
+* **Hand-soldered parts (not in the JLCPCB files):** the two right-angle Dupont headers on the upper board,
+  `J1` at the front (3 × 12) and `J2` at the rear (3 × 9). See [assembly.md](assembly.md).
 * **Board-to-board connectors are machine-placed** (since 2026-11-25): `J1` lower, Samtec SFMC-110-02-L-D-K-TR
   (LCSC C3323057), and `J3` upper, FTSH-110-04-F-DV-TR (C7279869). The socket carries a pick-and-place film
   that must be peeled off before mating.
-* **Lower board `J2` (3 × 9 holes) is left empty.** Wires are soldered into the holes. Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
+* **The lower board has no pin header** (revision C). Only the four battery and ESC wires are soldered to it.
+* **The microSD socket `J4` is on the underside of the upper board**, opening toward the left-hand edge.
 * **Standoffs H1–H3** on the lower board are reflow-soldered M2 standoffs, 8.0 mm (Sinhoo SMTSO2080CTJ). At JLCPCB they are a "Standard PCBA only" part.
   If your assembler will not place them, solder them by hand or use loose M2 × 8 mm standoffs
   with screws from below.

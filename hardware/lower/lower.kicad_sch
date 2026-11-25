@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "StackF765 lower board (power)")
-		(date "2026-11-16")
-		(rev "B")
+		(date "2026-11-25")
+		(rev "C")
 		(company "StackF765 lower board (power)")
 		(comment 1 "Index sheet - generated from gen/*.py")
 	)
@@ -99,17 +99,23 @@
 		(effects (font (size 1.8 1.8)) (justify left bottom))
 		(uuid "a6214367-ddff-5d60-b804-6ed75df55311")
 	)
-	(text "Input range 6-13 V (2S-3S LiPo); D1 clamps spikes below 25 V so every part stays inside its ratings.  No reverse-polarity protection: check wiring before connecting a battery."
+	(text "Both rails go up to the upper board through J1; the motor, LED and companion-power pins are on the upper board."
 		(exclude_from_sim no)
 		(at 20 82.6 0)
 		(effects (font (size 1.8 1.8)) (justify left bottom))
 		(uuid "8b98239f-108d-5928-b474-bc5ec77b463f")
 	)
-	(text "All components are on the top side; the bottom side carries copper only."
+	(text "Input range 6-13 V (2S-3S LiPo); D1 clamps spikes below 25 V so every part stays inside its ratings.  No reverse-polarity protection: check wiring before connecting a battery."
 		(exclude_from_sim no)
 		(at 20 86.8 0)
 		(effects (font (size 1.8 1.8)) (justify left bottom))
 		(uuid "af362675-619f-585f-8e3f-540a3d0c1f0b")
+	)
+	(text "All components are on the top side; the bottom side carries copper only."
+		(exclude_from_sim no)
+		(at 20 91 0)
+		(effects (font (size 1.8 1.8)) (justify left bottom))
+		(uuid "57ffc525-866f-5084-9e26-2ef0fea1c776")
 	)
 	(sheet_instances (path "/" (page "1")))
 	(embedded_fonts no)

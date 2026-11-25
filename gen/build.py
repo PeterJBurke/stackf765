@@ -138,11 +138,35 @@ def main():
         if hasattr(mod, "pre_route"):
             mod.pre_route(bd, rt)
         if getattr(mod, "ROUTER", "negotiated") == "sequential":
-            unrouted = rt.route_seq(order=getattr(mod, "ROUTE_ORDER", None))
+            import copy
+            order = list(getattr(mod, "ROUTE_ORDER", None) or [])
+            best = None
+            for attempt in range(1 + getattr(mod, "ROUTE_RETRIES", 0)):
+                unrouted = rt.route_seq(order=order or None)
+                if best is None or len(unrouted) < len(best[0]):
+                    best = (list(unrouted), copy.deepcopy(rt.routes))
+                if not unrouted:
+                    break
+                print(f"[{name}] attempt {attempt + 1}: unrouted {unrouted}")
+                # failed nets go right after the fixed head of the queue (crystals, supplies) on the next attempt
+                head = [n for n in order[:4] if n not in unrouted]
+                order = head + unrouted + [n for n in order if n not in head and n not in unrouted]
+            unrouted, rt.routes = best
+            rt._rebuild_soft()
         else:
             unrouted = rt.route_all(order=getattr(mod, "ROUTE_ORDER", None))
-        for net, ref, num in rt.failed[:0]:
-            pass
+        for n in unrouted:                 # say which pads cannot be reached from the first pad of the net
+            allp, bad = rt.pads[n], []
+            for q in allp[1:]:
+                rt.pads[n] = [allp[0], q]
+                rt.routes[n] = []
+                rt._rebuild_soft()
+                if not rt.route_net(n):
+                    bad.append(f"{q['ref']}.{q['num']}")
+            rt.pads[n] = allp
+            rt.routes[n] = []
+            rt._rebuild_soft()
+            print(f"[{name}]   {n}: from {allp[0]['ref']}.{allp[0]['num']} no path to {bad}")
         rt.commit()
         print(f"[{name}] routing took {time.time() - t0:.0f}s; unrouted nets: {unrouted}")
         if getattr(mod, "WIDEN", None):

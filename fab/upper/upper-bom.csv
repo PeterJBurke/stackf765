@@ -10,6 +10,7 @@ D2,1,GREEN,Green LED 0603,LED_0603_1608Metric,Nationstar,NCD0603G1,C84267,0.016,
 D3,1,SMF5.0CA,"200 W bidirectional TVS, 5 V stand-off, SOD-123FL",D_SOD-123F,MCC,SMF5.0CA-TP,C914432,0.053,yes
 FB1,1,120R@100MHz,"Ferrite bead 120 ohm, 2 A, 0603",L_0603_1608Metric,Murata,BLM18PG121SN1D,C14709,0.015,yes
 J1,1,3x12 RA 2.54mm,"3x12 right-angle pin header, 2.54 mm: four 3x3 pieces or one Samtec TSW (hand-soldered)",PinHeader_3x12_P2.54mm_Horizontal,HCTL / Samtec,PZ254-3-03-W-2.5-G0 (x4) or TSW-112-08-G-T-RA,C7429379,0.96,hand
+J2,1,3x9 RA 2.54mm,"3x9 right-angle pin header, 2.54 mm: three 3x3 pieces (hand-soldered)",PinHeader_3x09_P2.54mm_Horizontal,HCTL,PZ254-3-03-W-2.5-G0 (x3),C7429379,0.72,hand
 J3,1,FTSH-110-04-L-DV,"2x10 SMT terminal strip, 1.27 mm, 3.81 mm posts (lead style -04; -F or -L plating). Fallback: FTSH-110-05-F-DV, LCSC C6558973",Samtec_FTSH-110-xx-x-DV,Samtec,FTSH-110-04-F-DV-TR,C7279869,4.34,yes
 J4,1,microSD,"microSD socket, push-pull (card is pulled out by its edge)",microSD_HC_Molex_104031-0811,Molex,104031-0811,C585350,0.68,yes
 J5,1,JST-SH 6P,"JST SH 6-pin side-entry header, 1.0 mm",JST_SH_SM06B-SRSS-TB_1x06-1MP_P1.00mm_Horizontal,JST,SM06B-SRSS-TB(LF)(SN),C160405,0.3,yes

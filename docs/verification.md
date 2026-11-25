@@ -18,7 +18,7 @@ The current results are in [verification-report.md](verification-report.md) and 
 | Routing complete | same | Zero unconnected pads | – |
 | Board = schematic | same, `--schematic-parity` | Every footprint, pad and net on the board matches the schematic | – |
 | Firmware pin map | `tools/check_hwdef.py` | Each of the 49 MCU pins used by ArduPilot's `hwdef.dat` is wired to the matching net, and that net reaches the right sensor, header or connector pin; sensor address straps match the firmware | That the firmware behaves correctly on hardware |
-| Stack fit | `tools/check_stack.py` | The 20 board-to-board pins line up and carry the same signals; standoffs meet screw holes; parts fit in the 8 mm gap; the lower board's J2 holes carry no header and leave room under the upper header's tails; grommet zones are clear; the service cable is consistent at both ends | Real part tolerances |
+| Stack fit | `tools/check_stack.py` | The 20 board-to-board pins line up and carry the same signals; standoffs meet screw holes; parts fit in the 8 mm gap; the lower board carries no pin header; the tails of both upper headers clear everything below them, including a 5 mm power-wire joint; grommet zones are clear; the service cable is consistent at both ends | Real part tolerances |
 | Firmware build | `firmware/build.sh` | ArduPilot's own generator accepts the pin assignment (alternate functions, timers, DMA) and bootloader plus ArduCopter compile and link | Run-time behaviour |
 | BOM completeness | `tools/verify.py` | Every fitted part has a manufacturer part number and an LCSC number | Current stock |
 
@@ -86,7 +86,8 @@ Items the audit could not confirm from a primary source are listed at the end of
 | Buzzer polarity | "+" on the part goes to pad 1; confirmed against the maker's drawing in the audit. Check it in the assembler's preview. |
 | Standoff footprint | Hole 3.75 mm, pad 6.2 mm, from the PEM SMTSO family data; Sinhoo's drawing gives the part dimensions (8.00 mm tall) but no land pattern. |
 | Grommet size | The 4 mm hole and 7 mm keep-out follow Matek's "M4 to M3" silicone grommets with brass "M3 to M2" inserts. No maker's dimension drawing was found; measure yours. |
-| Header pin clearance | The upper header's solder tails hang about 1.4 mm below the upper board, over the lower board's `J2` holes. `J2` is left without a header (2026-11-24): a right-angle header there reached 6.6 mm, level with the tail tips, with only 0.63 mm sideways between them (`research/header-clearance.md`). With wires soldered into the holes the tails have more than 3 mm of clearance. Never fit a header to `J2`. |
+| Header pin clearance | Both Dupont headers are on the upper board (revision C, 2026-11-25); their solder tails hang about 1.8 mm below it. The front header has nothing under it. The rear header sits over the battery and ESC wire pads: 1.2 mm spare over a 5 mm wire joint with untrimmed tails, about 2.5 mm with the tails cut flush (assembly step 1). Keep power-wire joints under 5 mm. |
+| Rear header 5 V current | The `5V` row of the rear header is fed through the inner power layer; keep the total drawn from that row under 2 A. Servos that need more need their own supply. The two `PI5V` columns have their own regulator and copper. |
 | Board-to-board connector | Samtec SFMC + FTSH-04 mates at 7.65 mm; with 8.0 mm standoffs it runs 0.35 mm short of fully seated, inside Samtec's stated range (maximum 8.38 mm). Land patterns were read from Samtec's footprint drawings (`research/samtec-b2b.md`). |
 | Part stock | Several connectors could not be stock-checked on the day; see [manufacturing.md](manufacturing.md). |
 | Board ID | Private ArduPilot board ID 20765; see [firmware.md](firmware.md). |

@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "StackF765 upper board (flight controller) - Microcontroller STM32F765VIT6")
-		(date "2026-11-16")
-		(rev "B")
+		(date "2026-11-25")
+		(rev "C")
 		(company "StackF765 upper board (flight controller)")
 		(comment 1 "Sheet 3: Microcontroller STM32F765VIT6")
 	)

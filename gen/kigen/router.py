@@ -35,7 +35,8 @@ def _disk(r_cells):
 class Router:
     def __init__(self, board, layers, grid=0.05, track=0.15, clear=0.15, via_dia=0.6, via_drill=0.3,
                  edge_clear=0.3, hole_clear=0.25, widths=None, plane_nets=(), layer_cost=None,
-                 via_cost=400, turn_cost=3, margin=None, plane_region=None, no_route=()):
+                 via_cost=400, turn_cost=3, margin=None, plane_region=None, no_route=(), local_span=0.0,
+                 max_victims=4):
         self.bd, self.b = board, board.b
         self.layers = layers                       # copper layer names in the grid, e.g. ["F.Cu","B.Cu"]
         self.lid = [board.layer(n) for n in layers]
@@ -47,6 +48,7 @@ class Router:
         self.plane_nets = set(plane_nets)
         self.plane_region = plane_region or {}     # net -> list of rects (x0,y0,x1,y1) where vias may reach the plane
         self.no_route = set(no_route)
+        self.local_span, self.max_victims = local_span, max_victims
         self.layer_cost = layer_cost or [10] * len(layers)
         self.via_cost, self.turn_cost = via_cost, turn_cost
         self.margin = margin if margin is not None else grid * 0.75
@@ -607,7 +609,9 @@ class Router:
         self.routes = {}
         self._rebuild_soft()
         failed = []
-        for n in planes + sig:
+        # very short nets (a capacitor next to its pin) go in before the plane fan-outs can box them in
+        local = [n for n in sig if span(n) < self.local_span and n not in (order or [])]
+        for n in local + planes + [n for n in sig if n not in local]:
             self.failed = []
             if not self.route_net(n):
                 failed.append(n)
@@ -634,7 +638,7 @@ class Router:
                     self._rebuild_soft()
                     continue
                 victims = [v for v in self._conflicts(n)]
-                if len(victims) > 4:
+                if len(victims) > self.max_victims:
                     still.append(n)
                     self.routes = keep
                     self._rebuild_soft()
