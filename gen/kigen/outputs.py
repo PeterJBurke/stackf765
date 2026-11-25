@@ -73,7 +73,11 @@ def compare_netlist(design, netfile):
 # that exact part, 2026-11-19; see docs/ordering-jlcpcb.md).  A substitute part needs its own entry.
 JLC_ROT = {"C710319": 270, "C82351": 270, "C779278": 90, "C404027": 180, "C2862740": 180, "C585350": 180,
            "C3235556": 270, "C8545": 180, "C15127": 180, "C3200405": 180, "C105240": 180, "C7519": 270,
-           "C94599": 270}   # MLT-8530: seen in JLCPCB preview 2026-11-19, "+" must sit on pad 1
+           "C94599": 270,   # MLT-8530: seen in JLCPCB preview 2026-11-19, "+" must sit on pad 1
+           # Samtec board-to-board pair (2026-11-25).  FTSH fitted against EasyEDA's footprint; the SFMC socket has
+           # no EasyEDA footprint to read, so it is assumed drawn long-axis-horizontal like the FTSH.  Both parts
+           # are symmetric end for end, so only a 90 degree error is possible: check it in JLCPCB's preview.
+           "C7279869": 270, "C6558973": 270, "C3323057": 270}
 # JLCPCB footprint origin differs from KiCad's: shift of the placement point in the footprint's own frame (mm)
 JLC_SHIFT = {"C165948": (0.0, 1.57)}
 
@@ -91,6 +95,18 @@ def fab(proj_dir, name, out_dir, layers, hand=(), lcsc=None):
     run(["kicad-cli", "pcb", "export", "drill", pcb, "-o", g + "/", "--format", "excellon",
          "--drill-origin", "plot", "--excellon-separate-th", "--generate-map", "--map-format", "pdf",
          "--excellon-units", "mm"], check=True)
+    cpl(proj_dir, name, out_dir, hand, lcsc)
+    zipf = os.path.join(out_dir, f"{name}-gerbers.zip")
+    if os.path.exists(zipf):
+        os.remove(zipf)
+    run(["zip", "-j", "-q", zipf] + [os.path.join(g, f) for f in sorted(os.listdir(g)) if not f.endswith(".pdf")])
+    run(["kicad-cli", "pcb", "export", "ipcd356", pcb, "-o", os.path.join(out_dir, f"{name}.d356")])
+
+
+def cpl(proj_dir, name, out_dir, hand=(), lcsc=None):
+    """Placement files only (KiCad pos + JLCPCB CPL); does not touch the Gerbers."""
+    lcsc = lcsc or {}
+    pcb = os.path.join(proj_dir, f"{name}.kicad_pcb")
     pos = os.path.join(out_dir, f"{name}-pos.csv")
     run(["kicad-cli", "pcb", "export", "pos", pcb, "-o", pos, "--format", "csv", "--units", "mm",
          "--side", "both", "--use-drill-file-origin", "--exclude-dnp"], check=True)
@@ -113,11 +129,6 @@ def fab(proj_dir, name, out_dir, layers, hand=(), lcsc=None):
                 rot = (180 - rot) % 360          # JLCPCB views bottom-side parts mirrored
             rot = (rot + JLC_ROT.get(part, 0)) % 360
             w.writerow([r["Ref"], f"{x:.4f}", f"{y:.4f}", "Top" if r["Side"] == "top" else "Bottom", f"{rot:g}"])
-    zipf = os.path.join(out_dir, f"{name}-gerbers.zip")
-    if os.path.exists(zipf):
-        os.remove(zipf)
-    run(["zip", "-j", "-q", zipf] + [os.path.join(g, f) for f in sorted(os.listdir(g)) if not f.endswith(".pdf")])
-    run(["kicad-cli", "pcb", "export", "ipcd356", pcb, "-o", os.path.join(out_dir, f"{name}.d356")])
 
 
 def bom(design, out_dir, side_of=None):

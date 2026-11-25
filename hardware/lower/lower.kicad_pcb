@@ -2321,7 +2321,7 @@
 				)
 			)
 		)
-		(property "MPN" "SFMC-110-02-L-D"
+		(property "MPN" "SFMC-110-02-L-D-K-TR"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
@@ -2357,23 +2357,11 @@
 				)
 			)
 		)
-		(property "Price" "5.5"
+		(property "Price" "5.64"
 			(at 0 0 90)
 			(layer "F.SilkS")
 			(hide yes)
 			(uuid "8a222e53-be95-444d-852c-9542ab6429e9")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-			)
-		)
-		(property "Assembly" "hand"
-			(at 0 0 90)
-			(layer "F.SilkS")
-			(hide yes)
-			(uuid "63e8f8f5-96af-445a-b435-db6d06d2eb28")
 			(effects
 				(font
 					(size 1.27 1.27)

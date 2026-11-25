@@ -1730,18 +1730,17 @@
 			(at 161.29 49.53 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "2x10 SMT terminal strip, 1.27 mm, 3.81 mm posts (buy from a distributor; hand-solder or consign)"
+		(property "Description" "2x10 SMT terminal strip, 1.27 mm, 3.81 mm posts (lead style -04; -F or -L plating). Fallback: FTSH-110-05-F-DV, LCSC C6558973"
 			(at 161.29 49.53 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "MPN" "FTSH-110-04-L-DV"
+		(property "MPN" "FTSH-110-04-F-DV-TR"
 			(at 161.29 49.53 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
 		(property "Manufacturer" "Samtec" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "LCSC" "C7279869" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "4.19" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Assembly" "hand" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "4.34" (at 161.29 49.53 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "938dcfcd-30b4-5694-9e7e-c2987afb4eda"))
 		(pin "3" (uuid "a0758cc9-5ed9-5566-8990-0c9be294842b"))
 		(pin "5" (uuid "d4ee5340-d19b-5704-a6dc-17699ad079c5"))

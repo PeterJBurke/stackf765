@@ -1,5 +1,5 @@
 {
- "date": "2026-11-24",
+ "date": "2026-11-25",
  "checks": [
   {
    "name": "upper: electrical rules check (KiCad ERC)",
@@ -23,8 +23,8 @@
   },
   {
    "name": "upper: fabrication files present and current",
-   "ok": true,
-   "detail": "gerbers, drill, BOM, placement"
+   "ok": false,
+   "detail": "missing [] stale=True"
   },
   {
    "name": "upper: every BOM line has a manufacturer part number and an LCSC number",
@@ -53,8 +53,8 @@
   },
   {
    "name": "lower: fabrication files present and current",
-   "ok": true,
-   "detail": "gerbers, drill, BOM, placement"
+   "ok": false,
+   "detail": "missing [] stale=True"
   },
   {
    "name": "lower: every BOM line has a manufacturer part number and an LCSC number",

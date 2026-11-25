@@ -1,7 +1,6 @@
 # Assembling the stack
 
-You need: the three assembled boards, the right-angle header for the upper board, the two Samtec board-to-board
-connectors if they were not factory-fitted, three M2 × 4 mm screws,
+You need: the three assembled boards, the right-angle header for the upper board, three M2 × 4 mm screws,
 four silicone grommets ("M4 to M3") with brass "M3 to M2" inserts and M2 screws, a 6-wire JST-SH cable wired 1:1
 (JST A06SR06SR30K102A), battery and ESC wires.
 
@@ -9,9 +8,10 @@ Do the electrical checks in [bringup.md](bringup.md) on each board **before** st
 
 ## 1. Solder the header and board-to-board connectors
 
-**Board-to-board connectors (if not factory-fitted).** Socket SFMC-110-02-L-D on the top of the lower
-board (J1), header FTSH-110-04-L-DV on the bottom of the upper board (J3). They are 1.27 mm-pitch
-surface-mount parts: tack one corner pin, check alignment, then solder the rest with flux and a fine tip.
+**Board-to-board connectors.** These come fitted by JLCPCB: the socket on the top of the lower board (J1) and
+the header on the bottom of the upper board (J3). Peel the clear placement film off the top of the socket.
+Only if your assembler left them off: they are 1.27 mm-pitch surface-mount parts (SFMC-110-02-L-D and
+FTSH-110-04-L-DV); tack one corner pin, check alignment, then solder the rest with flux and a fine tip.
 
 **Lower board, J2 (3 × 9 solder holes). Fit no header.** Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
 Solder the ESC signal leads, the LED lead and the companion-computer power wires straight into the holes from

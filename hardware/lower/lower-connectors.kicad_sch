@@ -713,15 +713,14 @@
 			(at 69.85 55.88 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "Description" "2x10 SMT socket, 1.27 mm, 4.70 mm tall (buy from a distributor; hand-solder or consign)"
+		(property "Description" "2x10 SMT socket, 1.27 mm, 4.70 mm tall; -K = pick-and-place film on top, peel it off before mating"
 			(at 69.85 55.88 0)
 			(effects (font (size 1.27 1.27)) (hide yes))
 		)
-		(property "MPN" "SFMC-110-02-L-D" (at 69.85 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "MPN" "SFMC-110-02-L-D-K-TR" (at 69.85 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Manufacturer" "Samtec" (at 69.85 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "LCSC" "C3323057" (at 69.85 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Price" "5.5" (at 69.85 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
-		(property "Assembly" "hand" (at 69.85 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
+		(property "Price" "5.64" (at 69.85 55.88 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "a24127d8-4876-5d84-b7ef-69a27d1434b7"))
 		(pin "3" (uuid "7a5d6969-224a-5054-aeb8-4cf431ec0404"))
 		(pin "5" (uuid "118f4f75-792d-5454-9844-1ee4f69faf47"))

@@ -16229,7 +16229,7 @@
 				(justify mirror)
 			)
 		)
-		(property "MPN" "FTSH-110-04-L-DV"
+		(property "MPN" "FTSH-110-04-F-DV-TR"
 			(at 0 0 90)
 			(layer "B.SilkS")
 			(hide yes)
@@ -16268,24 +16268,11 @@
 				(justify mirror)
 			)
 		)
-		(property "Price" "4.19"
+		(property "Price" "4.34"
 			(at 0 0 90)
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "a618c019-37f4-448a-95a7-8711a0111225")
-			(effects
-				(font
-					(size 1.27 1.27)
-					(thickness 0.15)
-				)
-				(justify mirror)
-			)
-		)
-		(property "Assembly" "hand"
-			(at 0 0 90)
-			(layer "B.SilkS")
-			(hide yes)
-			(uuid "eb47c81c-6602-437c-a5cc-981d139a2285")
 			(effects
 				(font
 					(size 1.27 1.27)

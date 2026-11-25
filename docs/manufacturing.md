@@ -38,11 +38,11 @@ The boards carry no reserved spot for the fab's order number, so choose the opti
 
 ## Assembly notes
 
-* **Hand-soldered parts (not in the JLCPCB files):** the right-angle header
-  `J1` on the upper board (3 × 12) and the two Samtec
-  board-to-board connectors (`J1` lower: SFMC-110-02-L-D, `J3` upper: FTSH-110-04-L-DV). LCSC had only a
-  handful of the Samtec parts when checked, so buy them from DigiKey, Mouser or Samtec and either
-  hand-solder them or send them to the assembler as consigned parts. See [assembly.md](assembly.md).
+* **Hand-soldered part (not in the JLCPCB files):** only the right-angle header
+  `J1` on the upper board (3 × 12). See [assembly.md](assembly.md).
+* **Board-to-board connectors are machine-placed** (since 2026-11-25): `J1` lower, Samtec SFMC-110-02-L-D-K-TR
+  (LCSC C3323057), and `J3` upper, FTSH-110-04-F-DV-TR (C7279869). The socket carries a pick-and-place film
+  that must be peeled off before mating.
 * **Lower board `J2` (3 × 9 holes) is left empty.** Wires are soldered into the holes. Do not fit a pin header here: its pins would sit directly under the pins of the upper board's header.
 * **Standoffs H1–H3** on the lower board are reflow-soldered M2 standoffs, 8.0 mm (Sinhoo SMTSO2080CTJ). At JLCPCB they are a "Standard PCBA only" part.
   If your assembler will not place them, solder them by hand or use loose M2 × 8 mm standoffs
@@ -68,7 +68,7 @@ manager. All parts not listed below had more than 2,500 in stock.
 | TPS62933DRLR (lower U1, U2) | **36 at JLCPCB**, 817 at LCSC; two per lower board. Pre-order if short. TPS62933FDRLR fits but runs in forced-PWM mode and can push current back into the battery rail if an ESC's BEC also feeds the 5 V pins. |
 | Buzzer BZ1 | MLT-8530. The "+" mark on the part goes to pad 1 (marked "+" on the board). |
 | 27 MHz crystal Y2 | 905 in stock. |
-| Samtec SFMC-110-02-L-D / FTSH-110-04-L-DV | LCSC holds 30 and 5 of close variants only, and the LCSC numbers and prices in the BOM are those variants (C3323057 is SFMC-110-02-L-D-K-TR, C7279869 is FTSH-110-04-F-DV-TR). Buy the exact part numbers from DigiKey, Mouser or Samtec. Board-to-board pair. Use lead style **-04** on the FTSH (3.81 mm posts); other styles do not mate correctly at 8.0 mm. Do not order the FTSH with the -K option. |
+| Samtec SFMC-110-02-L-D-K-TR (C3323057) / FTSH-110-04-F-DV-TR (C7279869) | Board-to-board pair, placed by JLCPCB. **30 and 5 in stock** on 2026-11-24: the header is exactly enough for 5 boards. Fallback for the header: FTSH-110-05-F-DV (C6558973, 20 in stock, same footprint, mates at 7.77–8.89 mm). From a distributor, SFMC-110-02-L-D and FTSH-110-04-L-DV are the same parts in other plating and packing. Use lead style -04 or -05 only; never the FTSH -K option. |
 
 Approximate component cost at single-unit prices is shown per board on the
 [project page](https://peterjburke.github.io/stackf765/#boards). PCB fabrication,
