@@ -194,7 +194,14 @@ def main():
         s = summary(b)
         table, total, nparts, nlines = bom_table(b)
         grand += total
-        ok = s and not s.get("drc") and not s.get("unconnected") and not s.get("parity") and not s.get("netlist_diffs")
+        # badge from the committed verification results; build/<board>/summary.json is only a local
+        # by-product of the last full build and goes stale when a board file is patched in place
+        mine = [c for c in checks.get("checks", []) if c["name"].startswith(b + ": ")
+                and any(k in c["name"] for k in ("(KiCad ERC)", "(KiCad DRC)", "fully routed", "matches schematic"))]
+        if len(mine) == 4:
+            ok = all(c["ok"] for c in mine)
+        else:
+            ok = s and not s.get("drc") and not s.get("unconnected") and not s.get("parity") and not s.get("netlist_diffs")
         badge = '<span class="ok">ERC / DRC clean</span>' if ok else '<span class="warn">work in progress</span>'
         cards.append(f'''
 <article class="board" id="{b}">

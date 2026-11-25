@@ -35,7 +35,7 @@ const BOARD_URL = {
   service: new URL('../../boards/service/service.glb', import.meta.url).href,
 };
 // reference designators of the right-angle 0.1 inch pin headers, for the "Hide headers" control
-const HEADER_REFS = { lower: ['J2'], upper: ['J1'], service: [] };
+const HEADER_REFS = { lower: [], upper: ['J1'], service: [] };   // lower J2 is bare solder holes
 
 // Load one board.  Resolves to a Group in scene convention: mm, Z up, origin at the centre of the
 // PCB's bottom face, pin headers toward +Y (the nose).  A rotation only, so nothing is mirrored.
